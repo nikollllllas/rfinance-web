@@ -93,8 +93,8 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
+            <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="category">Categoria</Label>
               <Select required name="category" value={categoryId} onValueChange={setCategoryId}>
                 <SelectTrigger id="category">
