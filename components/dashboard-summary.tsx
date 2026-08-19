@@ -34,7 +34,7 @@ function StatCard({
         <span
           className={cn(
             "flex h-8 w-8 items-center justify-center rounded-[9px]",
-            tone === "neutral" && "bg-foreground text-background",
+            tone === "neutral" && "bg-foreground/10 text-foreground",
             tone === "success" && "bg-success/15 text-success",
             tone === "destructive" && "bg-destructive/15 text-destructive"
           )}

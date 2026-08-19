@@ -157,7 +157,7 @@ export const TransactionCreateDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[560px]">
         <DialogHeader>
           <DialogTitle>Nova Transação</DialogTitle>
           <DialogDescription>
@@ -166,8 +166,8 @@ export const TransactionCreateDialog = ({
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
+            <div className="space-y-2 sm:col-span-2">
               <Label>Tipo de Transação</Label>
               <RadioGroup
                 value={transactionType}
@@ -190,7 +190,7 @@ export const TransactionCreateDialog = ({
               </RadioGroup>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="description">Descrição</Label>
               <Input
                 id="description"
@@ -226,8 +226,17 @@ export const TransactionCreateDialog = ({
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="date">{dateLabel}</Label>
+              <DatePicker
+                date={date}
+                setDate={(newDate) => newDate && setDate(newDate)}
+              />
+              <input type="hidden" name="date" value={date.toISOString()} />
+            </div>
+
             {transactionType === "GASTO" ? (
-              <div className="space-y-3">
+              <div className="space-y-3 sm:col-span-2">
                 <Label>Meio de pagamento</Label>
                 <RadioGroup
                   value={paymentMethod}
@@ -310,15 +319,6 @@ export const TransactionCreateDialog = ({
                 ) : null}
               </div>
             ) : null}
-
-            <div className="space-y-2">
-              <Label htmlFor="date">{dateLabel}</Label>
-              <DatePicker
-                date={date}
-                setDate={(newDate) => newDate && setDate(newDate)}
-              />
-              <input type="hidden" name="date" value={date.toISOString()} />
-            </div>
 
             <div className="space-y-2">
               <Label htmlFor="category">Categoria</Label>
@@ -405,7 +405,7 @@ export const TransactionCreateDialog = ({
               </Select>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="notes">Observações (Opcional)</Label>
               <Textarea
                 id="notes"

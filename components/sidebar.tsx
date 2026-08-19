@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { CreditCard, Home, Menu, PieChart, Users, Wallet, X } from "lucide-react"
+import { CreditCard, Home, LogOut, Menu, PieChart, Users, Wallet, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useMediaQuery } from "@/hooks/use-mobile"
@@ -203,7 +203,7 @@ export default function Sidebar() {
             <ThemeToggle collapsed={collapsed} />
             <Button
               variant="outline"
-              className={cn("w-full justify-start", collapsed && "justify-center px-0")}
+              className={cn("w-full justify-center gap-2", collapsed && "px-0")}
               onClick={async () => {
                 try {
                   await logoutMutation.mutateAsync()
@@ -213,8 +213,8 @@ export default function Sidebar() {
                 }
               }}
             >
+              <LogOut className="h-4 w-4" />
               {!collapsed && <span>Sair</span>}
-              {collapsed && <span>⎋</span>}
             </Button>
           </div>
         </div>

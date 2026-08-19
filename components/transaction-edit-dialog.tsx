@@ -177,7 +177,7 @@ export function TransactionEditDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[560px]">
         <DialogHeader>
           <DialogTitle>Editar Transação</DialogTitle>
           <DialogDescription>
@@ -199,8 +199,8 @@ export function TransactionEditDialog({
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 py-4">
-              <div className="space-y-2">
+            <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
+              <div className="space-y-2 sm:col-span-2">
                 <Label>Tipo de Transação</Label>
                 <RadioGroup
                   value={transactionType}
@@ -225,7 +225,7 @@ export function TransactionEditDialog({
                 </RadioGroup>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="description">Descrição</Label>
                 <Input
                   id="description"
@@ -258,12 +258,21 @@ export function TransactionEditDialog({
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="date">Data</Label>
+                <DatePicker
+                  date={date}
+                  setDate={(newDate) => newDate && setDate(newDate)}
+                />
+                <input type="hidden" name="date" value={date.toISOString()} />
+              </div>
+
               {transaction &&
               transaction.type === "GASTO" &&
               (transaction.paymentMethod ||
                 transaction.installmentGroupId) ? (
                 <div
-                  className="rounded-md border bg-muted/40 px-3 py-2 text-sm text-muted-foreground"
+                  className="rounded-md border bg-muted/40 px-3 py-2 text-sm text-muted-foreground sm:col-span-2"
                   role="region"
                   aria-label="Informações de pagamento"
                 >
@@ -293,15 +302,6 @@ export function TransactionEditDialog({
                   ) : null}
                 </div>
               ) : null}
-
-              <div className="space-y-2">
-                <Label htmlFor="date">Data</Label>
-                <DatePicker
-                  date={date}
-                  setDate={(newDate) => newDate && setDate(newDate)}
-                />
-                <input type="hidden" name="date" value={date.toISOString()} />
-              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="category">Categoria</Label>
@@ -368,7 +368,7 @@ export function TransactionEditDialog({
                 </Select>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 sm:col-span-2">
                 <Label htmlFor="notes">Observações (Opcional)</Label>
                 <Textarea
                   id="notes"
