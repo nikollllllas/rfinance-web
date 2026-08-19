@@ -1,6 +1,6 @@
 import type React from "react";
 import "@/app/globals.css";
-import { Inter } from "next/font/google";
+import { Bricolage_Grotesque, Inter } from "next/font/google";
 import AppShell from "@/components/app-shell";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,6 +8,11 @@ import { QueryProvider } from "@/components/query-provider";
 import { KubbProvider } from "@/components/kubb-provider";
 
 const inter = Inter({ subsets: ["latin"] });
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-display",
+});
 
 export const metadata = {
   title: "RFinance - Controle financeiro",
@@ -21,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${bricolageGrotesque.variable}`}>
         <QueryProvider>
           <KubbProvider>
             <AppShell>
