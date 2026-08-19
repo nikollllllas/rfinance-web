@@ -45,9 +45,9 @@ function DashboardContent() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center px-4 md:px-6">
+        <div className="flex h-14 items-center px-4">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-lg">Painel</span>
+            <span className="font-display text-lg">Painel</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
@@ -69,13 +69,13 @@ function DashboardContent() {
           </div>
         </div>
       </header>
-      <main className="flex-1 p-4 md:p-6 space-y-6">
+      <main className="flex-1 space-y-[18px] p-4">
         <DashboardSummary dashboardData={dashboardData} isLoading={isLoading} error={error} />
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        <div className="grid gap-[18px] md:grid-cols-2 lg:grid-cols-7">
           <Card className="lg:col-span-4">
             <CardHeader>
-              <CardTitle>Visão Financeira</CardTitle>
+              <CardTitle className="font-display">Visão Financeira</CardTitle>
               <CardDescription>
                 Sua atividade financeira nos últimos 6 meses:
               </CardDescription>
@@ -86,7 +86,7 @@ function DashboardContent() {
           </Card>
           <Card className="lg:col-span-3">
             <CardHeader>
-              <CardTitle>Gastos por Categoria</CardTitle>
+              <CardTitle className="font-display">Gastos por Categoria</CardTitle>
               <CardDescription>
                 Detalhamento dos seus gastos mensais:
               </CardDescription>
@@ -96,10 +96,10 @@ function DashboardContent() {
             </CardContent>
           </Card>
         </div>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-[18px] md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Progresso do Orçamento</CardTitle>
+              <CardTitle className="font-display">Progresso do Orçamento</CardTitle>
               <CardDescription>
                 Acompanhe suas metas de orçamento:
               </CardDescription>
@@ -111,7 +111,7 @@ function DashboardContent() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Transações Recentes</CardTitle>
+                <CardTitle className="font-display">Transações Recentes</CardTitle>
                 <CardDescription>
                   Suas últimas atividades financeiras:
                 </CardDescription>

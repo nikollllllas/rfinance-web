@@ -69,6 +69,9 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
       },
+      boxShadow: {
+        soft: "0 1px 2px rgb(0 0 0 / 0.03), 0 10px 28px -14px rgb(0 0 0 / 0.14)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
