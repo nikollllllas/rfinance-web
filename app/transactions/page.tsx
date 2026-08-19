@@ -98,7 +98,7 @@ export default function TransactionsPage() {
       : formatCurrency(monthlyBalance)
 
   const SkeletonTable = () => (
-    <div className="rounded-md border">
+    <div className="overflow-hidden rounded-2xl bg-card shadow-soft">
       <Table>
         <TableHeader>
           <TableRow>
@@ -136,7 +136,7 @@ export default function TransactionsPage() {
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-20 md:h-14 items-center px-4 py-2 md:py-0 md:px-6 flex-col md:flex-row">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-lg">Transações</span>
+            <span className="font-display text-lg">Transações</span>
           </div>
           <div className="md:ml-auto flex items-center gap-2 flex-col md:flex-row">
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
@@ -157,7 +157,7 @@ export default function TransactionsPage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 p-4 md:p-6">
+      <main className="flex-1 p-4">
         <div className="flex flex-col gap-4">
           {isLoading && transactions.length === 0 ? (
             <div className="flex justify-center items-center py-12">
@@ -236,16 +236,16 @@ export default function TransactionsPage() {
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
                             {transaction.type === "GANHO" ? (
-                              <ArrowUpIcon className="h-4 w-4 text-green-500" />
+                              <ArrowUpIcon className="h-4 w-4 text-success" />
                             ) : (
-                              <ArrowDownIcon className="h-4 w-4 text-red-500" />
+                              <ArrowDownIcon className="h-4 w-4 text-destructive" />
                             )}
                             <span
                               className={cn(
                                 "font-medium",
                                 transaction.type === "GANHO"
-                                  ? "text-green-600"
-                                  : "text-red-600"
+                                  ? "text-success"
+                                  : "text-destructive"
                               )}
                             >
                               {transaction.type === "GANHO" ? "+" : "-"}
@@ -320,7 +320,7 @@ export default function TransactionsPage() {
                         <span
                           className={cn(
                             "font-medium",
-                            monthlyBalance < 0 ? "text-red-600" : "text-green-600"
+                            monthlyBalance < 0 ? "text-destructive" : "text-success"
                           )}
                         >
                           {monthlyBalanceDisplay}

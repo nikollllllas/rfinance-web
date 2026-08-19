@@ -43,33 +43,34 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col">
       {recentTransactions.map((transaction: any) => {
         const installmentSuffix = getInstallmentSuffix(
           transaction.installmentIndex,
           transaction.installmentCount
         );
         const paymentLabel = getPaymentMethodLabel(transaction.paymentMethod);
+        const isIncome = transaction.type === "GANHO";
         return (
         <div
           key={transaction.id}
-          className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent/50 transition-colors"
+          className="flex items-center justify-between rounded-xl p-2.5 transition-colors hover:bg-muted/60"
         >
           <div className="flex items-center gap-3">
             <div
               className={cn(
-                "flex items-center justify-center w-10 h-10 rounded-full",
-                transaction.type === "GANHO" ? "bg-green-100" : "bg-red-100"
+                "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]",
+                isIncome ? "bg-success/15" : "bg-destructive/15"
               )}
             >
-              {transaction.type === "GANHO" ? (
-                <ArrowUpIcon className="h-5 w-5 text-green-600" />
+              {isIncome ? (
+                <ArrowUpIcon className="h-4 w-4 text-success" strokeWidth={2.2} />
               ) : (
-                <ArrowDownIcon className="h-5 w-5 text-red-600" />
+                <ArrowDownIcon className="h-4 w-4 text-destructive" strokeWidth={2.2} />
               )}
             </div>
             <div>
-              <p className="font-medium">
+              <p className="text-[13.5px] font-medium">
                 {transaction.description}
                 {installmentSuffix ? ` ${installmentSuffix}` : ""}
               </p>
@@ -84,11 +85,11 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
           </div>
           <div
             className={cn(
-              "font-medium",
-              transaction.type === "GANHO" ? "text-green-600" : "text-red-600"
+              "text-[13.5px] font-semibold",
+              isIncome ? "text-success" : "text-destructive"
             )}
           >
-            {transaction.type === "GANHO" ? "+" : "-"}
+            {isIncome ? "+" : "-"}
             {formatCurrency(Number(transaction.amount))}
           </div>
         </div>

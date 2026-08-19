@@ -19,7 +19,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <CategoriesProvider>
       <Sidebar />
-      <div className="pl-[var(--sidebar-width,256px)] transition-all duration-300">{children}</div>
+      <div className="min-h-screen bg-muted/40 pl-[var(--sidebar-width,256px)] transition-all duration-300">
+        {children}
+      </div>
     </CategoriesProvider>
   )
 }

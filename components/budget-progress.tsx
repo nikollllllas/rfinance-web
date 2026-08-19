@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { DashboardData } from "@/lib/api-types";
 import { formatCurrency } from "@/lib/utils";
 import { useCategories } from "@/hooks/use-categories";
+import { getBudgetStatusColors } from "@/lib/budget-status-colors";
 
 interface BudgetProgressProps {
   dashboardData: DashboardData | null;
@@ -55,40 +56,24 @@ export default function BudgetProgress({
         const categoryType = (budget.categoryType ??
           categories.find((category) => category.name === budget.category)
             ?.type) as "GANHO" | "GASTO" | "AMBOS" | undefined;
-        let track = "bg-gray-200"
-        let indicatorColor = "bg-gray-400"
-        let textColor = "text-muted-foreground"
-        let showOverBudgetWarning = false
-
-        if (categoryType === "GASTO") {
-          track = "bg-red-200"
-          textColor = "text-red-600"
-          indicatorColor = isOverBudget ? "bg-red-500" : "bg-red-400"
-          showOverBudgetWarning = isOverBudget
-        } else if (categoryType === "GANHO") {
-          track = "bg-green-200"
-          textColor = "text-green-600"
-          indicatorColor = isOverBudget ? "bg-green-500" : "bg-green-400"
-        } else if (categoryType === "AMBOS") {
-          track = "bg-yellow-200"
-          textColor = "text-yellow-600"
-          indicatorColor = isOverBudget ? "bg-yellow-500" : "bg-yellow-400"
-          showOverBudgetWarning = isOverBudget
-        }
+        const { track, indicator, text, showOverBudgetWarning } = getBudgetStatusColors(
+          categoryType,
+          isOverBudget,
+        );
 
         return (
-          <div key={budget.id} className="space-y-1">
+          <div key={budget.id} className="space-y-1.5">
             <div className="flex justify-between text-sm">
-              <span>{budget.category}</span>
-              <span className={textColor}>
+              <span className="font-medium">{budget.category}</span>
+              <span className={text}>
                 {formatCurrency(budget.current)} / {formatCurrency(budget.max)}
                 {showOverBudgetWarning && " (Acima do orçamento)"}
               </span>
             </div>
             <Progress
               value={percentage}
-              className={`h-2 ${track}`}
-              indicatorClassName={indicatorColor}
+              className={`h-[7px] ${track}`}
+              indicatorClassName={indicator}
             />
           </div>
         );

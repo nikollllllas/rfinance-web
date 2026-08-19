@@ -54,13 +54,13 @@ export default function ExpensesByCategory({dashboardData, isLoading, error}: Ex
           data={dashboardData.expensesByCategory}
           cx="50%"
           cy="50%"
-          labelLine={false}
-          outerRadius={80}
-          fill="#8884d8"
+          innerRadius={64}
+          outerRadius={92}
+          paddingAngle={2}
+          cornerRadius={4}
           dataKey="value"
-          label={({ name, percent }) =>
-            `${name} ${(percent * 100).toFixed(0)}%`
-          }
+          stroke="hsl(var(--card))"
+          strokeWidth={2}
         >
           {dashboardData.expensesByCategory.map((entry: any, index: number) => (
             <Cell key={`cell-${index}`} fill={entry.color} />
@@ -68,8 +68,13 @@ export default function ExpensesByCategory({dashboardData, isLoading, error}: Ex
         </Pie>
         <Tooltip
           formatter={(value) => [formatCurrency(Number(value)), "Valor"]}
+          contentStyle={{
+            background: "hsl(var(--card))",
+            border: "1px solid hsl(var(--border))",
+            borderRadius: 12,
+          }}
         />
-        <Legend />
+        <Legend iconType="circle" iconSize={8} />
       </PieChart>
     </ResponsiveContainer>
   );

@@ -2,6 +2,7 @@ import type React from "react";
 import "@/app/globals.css";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import AppShell from "@/components/app-shell";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
 import { QueryProvider } from "@/components/query-provider";
@@ -27,15 +28,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${inter.className} ${bricolageGrotesque.variable}`}>
-        <QueryProvider>
-          <KubbProvider>
-            <AppShell>
-              {children}
-              <Toaster />
-              <Analytics />
-            </AppShell>
-          </KubbProvider>
-        </QueryProvider>
+        <ThemeProvider>
+          <QueryProvider>
+            <KubbProvider>
+              <AppShell>
+                {children}
+                <Toaster />
+                <Analytics />
+              </AppShell>
+            </KubbProvider>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

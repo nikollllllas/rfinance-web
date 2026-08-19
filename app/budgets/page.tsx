@@ -22,6 +22,7 @@ import { BudgetEditDialog } from "@/components/budget-edit-dialog"
 import { BudgetCreateDialog } from "@/components/budget-create-dialog"
 import { formatBudgetMonth, formatCurrency } from "@/lib/utils"
 import { useCategories } from "@/hooks/use-categories"
+import { getBudgetStatusColors } from "@/lib/budget-status-colors"
 
 const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?: () => void }) => {
   const { progress, isLoading, error } = useBudgetProgress(budget.id)
@@ -92,34 +93,18 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
   const categoryType = (budget.category?.type ??
     getCategoryById(budget.categoryId)?.type) as "GANHO" | "GASTO" | "AMBOS" | undefined
 
-  let track = "bg-gray-200"
-  let indicatorColor = "bg-gray-400"
-  let textColor = "text-muted-foreground"
-  let showOverBudgetWarning = false
-
-  if (categoryType === "GASTO") {
-    track = "bg-red-200"
-    textColor = "text-red-600"
-    indicatorColor = isOverBudget ? "bg-red-500" : "bg-red-400"
-    showOverBudgetWarning = isOverBudget
-  } else if (categoryType === "GANHO") {
-    track = "bg-green-200"
-    textColor = "text-green-600"
-    indicatorColor = isOverBudget ? "bg-green-500" : "bg-green-400"
-  } else if (categoryType === "AMBOS") {
-    track = "bg-yellow-200"
-    textColor = "text-yellow-600"
-    indicatorColor = isOverBudget ? "bg-yellow-500" : "bg-yellow-400"
-    showOverBudgetWarning = isOverBudget
-  }
+  const { track, indicator, text, showOverBudgetWarning } = getBudgetStatusColors(
+    categoryType,
+    isOverBudget,
+  )
 
   return (
     <>
       <Card>
         <CardHeader className="pb-2">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-lg capitalize">{budget.category?.name}</CardTitle>
-            <span className={`text-sm font-medium ${textColor}`}>
+            <CardTitle className="font-display text-lg capitalize">{budget.category?.name}</CardTitle>
+            <span className={`text-sm font-medium ${text}`}>
               {percentage}%
             </span>
           </div>
@@ -130,17 +115,17 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
         <CardContent>
           <Progress
             value={percentage}
-            className={`h-2 ${track}`}
-            indicatorClassName={indicatorColor}
+            className={`h-[7px] ${track}`}
+            indicatorClassName={indicator}
           />
           <div className="mt-2 text-xs text-muted-foreground flex justify-between">
             <span>Mês: {formatBudgetMonth(budget.budgetMonth)}</span>
             {showOverBudgetWarning && (
-              <span className="text-red-500">Acima do orçamento</span>
+              <span className="text-destructive">Acima do orçamento</span>
             )}
           </div>
           <div className="mt-1 text-sm">
-            <span className={textColor}>
+            <span className={text}>
               {formatCurrency(progress.current)} / {formatCurrency(Number(budget.amount))}
             </span>
           </div>
@@ -251,9 +236,9 @@ export default function BudgetsPage() {
     return (
       <div className="flex flex-col min-h-screen">
         <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-14 items-center px-4 md:px-6">
+          <div className="flex h-14 items-center px-4">
             <div className="flex items-center gap-2 font-semibold">
-              <span className="text-lg">Orçamentos</span>
+              <span className="font-display text-lg">Orçamentos</span>
             </div>
             <div className="ml-auto flex items-center gap-2">
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
@@ -295,7 +280,7 @@ export default function BudgetsPage() {
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 md:p-6 flex justify-center items-center">
+        <main className="flex-1 p-4 flex justify-center items-center">
           <div className="flex flex-col items-center">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="mt-2">Carregando orçamentos...</p>
@@ -308,9 +293,9 @@ export default function BudgetsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center px-4 md:px-6">
+        <div className="flex h-14 items-center px-4">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="text-lg">Orçamentos</span>
+            <span className="font-display text-lg">Orçamentos</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Select value={selectedMonth} onValueChange={setSelectedMonth}>
@@ -352,7 +337,7 @@ export default function BudgetsPage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 p-4 md:p-6">
+      <main className="flex-1 p-4">
         {error ? (
           <div className="rounded-md border border-destructive p-4 text-center">
             <p className="text-destructive">Erro ao carregar orçamentos. Por favor, tente novamente.</p>

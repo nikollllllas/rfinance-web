@@ -20,6 +20,10 @@ interface FinancialOverviewProps {
   error: Error | null;
 }
 
+const COLOR_INCOME = "hsl(var(--success))";
+const COLOR_EXPENSES = "hsl(var(--destructive))";
+const COLOR_SAVINGS = "hsl(var(--warning))";
+
 export default function FinancialOverview({dashboardData, isLoading, error}: FinancialOverviewProps) {
 
   if (isLoading) {
@@ -50,38 +54,55 @@ export default function FinancialOverview({dashboardData, isLoading, error}: Fin
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis tickFormatter={(value) => `R$${value}`} />
+        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+        <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} tickLine={false} axisLine={false} />
+        <YAxis
+          tickFormatter={(value) => `R$${value}`}
+          stroke="hsl(var(--muted-foreground))"
+          fontSize={12}
+          tickLine={false}
+          axisLine={false}
+        />
         <Tooltip
           formatter={(value) => [formatCurrency(Number(value)), undefined]}
           labelFormatter={(label) => `Mês: ${label}`}
+          contentStyle={{
+            background: "hsl(var(--card))",
+            border: "1px solid hsl(var(--border))",
+            borderRadius: 12,
+          }}
         />
         <Legend
           payload={[
-            { value: "Ganhos", type: "line", color: "#8884d8" },
-            { value: "Gastos", type: "line", color: "#ff7300" },
-            { value: "Economia", type: "line", color: "#82ca9d" },
+            { value: "Ganhos", type: "line", color: COLOR_INCOME },
+            { value: "Gastos", type: "line", color: COLOR_EXPENSES },
+            { value: "Economia", type: "line", color: COLOR_SAVINGS },
           ]}
         />
         <Line
           type="monotone"
           dataKey="income"
           name="Ganhos"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          stroke={COLOR_INCOME}
+          strokeWidth={2.5}
+          dot={false}
+          activeDot={{ r: 6 }}
         />
         <Line
           type="monotone"
           dataKey="expenses"
           name="Gastos"
-          stroke="#ff7300"
+          stroke={COLOR_EXPENSES}
+          strokeWidth={2}
+          dot={false}
         />
         <Line
           type="monotone"
           dataKey="savings"
           name="Economia"
-          stroke="#82ca9d"
+          stroke={COLOR_SAVINGS}
+          strokeWidth={2}
+          dot={false}
         />
       </LineChart>
     </ResponsiveContainer>
