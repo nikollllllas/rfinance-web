@@ -4,10 +4,9 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Loader2, Mail } from "lucide-react"
+import { AuthInput } from "@/components/auth/auth-input"
+import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useAuthControllerForgotPassword } from "@/lib/api/auth/hooks/use-auth-controller-forgot-password"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 import { kubbClientConfig } from "@/lib/kubb-client"
@@ -42,63 +41,53 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-sky-50 px-4 py-12">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[-40px] top-[-80px] h-[300px] w-[300px] rounded-full bg-sky-200/60 blur-3xl" />
-        <div className="absolute bottom-[-120px] right-[-60px] h-[300px] w-[300px] rounded-full bg-blue-200/50 blur-3xl" />
-      </div>
+    <AuthShell title="Esqueci minha senha" subtitle="Informe seu email pra receber as instruções de redefinição.">
+      <form className="flex flex-col gap-[18px]" onSubmit={handleSubmit}>
+        <div className="flex flex-col gap-[7px]">
+          <label className="text-[13px] font-medium text-foreground/80" htmlFor="forgot-password-email">
+            Email
+          </label>
+          <AuthInput
+            id="forgot-password-email"
+            type="email"
+            icon={<Mail className="h-[17px] w-[17px]" />}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="seu@email.com"
+            required
+            disabled={isSubmitting}
+          />
+        </div>
 
-      <Card className="relative w-full max-w-md border-sky-200/70 bg-white/90 shadow-lg backdrop-blur">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-sky-900">Recuperar senha</CardTitle>
-          <CardDescription className="text-sky-700/80">
-            Informe seu email para receber instruções de redefinição.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <Label className="text-sky-900" htmlFor="forgot-password-email">Email</Label>
-              <div className="relative">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <Input
-                  id="forgot-password-email"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder="seu@email.com"
-                  className="border-sky-100 bg-transparent pl-10 text-black placeholder:text-slate-500"
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-            </div>
+        {errorMessage ? (
+          <p className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {errorMessage}
+          </p>
+        ) : null}
+        {successMessage ? <p className="text-sm text-success">{successMessage}</p> : null}
 
-            {errorMessage ? (
-              <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{errorMessage}</p>
-            ) : null}
-            {successMessage ? <p className="text-sm text-emerald-600">{successMessage}</p> : null}
+        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Enviando...
+            </>
+          ) : (
+            "Enviar instruções"
+          )}
+        </Button>
+      </form>
 
-            <Button className="w-full bg-sky-600 hover:bg-sky-700" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Enviando...
-                </>
-              ) : (
-                "Enviar instruções"
-              )}
-            </Button>
-          </form>
-
-          <Button asChild variant="link" className="mt-4 px-0 text-sky-700 hover:text-sky-900">
-            <Link href="/login">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Voltar ao login
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
-    </main>
+      <Button
+        asChild
+        variant="link"
+        className="mt-4 px-0 text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <Link href="/login">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Voltar ao login
+        </Link>
+      </Button>
+    </AuthShell>
   )
 }
