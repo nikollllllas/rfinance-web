@@ -60,11 +60,11 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
             <div
               className={cn(
                 "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]",
-                isIncome ? "bg-success/15" : "bg-destructive/15"
+                isIncome ? "bg-green-500/15" : "bg-destructive/15"
               )}
             >
               {isIncome ? (
-                <ArrowUpIcon className="h-4 w-4 text-success" strokeWidth={2.2} />
+                <ArrowUpIcon className="h-4 w-4 text-green-600 dark:text-green-500" strokeWidth={2.2} />
               ) : (
                 <ArrowDownIcon className="h-4 w-4 text-destructive" strokeWidth={2.2} />
               )}
@@ -86,7 +86,7 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
           <div
             className={cn(
               "text-[13.5px] font-semibold",
-              isIncome ? "text-success" : "text-destructive"
+              isIncome ? "text-green-600 dark:text-green-500" : "text-destructive"
             )}
           >
             {isIncome ? "+" : "-"}
