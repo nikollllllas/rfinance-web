@@ -182,7 +182,7 @@ export default function TransactionsPage() {
           ) : (
             <>
               {isLoading ? <SkeletonTable /> : (
-                <div className="rounded-md border">
+                <div className="overflow-hidden rounded-2xl bg-card shadow-soft">
                   <Table>
                   <TableHeader>
                     <TableRow>
@@ -236,7 +236,7 @@ export default function TransactionsPage() {
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
                             {transaction.type === "GANHO" ? (
-                              <ArrowUpIcon className="h-4 w-4 text-success" />
+                              <ArrowUpIcon className="h-4 w-4 text-green-600 dark:text-green-500" />
                             ) : (
                               <ArrowDownIcon className="h-4 w-4 text-destructive" />
                             )}
@@ -244,7 +244,7 @@ export default function TransactionsPage() {
                               className={cn(
                                 "font-medium",
                                 transaction.type === "GANHO"
-                                  ? "text-success"
+                                  ? "text-green-600 dark:text-green-500"
                                   : "text-destructive"
                               )}
                             >
@@ -320,7 +320,7 @@ export default function TransactionsPage() {
                         <span
                           className={cn(
                             "font-medium",
-                            monthlyBalance < 0 ? "text-destructive" : "text-success"
+                            monthlyBalance < 0 ? "text-destructive" : "text-green-600 dark:text-green-500"
                           )}
                         >
                           {monthlyBalanceDisplay}

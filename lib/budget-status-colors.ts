@@ -11,9 +11,9 @@ export function getBudgetStatusColors(categoryType: BudgetCategoryType, isOverBu
   }
   if (categoryType === "GANHO") {
     return {
-      track: "bg-success/15",
-      indicator: "bg-success",
-      text: "text-success",
+      track: "bg-green-500/15",
+      indicator: "bg-green-500",
+      text: "text-green-600 dark:text-green-500",
       showOverBudgetWarning: false,
     }
   }
