@@ -42,6 +42,11 @@ export function InlineTagEditor({
       variant: "success",
     },
     {
+      value: "RECEBIDO",
+      label: "Recebido",
+      variant: "received",
+    },
+    {
       value: "DEVOLVER",
       label: "Devolver",
       variant: "warning",
@@ -57,7 +62,7 @@ export function InlineTagEditor({
   };
 
   const handleTagChange = async (
-    newTag: "FALTA" | "PAGO" | "DEVOLVER" | "ECONOMIA" | null
+    newTag: "FALTA" | "PAGO" | "RECEBIDO" | "DEVOLVER" | "ECONOMIA" | null
   ) => {
     if (newTag === currentTag) {
       setIsOpen(false);
@@ -126,6 +131,7 @@ export function InlineTagEditor({
                     option.value as
                       | "FALTA"
                       | "PAGO"
+                      | "RECEBIDO"
                       | "DEVOLVER"
                       | "ECONOMIA"
                       | null

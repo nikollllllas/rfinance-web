@@ -1,0 +1,157 @@
+import { DashboardData } from "@/lib/api-types";
+
+/** Dados fictícios usados só nas rotas /preview/* — nunca chamam a API real. */
+export const previewTransactions = [
+  {
+    id: "t1",
+    description: "Salário",
+    amount: 8500,
+    type: "GANHO",
+    date: "2026-09-17",
+    category: { name: "Salário" },
+    tag: "RECEBIDO",
+  },
+  {
+    id: "t2",
+    description: "Supermercado",
+    amount: 342.9,
+    type: "GASTO",
+    date: "2026-09-16",
+    category: { name: "Alimentação" },
+    paymentMethod: "DEBITO",
+    tag: "PAGO",
+  },
+  {
+    id: "t3",
+    description: "Notebook novo",
+    amount: 4200,
+    type: "GASTO",
+    date: "2026-09-14",
+    category: { name: "Eletrônicos" },
+    paymentMethod: "CREDITO",
+    installmentIndex: 1,
+    installmentCount: 10,
+    tag: "FALTA",
+  },
+  {
+    id: "t4",
+    description: "Cinema",
+    amount: 68,
+    type: "GASTO",
+    date: "2026-09-12",
+    category: { name: "Lazer" },
+    paymentMethod: "PIX",
+  },
+  {
+    id: "t5",
+    description: "Aluguel",
+    amount: 1500,
+    type: "GASTO",
+    date: "2026-09-10",
+    category: { name: "Moradia" },
+    paymentMethod: "PIX",
+    tag: "PAGO",
+  },
+  {
+    id: "t6",
+    description: "Freelance",
+    amount: 1200,
+    type: "GANHO",
+    date: "2026-09-08",
+    category: { name: "Extra" },
+    tag: "FALTA",
+  },
+  {
+    id: "t7",
+    description: "Uber",
+    amount: 34.5,
+    type: "GASTO",
+    date: "2026-09-05",
+    category: { name: "Transporte" },
+    paymentMethod: "PIX",
+  },
+  {
+    id: "t8",
+    description: "Reembolso loja",
+    amount: 89.9,
+    type: "GANHO",
+    date: "2026-09-02",
+    category: { name: "Outros" },
+    tag: "DEVOLVER",
+  },
+];
+
+export const previewDashboardData: DashboardData = {
+  summary: {
+    balance: 8420.5,
+    income: { amount: 12500, change: 8.2 },
+    expenses: { amount: 4079.5, change: -3.1 },
+    savings: { amount: 3200, change: 14.6 },
+  },
+  monthlyData: [
+    { month: "Mai", income: 10800, expenses: 4200, savings: 2600 },
+    { month: "Jun", income: 11200, expenses: 4600, savings: 2800 },
+    { month: "Jul", income: 11800, expenses: 4100, savings: 3100 },
+    { month: "Ago", income: 11500, expenses: 4400, savings: 2900 },
+    { month: "Set", income: 12100, expenses: 3950, savings: 3350 },
+    { month: "Out", income: 12500, expenses: 4079.5, savings: 3200 },
+  ],
+  expensesByCategory: [
+    { name: "Moradia", value: 1500, color: "#6366f1" },
+    { name: "Alimentação", value: 980, color: "#22c55e" },
+    { name: "Transporte", value: 620, color: "#f59e0b" },
+    { name: "Lazer", value: 450, color: "#ec4899" },
+    { name: "Outros", value: 529.5, color: "#94a3b8" },
+  ],
+  budgets: [
+    { id: "b1", category: "Alimentação", current: 980, max: 1200, categoryType: "GASTO" },
+    { id: "b2", category: "Lazer", current: 450, max: 400, categoryType: "GASTO" },
+    { id: "b3", category: "Salário", current: 11000, max: 12000, categoryType: "GANHO" },
+  ],
+  recentTransactions: previewTransactions.slice(0, 4),
+};
+
+export const previewBudgets = [
+  {
+    id: "b1",
+    category: { name: "Alimentação", type: "GASTO" },
+    amount: 1200,
+    current: 980,
+    budgetMonth: "2026-09",
+    isOverBudget: false,
+  },
+  {
+    id: "b2",
+    category: { name: "Lazer", type: "GASTO" },
+    amount: 400,
+    current: 450,
+    budgetMonth: "2026-09",
+    isOverBudget: true,
+  },
+  {
+    id: "b3",
+    category: { name: "Salário", type: "GANHO" },
+    amount: 12000,
+    current: 11000,
+    budgetMonth: "2026-09",
+    isOverBudget: false,
+  },
+  {
+    id: "b4",
+    category: { name: "Transporte", type: "GASTO" },
+    amount: 700,
+    current: 620,
+    budgetMonth: "2026-09",
+    isOverBudget: false,
+  },
+];
+
+export const previewCategories = [
+  { id: "c1", name: "Salário", color: "#22c55e", type: "GANHO", isDefault: true },
+  { id: "c2", name: "Extra", color: "#0ea5e9", type: "GANHO", isDefault: false },
+  { id: "c3", name: "Alimentação", color: "#f59e0b", type: "GASTO", isDefault: true },
+  { id: "c4", name: "Moradia", color: "#6366f1", type: "GASTO", isDefault: true },
+  { id: "c5", name: "Transporte", color: "#ec4899", type: "GASTO", isDefault: false },
+  { id: "c6", name: "Lazer", color: "#f43f5e", type: "GASTO", isDefault: false },
+  { id: "c7", name: "Outros", color: "#94a3b8", type: "AMBOS", isDefault: true },
+];
