@@ -72,7 +72,7 @@ export function TransactionEditDialog({
   const [categoryId, setCategoryId] = useState("");
   const [notes, setNotes] = useState("");
   const [tag, setTag] = useState<
-    "FALTA" | "PAGO" | "DEVOLVER" | "ECONOMIA" | null
+    "FALTA" | "PAGO" | "RECEBIDO" | "DEVOLVER" | "ECONOMIA" | null
   >(null);
 
   useEffect(() => {
@@ -166,6 +166,8 @@ export function TransactionEditDialog({
         return "destructive";
       case "PAGO":
         return "success";
+      case "RECEBIDO":
+        return "received";
       case "DEVOLVER":
         return "warning";
       case "ECONOMIA":
@@ -343,7 +345,12 @@ export function TransactionEditDialog({
                     setTag(
                       value === ""
                         ? null
-                        : (value as "FALTA" | "PAGO" | "DEVOLVER" | "ECONOMIA")
+                        : (value as
+                            | "FALTA"
+                            | "PAGO"
+                            | "RECEBIDO"
+                            | "DEVOLVER"
+                            | "ECONOMIA")
                     )
                   }
                 >
@@ -357,6 +364,9 @@ export function TransactionEditDialog({
                     </SelectItem>
                     <SelectItem value="PAGO">
                       <Badge variant="success">Pago</Badge>
+                    </SelectItem>
+                    <SelectItem value="RECEBIDO">
+                      <Badge variant="received">Recebido</Badge>
                     </SelectItem>
                     <SelectItem value="DEVOLVER">
                       <Badge variant="warning">Devolver</Badge>

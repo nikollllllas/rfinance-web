@@ -4,7 +4,7 @@ export type TransactionType = "GANHO" | "GASTO"
 
 export type PaymentMethod = "PIX" | "DEBITO" | "CREDITO"
 
-export type TransactionTag = "FALTA" | "PAGO" | "DEVOLVER" | "ECONOMIA"
+export type TransactionTag = "FALTA" | "PAGO" | "RECEBIDO" | "DEVOLVER" | "ECONOMIA"
 
 export interface TransactionData {
   description: string

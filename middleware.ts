@@ -9,7 +9,8 @@ export const middleware = (request: NextRequest) => {
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon.ico") ||
     pathname.includes(".")
-  const isPublicPath = publicPaths.includes(pathname)
+  const isPublicPath =
+    publicPaths.includes(pathname) || pathname.startsWith("/preview")
 
   if (isStaticPath) {
     return NextResponse.next()
