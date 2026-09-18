@@ -105,6 +105,7 @@ export const TransactionCreateDialog = ({
         tag: tag as
           | "FALTA"
           | "PAGO"
+          | "RECEBIDO"
           | "DEVOLVER"
           | "ECONOMIA"
           | null
@@ -360,7 +361,12 @@ export const TransactionCreateDialog = ({
                   setTag(
                     value === "none"
                       ? null
-                      : (value as "FALTA" | "PAGO" | "DEVOLVER" | "ECONOMIA")
+                      : (value as
+                          | "FALTA"
+                          | "PAGO"
+                          | "RECEBIDO"
+                          | "DEVOLVER"
+                          | "ECONOMIA")
                   )
                 }
               >
@@ -383,6 +389,14 @@ export const TransactionCreateDialog = ({
                         Pago
                       </Badge>
                       <span>Pago</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="RECEBIDO">
+                    <div className="flex items-center">
+                      <Badge variant="received" className="mr-2">
+                        Recebido
+                      </Badge>
+                      <span>Recebido</span>
                     </div>
                   </SelectItem>
                   <SelectItem value="DEVOLVER">

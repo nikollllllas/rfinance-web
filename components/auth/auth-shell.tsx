@@ -9,7 +9,7 @@ type AuthShellProps = {
 
 export function AuthShell({ title, subtitle, children }: AuthShellProps) {
   return (
-    <main className="relative flex min-h-screen w-full bg-[oklch(0.99_0.004_250)]">
+    <main className="relative flex min-h-screen w-full bg-background">
       {/* gradient seam between panels */}
       <div className="pointer-events-none absolute inset-y-0 left-[620px] z-10 hidden w-[30px] -translate-x-1/2 bg-gradient-to-r from-transparent via-[oklch(0.15_0.02_255/0.2)] to-transparent lg:block" />
 
