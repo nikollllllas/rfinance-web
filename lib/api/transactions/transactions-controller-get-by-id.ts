@@ -5,15 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	TransactionsControllerGetByIdQueryResponse,
-	TransactionsControllerGetByIdPathParams,
-	TransactionsControllerGetById404,
-} from "../schemas/transactions/transactions-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	TransactionsControllerGetByIdQueryResponse,
+	TransactionsControllerGetByIdPathParams,
+	TransactionsControllerGetById404,
+} from "../schemas/transactions/transactions-controller-get-by-id.ts";
 
 function getTransactionsControllerGetByIdUrl(
 	id: TransactionsControllerGetByIdPathParams["id"],

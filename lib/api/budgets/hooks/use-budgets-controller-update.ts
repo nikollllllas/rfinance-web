@@ -4,11 +4,6 @@
  */
 
 import type {
-	BudgetsControllerUpdateMutationRequest,
-	BudgetsControllerUpdateMutationResponse,
-	BudgetsControllerUpdatePathParams,
-} from "../../schemas/budgets/budgets-controller-update.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +13,13 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { budgetsControllerUpdate } from "../budgets-controller-update.ts";
+import type {
+	BudgetsControllerUpdateMutationRequest,
+	BudgetsControllerUpdateMutationResponse,
+	BudgetsControllerUpdatePathParams,
+} from "../../schemas/budgets/budgets-controller-update.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { budgetsControllerUpdate } from "../budgets-controller-update.ts";
 
 export const budgetsControllerUpdateMutationKey = () =>
 	[{ url: "/v1/budgets/:id" }] as const;

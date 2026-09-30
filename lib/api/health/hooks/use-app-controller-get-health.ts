@@ -3,7 +3,6 @@
  * Do not edit manually.
  */
 
-import type { AppControllerGetHealthQueryResponse } from "../../schemas/health/app-controller-get-health.ts";
 import type {
 	Client,
 	RequestConfig,
@@ -15,8 +14,9 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { appControllerGetHealth } from "../app-controller-get-health.ts";
+import type { AppControllerGetHealthQueryResponse } from "../../schemas/health/app-controller-get-health.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { appControllerGetHealth } from "../app-controller-get-health.ts";
 
 export const appControllerGetHealthQueryKey = () => [{ url: "/v1" }] as const;
 

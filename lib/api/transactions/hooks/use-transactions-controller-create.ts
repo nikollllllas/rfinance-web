@@ -4,11 +4,6 @@
  */
 
 import type {
-	TransactionsControllerCreateMutationRequest,
-	TransactionsControllerCreateMutationResponse,
-	TransactionsControllerCreate404,
-} from "../../schemas/transactions/transactions-controller-create.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +13,14 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { transactionsControllerCreate } from "../transactions-controller-create.ts";
+import type {
+	TransactionsControllerCreateMutationRequest,
+	TransactionsControllerCreateMutationResponse,
+	TransactionsControllerCreateHeaderParams,
+	TransactionsControllerCreate404,
+} from "../../schemas/transactions/transactions-controller-create.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { transactionsControllerCreate } from "../transactions-controller-create.ts";
 
 export const transactionsControllerCreateMutationKey = () =>
 	[{ url: "/v1/transactions" }] as const;
@@ -39,12 +40,15 @@ export function useTransactionsControllerCreateMutationOptions<
 	return mutationOptions<
 		TransactionsControllerCreateMutationResponse,
 		ResponseErrorConfig<TransactionsControllerCreate404>,
-		{ data: TransactionsControllerCreateMutationRequest },
+		{
+			data: TransactionsControllerCreateMutationRequest;
+			headers?: TransactionsControllerCreateHeaderParams;
+		},
 		TContext
 	>({
 		mutationKey,
-		mutationFn: async ({ data }) => {
-			return transactionsControllerCreate(data, config);
+		mutationFn: async ({ data, headers }) => {
+			return transactionsControllerCreate(data, headers, config);
 		},
 	});
 }
@@ -57,7 +61,10 @@ export function useTransactionsControllerCreate<TContext>(
 		mutation?: UseMutationOptions<
 			TransactionsControllerCreateMutationResponse,
 			ResponseErrorConfig<TransactionsControllerCreate404>,
-			{ data: TransactionsControllerCreateMutationRequest },
+			{
+				data: TransactionsControllerCreateMutationRequest;
+				headers?: TransactionsControllerCreateHeaderParams;
+			},
 			TContext
 		> & { client?: QueryClient };
 		client?: Partial<
@@ -75,14 +82,20 @@ export function useTransactionsControllerCreate<TContext>(
 	) as UseMutationOptions<
 		TransactionsControllerCreateMutationResponse,
 		ResponseErrorConfig<TransactionsControllerCreate404>,
-		{ data: TransactionsControllerCreateMutationRequest },
+		{
+			data: TransactionsControllerCreateMutationRequest;
+			headers?: TransactionsControllerCreateHeaderParams;
+		},
 		TContext
 	>;
 
 	return useMutation<
 		TransactionsControllerCreateMutationResponse,
 		ResponseErrorConfig<TransactionsControllerCreate404>,
-		{ data: TransactionsControllerCreateMutationRequest },
+		{
+			data: TransactionsControllerCreateMutationRequest;
+			headers?: TransactionsControllerCreateHeaderParams;
+		},
 		TContext
 	>(
 		{
@@ -94,7 +107,10 @@ export function useTransactionsControllerCreate<TContext>(
 	) as UseMutationResult<
 		TransactionsControllerCreateMutationResponse,
 		ResponseErrorConfig<TransactionsControllerCreate404>,
-		{ data: TransactionsControllerCreateMutationRequest },
+		{
+			data: TransactionsControllerCreateMutationRequest;
+			headers?: TransactionsControllerCreateHeaderParams;
+		},
 		TContext
 	>;
 }

@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { CategoryResponseDto } from "../category-response-dto.ts";
+
 export type CategoriesControllerGetByIdPathParams = {
 	/**
 	 * @type string
@@ -10,10 +12,7 @@ export type CategoriesControllerGetByIdPathParams = {
 	id: string;
 };
 
-/**
- * @example [object Object]
- */
-export type CategoriesControllerGetById200 = any;
+export type CategoriesControllerGetById200 = CategoryResponseDto;
 
 /**
  * @description Não autenticado

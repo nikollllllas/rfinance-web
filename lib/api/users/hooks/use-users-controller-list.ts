@@ -4,12 +4,6 @@
  */
 
 import type {
-	UsersControllerListQueryResponse,
-	UsersControllerListQueryParams,
-	UsersControllerList401,
-	UsersControllerList403,
-} from "../../schemas/users/users-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +14,14 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { usersControllerList } from "../users-controller-list.ts";
+import type {
+	UsersControllerListQueryResponse,
+	UsersControllerListQueryParams,
+	UsersControllerList401,
+	UsersControllerList403,
+} from "../../schemas/users/users-controller-list.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { usersControllerList } from "../users-controller-list.ts";
 
 export const usersControllerListQueryKey = (
 	params?: UsersControllerListQueryParams,

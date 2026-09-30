@@ -4,10 +4,6 @@
  */
 
 import type {
-	AuthControllerMeQueryResponse,
-	AuthControllerMe401,
-} from "../../schemas/auth/auth-controller-me.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { authControllerMe } from "../auth-controller-me.ts";
+import type {
+	AuthControllerMeQueryResponse,
+	AuthControllerMe401,
+} from "../../schemas/auth/auth-controller-me.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { authControllerMe } from "../auth-controller-me.ts";
 
 export const authControllerMeQueryKey = () => [{ url: "/v1/auth/me" }] as const;
 

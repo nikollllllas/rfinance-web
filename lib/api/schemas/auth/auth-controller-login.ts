@@ -4,12 +4,12 @@
  */
 
 import type { LoginDto } from "../login-dto.ts";
+import type { LoginResponseDto } from "../login-response-dto.ts";
 
 /**
  * @description Login realizado com sucesso
- * @example [object Object]
  */
-export type AuthControllerLogin200 = any;
+export type AuthControllerLogin200 = LoginResponseDto;
 
 /**
  * @description Credenciais inválidas

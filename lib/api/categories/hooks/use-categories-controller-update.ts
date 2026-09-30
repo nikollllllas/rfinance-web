@@ -4,15 +4,6 @@
  */
 
 import type {
-	CategoriesControllerUpdateMutationRequest,
-	CategoriesControllerUpdateMutationResponse,
-	CategoriesControllerUpdatePathParams,
-	CategoriesControllerUpdate401,
-	CategoriesControllerUpdate403,
-	CategoriesControllerUpdate404,
-	CategoriesControllerUpdate409,
-} from "../../schemas/categories/categories-controller-update.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -22,8 +13,17 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { categoriesControllerUpdate } from "../categories-controller-update.ts";
+import type {
+	CategoriesControllerUpdateMutationRequest,
+	CategoriesControllerUpdateMutationResponse,
+	CategoriesControllerUpdatePathParams,
+	CategoriesControllerUpdate401,
+	CategoriesControllerUpdate403,
+	CategoriesControllerUpdate404,
+	CategoriesControllerUpdate409,
+} from "../../schemas/categories/categories-controller-update.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { categoriesControllerUpdate } from "../categories-controller-update.ts";
 
 export const categoriesControllerUpdateMutationKey = () =>
 	[{ url: "/v1/categories/:id" }] as const;

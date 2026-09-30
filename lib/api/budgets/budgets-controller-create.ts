@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	BudgetsControllerCreateMutationRequest,
 	BudgetsControllerCreateMutationResponse,
 	BudgetsControllerCreate404,
 	BudgetsControllerCreate409,
 } from "../schemas/budgets/budgets-controller-create.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getBudgetsControllerCreateUrl() {
 	const res = { method: "POST", url: `/v1/budgets` as const };

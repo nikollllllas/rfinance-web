@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerRemoveMutationResponse,
-	BudgetsControllerRemovePathParams,
-} from "../../schemas/budgets/budgets-controller-remove.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -17,8 +13,12 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { budgetsControllerRemove } from "../budgets-controller-remove.ts";
+import type {
+	BudgetsControllerRemoveMutationResponse,
+	BudgetsControllerRemovePathParams,
+} from "../../schemas/budgets/budgets-controller-remove.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { budgetsControllerRemove } from "../budgets-controller-remove.ts";
 
 export const budgetsControllerRemoveMutationKey = () =>
 	[{ url: "/v1/budgets/:id" }] as const;

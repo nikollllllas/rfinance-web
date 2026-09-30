@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	UsersControllerListQueryResponse,
 	UsersControllerListQueryParams,
 	UsersControllerList401,
 	UsersControllerList403,
 } from "../schemas/users/users-controller-list.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getUsersControllerListUrl() {
 	const res = { method: "GET", url: `/v1/users` as const };

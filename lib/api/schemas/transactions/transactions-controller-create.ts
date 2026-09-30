@@ -4,11 +4,20 @@
  */
 
 import type { CreateTransactionDto } from "../create-transaction-dto.ts";
+import type { TransactionListResponseDto } from "../transaction-list-response-dto.ts";
+
+export type TransactionsControllerCreateHeaderParams = {
+	/**
+	 * @description Opcional. Reenviar a mesma chave devolve o resultado da primeira criação em vez de duplicar (usado pela fila offline do app).
+	 * @type string | undefined
+	 */
+	"idempotency-key"?: string;
+};
 
 /**
- * @example [object Object]
+ * @description Uma transação, ou N parcelas quando installmentCount >= 2
  */
-export type TransactionsControllerCreate201 = any;
+export type TransactionsControllerCreate201 = TransactionListResponseDto;
 
 /**
  * @description Categoria não encontrada
@@ -23,5 +32,6 @@ export type TransactionsControllerCreateMutationResponse =
 export type TransactionsControllerCreateMutation = {
 	Response: TransactionsControllerCreate201;
 	Request: TransactionsControllerCreateMutationRequest;
+	HeaderParams: TransactionsControllerCreateHeaderParams;
 	Errors: TransactionsControllerCreate404;
 };

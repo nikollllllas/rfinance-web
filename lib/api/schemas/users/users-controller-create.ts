@@ -4,11 +4,12 @@
  */
 
 import type { CreateUserDto } from "../create-user-dto.ts";
+import type { UserResponseDto } from "../user-response-dto.ts";
 
 /**
  * @description Usuário criado com sucesso
  */
-export type UsersControllerCreate201 = any;
+export type UsersControllerCreate201 = UserResponseDto;
 
 /**
  * @description Não autenticado

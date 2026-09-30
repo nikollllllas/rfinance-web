@@ -1,0 +1,10 @@
+{
+	"type": "object",
+	"properties": {
+		"name": { "type": "string", "example": "Alimentação" },
+		"value": { "type": "number", "example": 540.9 },
+		"color": { "type": "string", "example": "#22C55E" }
+	},
+	"required": ["name", "value", "color"],
+	"x-readme-ref-name": "DashboardExpenseByCategoryDto"
+}

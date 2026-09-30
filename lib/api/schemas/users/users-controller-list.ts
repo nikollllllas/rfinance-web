@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { ListUsersResponseDto } from "../list-users-response-dto.ts";
+
 export type UsersControllerListQueryParams = {
 	/**
 	 * @minLength 1
@@ -27,7 +29,7 @@ export type UsersControllerListQueryParams = {
 /**
  * @description Usuários listados com sucesso
  */
-export type UsersControllerList200 = any;
+export type UsersControllerList200 = ListUsersResponseDto;
 
 /**
  * @description Não autenticado

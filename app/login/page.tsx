@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowRight, Check, Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react"
 import { useAuthControllerLogin } from "@/lib/api/auth/hooks/use-auth-controller-login"
-import { setAuthTokenCookie } from "@/lib/auth/token-cookie"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 import { kubbClientConfig } from "@/lib/kubb-client"
 import { AuthInput } from "@/components/auth/auth-input"
@@ -29,17 +28,9 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const payload = await loginMutation.mutateAsync({
+      await loginMutation.mutateAsync({
         data: { email, password },
       })
-      if (
-        payload &&
-        typeof payload === "object" &&
-        "accessToken" in payload &&
-        typeof (payload as { accessToken: unknown }).accessToken === "string"
-      ) {
-        setAuthTokenCookie((payload as { accessToken: string }).accessToken)
-      }
 
       router.replace("/")
       router.refresh()

@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	CategoriesControllerGetByIdQueryResponse,
 	CategoriesControllerGetByIdPathParams,
 	CategoriesControllerGetById401,
 	CategoriesControllerGetById404,
 } from "../schemas/categories/categories-controller-get-by-id.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getCategoriesControllerGetByIdUrl(
 	id: CategoriesControllerGetByIdPathParams["id"],

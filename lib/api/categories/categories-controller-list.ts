@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	CategoriesControllerListQueryResponse,
-	CategoriesControllerList401,
-} from "../schemas/categories/categories-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	CategoriesControllerListQueryResponse,
+	CategoriesControllerList401,
+} from "../schemas/categories/categories-controller-list.ts";
 
 function getCategoriesControllerListUrl() {
 	const res = { method: "GET", url: `/v1/categories` as const };

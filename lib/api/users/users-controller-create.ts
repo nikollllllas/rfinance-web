@@ -5,17 +5,17 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	UsersControllerCreateMutationRequest,
 	UsersControllerCreateMutationResponse,
 	UsersControllerCreate401,
 	UsersControllerCreate403,
 	UsersControllerCreate409,
 } from "../schemas/users/users-controller-create.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getUsersControllerCreateUrl() {
 	const res = { method: "POST", url: `/v1/users` as const };
