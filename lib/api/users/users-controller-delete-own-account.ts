@@ -12,7 +12,7 @@ import type {
 import type {
 	UsersControllerDeleteOwnAccountMutationRequest,
 	UsersControllerDeleteOwnAccountMutationResponse,
-	UsersControllerDeleteOwnAccount401,
+	UsersControllerDeleteOwnAccount403,
 } from "../schemas/users/users-controller-delete-own-account.ts";
 
 function getUsersControllerDeleteOwnAccountUrl() {
@@ -35,7 +35,7 @@ export async function usersControllerDeleteOwnAccount(
 
 	const res = await request<
 		UsersControllerDeleteOwnAccountMutationResponse,
-		ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+		ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 		UsersControllerDeleteOwnAccountMutationRequest
 	>({
 		method: "DELETE",

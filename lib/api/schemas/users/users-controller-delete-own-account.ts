@@ -11,7 +11,7 @@ export type UsersControllerDeleteOwnAccount200 = SuccessResponseDto;
 /**
  * @description Senha incorreta
  */
-export type UsersControllerDeleteOwnAccount401 = any;
+export type UsersControllerDeleteOwnAccount403 = any;
 
 export type UsersControllerDeleteOwnAccountMutationRequest =
 	DeleteOwnAccountDto;
@@ -22,5 +22,5 @@ export type UsersControllerDeleteOwnAccountMutationResponse =
 export type UsersControllerDeleteOwnAccountMutation = {
 	Response: UsersControllerDeleteOwnAccount200;
 	Request: UsersControllerDeleteOwnAccountMutationRequest;
-	Errors: UsersControllerDeleteOwnAccount401;
+	Errors: UsersControllerDeleteOwnAccount403;
 };
