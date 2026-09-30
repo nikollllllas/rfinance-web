@@ -196,7 +196,7 @@
               }
             }
           },
-          "401": {
+          "403": {
             "description": "Senha incorreta"
           }
         },

@@ -16,7 +16,7 @@ import type {
 import type {
 	UsersControllerDeleteOwnAccountMutationRequest,
 	UsersControllerDeleteOwnAccountMutationResponse,
-	UsersControllerDeleteOwnAccount401,
+	UsersControllerDeleteOwnAccount403,
 } from "../../schemas/users/users-controller-delete-own-account.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
 import { usersControllerDeleteOwnAccount } from "../users-controller-delete-own-account.ts";
@@ -38,7 +38,7 @@ export function usersControllerDeleteOwnAccountMutationOptions<
 	const mutationKey = usersControllerDeleteOwnAccountMutationKey();
 	return mutationOptions<
 		UsersControllerDeleteOwnAccountMutationResponse,
-		ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+		ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 		{ data: UsersControllerDeleteOwnAccountMutationRequest },
 		TContext
 	>({
@@ -56,7 +56,7 @@ export function useUsersControllerDeleteOwnAccount<TContext>(
 	options: {
 		mutation?: UseMutationOptions<
 			UsersControllerDeleteOwnAccountMutationResponse,
-			ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+			ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 			{ data: UsersControllerDeleteOwnAccountMutationRequest },
 			TContext
 		> & { client?: QueryClient };
@@ -74,14 +74,14 @@ export function useUsersControllerDeleteOwnAccount<TContext>(
 		config,
 	) as UseMutationOptions<
 		UsersControllerDeleteOwnAccountMutationResponse,
-		ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+		ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 		{ data: UsersControllerDeleteOwnAccountMutationRequest },
 		TContext
 	>;
 
 	return useMutation<
 		UsersControllerDeleteOwnAccountMutationResponse,
-		ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+		ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 		{ data: UsersControllerDeleteOwnAccountMutationRequest },
 		TContext
 	>(
@@ -93,7 +93,7 @@ export function useUsersControllerDeleteOwnAccount<TContext>(
 		queryClient,
 	) as UseMutationResult<
 		UsersControllerDeleteOwnAccountMutationResponse,
-		ResponseErrorConfig<UsersControllerDeleteOwnAccount401>,
+		ResponseErrorConfig<UsersControllerDeleteOwnAccount403>,
 		{ data: UsersControllerDeleteOwnAccountMutationRequest },
 		TContext
 	>;
