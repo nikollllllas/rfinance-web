@@ -4,11 +4,6 @@
  */
 
 import type {
-	TransactionsControllerListQueryResponse,
-	TransactionsControllerListQueryParams,
-	TransactionsControllerList400,
-} from "../../schemas/transactions/transactions-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +14,13 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { transactionsControllerList } from "../transactions-controller-list.ts";
+import type {
+	TransactionsControllerListQueryResponse,
+	TransactionsControllerListQueryParams,
+	TransactionsControllerList400,
+} from "../../schemas/transactions/transactions-controller-list.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { transactionsControllerList } from "../transactions-controller-list.ts";
 
 export const transactionsControllerListSuspenseQueryKey = (
 	params?: TransactionsControllerListQueryParams,

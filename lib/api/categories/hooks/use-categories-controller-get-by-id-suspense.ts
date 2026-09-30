@@ -4,12 +4,6 @@
  */
 
 import type {
-	CategoriesControllerGetByIdQueryResponse,
-	CategoriesControllerGetByIdPathParams,
-	CategoriesControllerGetById401,
-	CategoriesControllerGetById404,
-} from "../../schemas/categories/categories-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,11 +14,17 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { categoriesControllerGetById } from "../categories-controller-get-by-id.ts";
+import type {
+	CategoriesControllerGetByIdQueryResponse,
+	CategoriesControllerGetByIdPathParams,
+	CategoriesControllerGetById401,
+	CategoriesControllerGetById404,
+} from "../../schemas/categories/categories-controller-get-by-id.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { categoriesControllerGetById } from "../categories-controller-get-by-id.ts";
 
 export const categoriesControllerGetByIdSuspenseQueryKey = (
-	id: CategoriesControllerGetByIdPathParams["id"],
+	id: CategoriesControllerGetByIdPathParams["id"] | undefined,
 ) => [{ url: "/v1/categories/:id", params: { id: id } }] as const;
 
 export type CategoriesControllerGetByIdSuspenseQueryKey = ReturnType<
@@ -44,7 +44,6 @@ export function useCategoriesControllerGetByIdSuspenseQueryOptions(
 		CategoriesControllerGetByIdQueryResponse,
 		typeof queryKey
 	>({
-		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
 			return categoriesControllerGetById(id, {

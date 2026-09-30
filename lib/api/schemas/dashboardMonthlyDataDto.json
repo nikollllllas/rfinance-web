@@ -1,0 +1,11 @@
+{
+	"type": "object",
+	"properties": {
+		"month": { "type": "string", "example": "mar" },
+		"income": { "type": "number", "example": 4200.5 },
+		"expenses": { "type": "number", "example": 2600.25 },
+		"savings": { "type": "number", "example": 1600.25 }
+	},
+	"required": ["month", "income", "expenses", "savings"],
+	"x-readme-ref-name": "DashboardMonthlyDataDto"
+}

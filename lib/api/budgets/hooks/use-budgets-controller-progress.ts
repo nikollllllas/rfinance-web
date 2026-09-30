@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerProgressQueryResponse,
-	BudgetsControllerProgressPathParams,
-} from "../../schemas/budgets/budgets-controller-progress.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,11 +14,15 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
+import type {
+	BudgetsControllerProgressQueryResponse,
+	BudgetsControllerProgressPathParams,
+} from "../../schemas/budgets/budgets-controller-progress.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
 
 export const budgetsControllerProgressQueryKey = (
-	id: BudgetsControllerProgressPathParams["id"],
+	id: BudgetsControllerProgressPathParams["id"] | undefined,
 ) => [{ url: "/v1/budgets/:id/progress", params: { id: id } }] as const;
 
 export type BudgetsControllerProgressQueryKey = ReturnType<
@@ -30,7 +30,7 @@ export type BudgetsControllerProgressQueryKey = ReturnType<
 >;
 
 export function useBudgetsControllerProgressQueryOptions(
-	id: BudgetsControllerProgressPathParams["id"],
+	id: BudgetsControllerProgressPathParams["id"] | undefined,
 	config: Partial<RequestConfig> & { client?: Client } = {},
 ) {
 	const queryKey = budgetsControllerProgressQueryKey(id);
@@ -43,7 +43,7 @@ export function useBudgetsControllerProgressQueryOptions(
 		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
-			return budgetsControllerProgress(id, {
+			return budgetsControllerProgress(id!, {
 				...config,
 				signal: config.signal ?? signal,
 			});
@@ -59,7 +59,7 @@ export function useBudgetsControllerProgress<
 	TQueryData = BudgetsControllerProgressQueryResponse,
 	TQueryKey extends QueryKey = BudgetsControllerProgressQueryKey,
 >(
-	id: BudgetsControllerProgressPathParams["id"],
+	id: BudgetsControllerProgressPathParams["id"] | undefined,
 	options: {
 		query?: Partial<
 			QueryObserverOptions<

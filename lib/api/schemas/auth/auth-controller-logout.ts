@@ -3,10 +3,9 @@
  * Do not edit manually.
  */
 
-/**
- * @example [object Object]
- */
-export type AuthControllerLogout200 = any;
+import type { SuccessResponseDto } from "../success-response-dto.ts";
+
+export type AuthControllerLogout200 = SuccessResponseDto;
 
 export type AuthControllerLogoutMutationResponse = AuthControllerLogout200;
 

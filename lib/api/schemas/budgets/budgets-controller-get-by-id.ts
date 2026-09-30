@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { BudgetResponseDto } from "../budget-response-dto.ts";
+
 export type BudgetsControllerGetByIdPathParams = {
 	/**
 	 * @type string
@@ -13,7 +15,7 @@ export type BudgetsControllerGetByIdPathParams = {
 /**
  * @description Orçamento encontrado
  */
-export type BudgetsControllerGetById200 = any;
+export type BudgetsControllerGetById200 = BudgetResponseDto;
 
 /**
  * @description Orçamento não encontrado

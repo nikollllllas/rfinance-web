@@ -4,10 +4,6 @@
  */
 
 import type {
-	CategoriesControllerListQueryResponse,
-	CategoriesControllerList401,
-} from "../../schemas/categories/categories-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { categoriesControllerList } from "../categories-controller-list.ts";
+import type {
+	CategoriesControllerListQueryResponse,
+	CategoriesControllerList401,
+} from "../../schemas/categories/categories-controller-list.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { categoriesControllerList } from "../categories-controller-list.ts";
 
 export const categoriesControllerListSuspenseQueryKey = () =>
 	[{ url: "/v1/categories" }] as const;

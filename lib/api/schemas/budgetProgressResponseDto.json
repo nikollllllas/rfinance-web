@@ -1,0 +1,26 @@
+{
+	"type": "object",
+	"properties": {
+		"current": { "type": "number", "example": 320.5 },
+		"max": { "type": "number", "example": 500 },
+		"percentage": { "type": "number", "example": 64.1 },
+		"isOverBudget": { "type": "boolean", "example": false },
+		"budgetMonth": { "type": "string", "example": "2026-03" },
+		"categoryName": { "type": "string", "example": "Alimentação" },
+		"categoryColor": { "type": "string", "example": "#22C55E" },
+		"startDate": { "format": "date-time", "type": "string" },
+		"endDate": { "format": "date-time", "type": "string" }
+	},
+	"required": [
+		"current",
+		"max",
+		"percentage",
+		"isOverBudget",
+		"budgetMonth",
+		"categoryName",
+		"categoryColor",
+		"startDate",
+		"endDate"
+	],
+	"x-readme-ref-name": "BudgetProgressResponseDto"
+}

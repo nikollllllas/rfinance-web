@@ -4,11 +4,6 @@
  */
 
 import type {
-	AuthControllerResetPasswordMutationRequest,
-	AuthControllerResetPasswordMutationResponse,
-	AuthControllerResetPassword401,
-} from "../../schemas/auth/auth-controller-reset-password.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +13,13 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { authControllerResetPassword } from "../auth-controller-reset-password.ts";
+import type {
+	AuthControllerResetPasswordMutationRequest,
+	AuthControllerResetPasswordMutationResponse,
+	AuthControllerResetPassword401,
+} from "../../schemas/auth/auth-controller-reset-password.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { authControllerResetPassword } from "../auth-controller-reset-password.ts";
 
 export const authControllerResetPasswordMutationKey = () =>
 	[{ url: "/v1/auth/reset-password" }] as const;

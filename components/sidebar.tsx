@@ -10,7 +10,6 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { useMediaQuery } from "@/hooks/use-mobile"
 import { useAuthControllerLogout } from "@/lib/api/auth/hooks/use-auth-controller-logout"
 import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
-import { clearAuthTokenCookie } from "@/lib/auth/token-cookie"
 import { parseCurrentUser } from "@/lib/auth/current-user"
 import { kubbClientConfig } from "@/lib/kubb-client"
 
@@ -208,7 +207,6 @@ export default function Sidebar() {
                 try {
                   await logoutMutation.mutateAsync()
                 } finally {
-                  clearAuthTokenCookie()
                   window.location.href = "/login"
                 }
               }}

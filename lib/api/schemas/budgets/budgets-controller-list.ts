@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { BudgetResponseDto } from "../budget-response-dto.ts";
+
 export type BudgetsControllerListQueryParams = {
 	/**
 	 * @description Formato YYYY-MM
@@ -11,10 +13,7 @@ export type BudgetsControllerListQueryParams = {
 	month?: string;
 };
 
-/**
- * @example
- */
-export type BudgetsControllerList200 = any;
+export type BudgetsControllerList200 = BudgetResponseDto[];
 
 export type BudgetsControllerListQueryResponse = BudgetsControllerList200;
 

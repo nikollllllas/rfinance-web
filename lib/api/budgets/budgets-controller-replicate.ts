@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerReplicateMutationRequest,
-	BudgetsControllerReplicateMutationResponse,
-} from "../schemas/budgets/budgets-controller-replicate.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerReplicateMutationRequest,
+	BudgetsControllerReplicateMutationResponse,
+} from "../schemas/budgets/budgets-controller-replicate.ts";
 
 function getBudgetsControllerReplicateUrl() {
 	const res = { method: "PUT", url: `/v1/budgets` as const };

@@ -4,12 +4,6 @@
  */
 
 import type {
-	BudgetsControllerCreateMutationRequest,
-	BudgetsControllerCreateMutationResponse,
-	BudgetsControllerCreate404,
-	BudgetsControllerCreate409,
-} from "../../schemas/budgets/budgets-controller-create.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +13,14 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { budgetsControllerCreate } from "../budgets-controller-create.ts";
+import type {
+	BudgetsControllerCreateMutationRequest,
+	BudgetsControllerCreateMutationResponse,
+	BudgetsControllerCreate404,
+	BudgetsControllerCreate409,
+} from "../../schemas/budgets/budgets-controller-create.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { budgetsControllerCreate } from "../budgets-controller-create.ts";
 
 export const budgetsControllerCreateMutationKey = () =>
 	[{ url: "/v1/budgets" }] as const;

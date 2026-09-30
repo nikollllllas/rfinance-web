@@ -4,11 +4,6 @@
  */
 
 import type {
-	AuthControllerLoginMutationRequest,
-	AuthControllerLoginMutationResponse,
-	AuthControllerLogin401,
-} from "../../schemas/auth/auth-controller-login.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +13,13 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { authControllerLogin } from "../auth-controller-login.ts";
+import type {
+	AuthControllerLoginMutationRequest,
+	AuthControllerLoginMutationResponse,
+	AuthControllerLogin401,
+} from "../../schemas/auth/auth-controller-login.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { authControllerLogin } from "../auth-controller-login.ts";
 
 export const authControllerLoginMutationKey = () =>
 	[{ url: "/v1/auth/login" }] as const;

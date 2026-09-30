@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerListQueryResponse,
-	BudgetsControllerListQueryParams,
-} from "../../schemas/budgets/budgets-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerList } from "../budgets-controller-list.ts";
+import type {
+	BudgetsControllerListQueryResponse,
+	BudgetsControllerListQueryParams,
+} from "../../schemas/budgets/budgets-controller-list.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { budgetsControllerList } from "../budgets-controller-list.ts";
 
 export const budgetsControllerListQueryKey = (
 	params?: BudgetsControllerListQueryParams,

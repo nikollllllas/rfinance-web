@@ -4,6 +4,7 @@
  */
 
 import type { UpdateUserByAdminDto } from "../update-user-by-admin-dto.ts";
+import type { UserResponseDto } from "../user-response-dto.ts";
 
 export type UsersControllerUpdateByAdminPathParams = {
 	/**
@@ -15,7 +16,7 @@ export type UsersControllerUpdateByAdminPathParams = {
 /**
  * @description Usuário atualizado com sucesso
  */
-export type UsersControllerUpdateByAdmin200 = any;
+export type UsersControllerUpdateByAdmin200 = UserResponseDto;
 
 /**
  * @description Não autenticado
