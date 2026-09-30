@@ -1,6 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: npm
+  # Requer lockfile texto (bun.lock): rodar "bun install --save-text-lockfile" e remover bun.lockb.
+  - package-ecosystem: bun
     directory: /
     schedule: { interval: weekly }
     open-pull-requests-limit: 5
