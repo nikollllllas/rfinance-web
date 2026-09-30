@@ -3,11 +3,11 @@
  * Do not edit manually.
  */
 
-import type { UserSummaryDto } from "./user-summary-dto.ts";
+import type { MeUserDto } from "./me-user-dto.ts";
 
 export type MeResponseDto = {
 	/**
 	 * @type object
 	 */
-	user: UserSummaryDto;
+	user: MeUserDto;
 };

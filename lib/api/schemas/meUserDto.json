@@ -1,0 +1,24 @@
+{
+	"type": "object",
+	"properties": {
+		"id": { "type": "string", "example": "uuid-user" },
+		"name": { "type": "string", "example": "Administrador" },
+		"email": { "type": "string", "example": "admin@rfinance.local" },
+		"role": { "type": "string", "enum": ["ADMIN", "USER"], "example": "ADMIN" },
+		"privacyAcceptedAt": {
+			"type": "string",
+			"format": "date-time",
+			"nullable": true
+		},
+		"privacyPolicyVersion": { "type": "string", "nullable": true }
+	},
+	"required": [
+		"id",
+		"name",
+		"email",
+		"role",
+		"privacyAcceptedAt",
+		"privacyPolicyVersion"
+	],
+	"x-readme-ref-name": "MeUserDto"
+}
