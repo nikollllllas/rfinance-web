@@ -11,10 +11,23 @@
 					"type": "string",
 					"enum": ["ADMIN", "USER"],
 					"example": "ADMIN"
-				}
+				},
+				"privacyAcceptedAt": {
+					"type": "string",
+					"format": "date-time",
+					"nullable": true
+				},
+				"privacyPolicyVersion": { "type": "string", "nullable": true }
 			},
-			"required": ["id", "name", "email", "role"],
-			"x-readme-ref-name": "UserSummaryDto"
+			"required": [
+				"id",
+				"name",
+				"email",
+				"role",
+				"privacyAcceptedAt",
+				"privacyPolicyVersion"
+			],
+			"x-readme-ref-name": "MeUserDto"
 		}
 	},
 	"required": ["user"],

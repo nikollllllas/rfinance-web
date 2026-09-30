@@ -121,6 +121,10 @@ export default function LoginPage() {
             </>
           )}
         </Button>
+
+        <a href="/privacidade" className="text-xs text-muted-foreground underline">
+          Política de Privacidade
+        </a>
       </form>
     </AuthShell>
   )

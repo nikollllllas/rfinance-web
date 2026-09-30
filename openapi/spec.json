@@ -210,6 +210,32 @@
         ]
       }
     },
+    "/v1/users/me/privacy-consent": {
+      "post": {
+        "operationId": "UsersController_acceptPrivacy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      }
+    },
     "/v1/users/{id}": {
       "put": {
         "operationId": "UsersController_updateByAdmin",
@@ -1541,11 +1567,53 @@
           "password"
         ]
       },
+      "MeUserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Administrador"
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@rfinance.local"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "ADMIN"
+          },
+          "privacyAcceptedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "privacyPolicyVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "privacyAcceptedAt",
+          "privacyPolicyVersion"
+        ]
+      },
       "MeResponseDto": {
         "type": "object",
         "properties": {
           "user": {
-            "$ref": "#/components/schemas/UserSummaryDto"
+            "$ref": "#/components/schemas/MeUserDto"
           }
         },
         "required": [
