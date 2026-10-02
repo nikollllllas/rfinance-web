@@ -208,7 +208,7 @@ export default function TransactionsPage() {
                       return (
                       <TableRow key={`${transaction.id}-${refreshKey}`}>
                         <TableCell className="font-medium">
-                          <div className="flex flex-col gap-0.5">
+                          <div className="flex flex-col gap-0.5 [overflow-wrap:anywhere]">
                             <Link
                               href={`/transactions/${transaction.id}`}
                               className="hover:underline"

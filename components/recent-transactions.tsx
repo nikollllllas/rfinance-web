@@ -56,9 +56,9 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
         return (
         <div
           key={transaction.id}
-          className="flex items-center justify-between rounded-xl p-2.5 transition-colors hover:bg-muted/60"
+          className="flex items-center justify-between gap-3 rounded-xl p-2.5 transition-colors hover:bg-muted/60"
         >
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <div
               className={cn(
                 "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]",
@@ -71,7 +71,7 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
                 <ArrowDownIcon className="h-4 w-4 text-destructive" strokeWidth={2.2} />
               )}
             </div>
-            <div>
+            <div className="min-w-0 [overflow-wrap:anywhere]">
               <p className="text-[13.5px] font-medium">
                 {transaction.description}
                 {installmentSuffix ? ` ${installmentSuffix}` : ""}

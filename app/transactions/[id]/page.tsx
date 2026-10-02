@@ -240,8 +240,8 @@ export default function TransactionDetailsPage() {
       <main className="flex-1 p-4 md:p-6">
         <Card className="mx-auto max-w-2xl">
           <CardHeader>
-            <div className="flex justify-between items-start">
-              <div>
+            <div className="flex justify-between items-start gap-4">
+              <div className="min-w-0 [overflow-wrap:anywhere]">
                 <CardTitle className="text-xl">
                   {transaction.description}
                   {installmentSuffix ? ` ${installmentSuffix}` : ""}
