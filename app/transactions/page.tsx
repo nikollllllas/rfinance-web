@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -103,22 +104,22 @@ export default function TransactionsPage() {
         <TableHeader>
           <TableRow>
             <TableHead>Descrição</TableHead>
-            <TableHead>Categoria</TableHead>
-            <TableHead>Data</TableHead>
+            <TableHead className="hidden md:table-cell">Categoria</TableHead>
+            <TableHead className="hidden md:table-cell">Data</TableHead>
             <TableHead>Tag</TableHead>
             <TableHead className="text-right">Valor</TableHead>
-            <TableHead className="w-[100px]">Ações</TableHead>
+            <TableHead className="hidden w-[100px] md:table-cell">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {Array.from({ length: 10 }).map((_, i) => (
             <TableRow key={i}>
               <TableCell><Skeleton className="h-4 w-32" /></TableCell>
-              <TableCell><Skeleton className="h-4 w-24" /></TableCell>
-              <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+              <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-24" /></TableCell>
+              <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-20" /></TableCell>
               <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
               <TableCell className="text-right"><Skeleton className="h-4 w-20 ml-auto" /></TableCell>
-              <TableCell>
+              <TableCell className="hidden md:table-cell">
                 <div className="flex justify-end gap-2">
                   <Skeleton className="h-8 w-8 rounded" />
                   <Skeleton className="h-8 w-8 rounded" />
@@ -134,13 +135,13 @@ export default function TransactionsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center px-4 md:px-6">
+        <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2 md:px-6">
           <div className="flex items-center gap-2 font-semibold">
             <span className="font-display text-lg">Transações</span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="w-[160px] sm:w-[200px]">
+              <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
                 <SelectValue placeholder="Selecione o mês" />
               </SelectTrigger>
               <SelectContent>
@@ -151,8 +152,9 @@ export default function TransactionsPage() {
                 ))}
               </SelectContent>
             </Select>
-            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} className="hidden md:block">
-              Nova Transação
+            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Nova Transação">
+              <Plus className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">Nova Transação</span>
             </Button>
           </div>
         </div>
@@ -187,11 +189,11 @@ export default function TransactionsPage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Descrição</TableHead>
-                      <TableHead>Categoria</TableHead>
-                      <TableHead>Data</TableHead>
+                      <TableHead className="hidden md:table-cell">Categoria</TableHead>
+                      <TableHead className="hidden md:table-cell">Data</TableHead>
                       <TableHead>Tag</TableHead>
                       <TableHead className="text-right">Valor</TableHead>
-                      <TableHead className="w-[100px]">Ações</TableHead>
+                      <TableHead className="hidden w-[100px] md:table-cell">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -207,23 +209,30 @@ export default function TransactionsPage() {
                       <TableRow key={`${transaction.id}-${refreshKey}`}>
                         <TableCell className="font-medium">
                           <div className="flex flex-col gap-0.5">
-                            <span>
+                            <Link
+                              href={`/transactions/${transaction.id}`}
+                              className="hover:underline"
+                            >
                               {transaction.description}
                               {installmentSuffix
                                 ? ` ${installmentSuffix}`
                                 : ""}
-                            </span>
+                            </Link>
                             {transaction.type === "GASTO" && paymentLabel ? (
                               <span className="text-xs font-normal text-muted-foreground">
                                 {paymentLabel}
                               </span>
                             ) : null}
+                            {/* No mobile, categoria e data saem das colunas e vêm pra cá */}
+                            <span className="text-xs font-normal text-muted-foreground md:hidden">
+                              {transaction.category?.name || "Sem categoria"} • {formatDate(transaction.date.toString())}
+                            </span>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="hidden md:table-cell">
                           {transaction.category?.name || "Sem categoria"}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="hidden md:table-cell">
                           {formatDate(transaction.date.toString())}
                         </TableCell>
                         <TableCell>
@@ -236,13 +245,13 @@ export default function TransactionsPage() {
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
                             {transaction.type === "GANHO" ? (
-                              <ArrowUpIcon className="h-4 w-4 text-green-600 dark:text-green-500" />
+                              <ArrowUpIcon className="hidden h-4 w-4 text-green-600 dark:text-green-500 sm:block" />
                             ) : (
-                              <ArrowDownIcon className="h-4 w-4 text-destructive" />
+                              <ArrowDownIcon className="hidden h-4 w-4 text-destructive sm:block" />
                             )}
                             <span
                               className={cn(
-                                "font-medium",
+                                "whitespace-nowrap font-medium",
                                 transaction.type === "GANHO"
                                   ? "text-green-600 dark:text-green-500"
                                   : "text-destructive"
@@ -253,7 +262,7 @@ export default function TransactionsPage() {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="hidden md:table-cell">
                           <div className="flex justify-end gap-2">
                             <Button
                               variant="ghost"
@@ -304,31 +313,25 @@ export default function TransactionsPage() {
                       </TableRow>
                       );
                     })}
-                    <TableRow className="w-full">
-                      <TableCell colSpan={4} className="text-right">
-                        <span className="font-medium">
-                          Total de Gastos: {' '}
-                        </span>
-                        <span>
-                          {formatCurrency(totalExpenses)}
-                        </span>
-                      </TableCell>
-                      <TableCell colSpan={2} className="text-right">
-                        <span className="font-medium">
-                          Saldo do mês: {' '}
-                        </span>
-                        <span
-                          className={cn(
-                            "font-medium",
-                            monthlyBalance < 0 ? "text-destructive" : "text-green-600 dark:text-green-500"
-                          )}
-                        >
-                          {monthlyBalanceDisplay}
-                        </span>
-                      </TableCell>
-                    </TableRow>
                   </TableBody>
                 </Table>
+                <div className="flex flex-wrap justify-end gap-x-6 gap-y-1 border-t p-4 text-sm">
+                  <span>
+                    <span className="font-medium">Total de Gastos:</span>{" "}
+                    {formatCurrency(totalExpenses)}
+                  </span>
+                  <span>
+                    <span className="font-medium">Saldo do mês:</span>{" "}
+                    <span
+                      className={cn(
+                        "font-medium",
+                        monthlyBalance < 0 ? "text-destructive" : "text-green-600 dark:text-green-500"
+                      )}
+                    >
+                      {monthlyBalanceDisplay}
+                    </span>
+                  </span>
+                </div>
                 </div>
               )}
             </>

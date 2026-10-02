@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CurrencyInput } from "@/components/ui/currency-input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -278,23 +279,13 @@ export default function EditTransactionPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="amount">Valor</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    R$
-                  </span>
-                  <Input
-                    id="amount"
-                    name="amount"
-                    type="number"
-                    step="0.01"
-                    min="0.01"
-                    placeholder="0,00"
-                    className="pl-9"
-                    required
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </div>
+                <CurrencyInput
+                  id="amount"
+                  name="amount"
+                  required
+                  value={amount}
+                  onValueChange={setAmount}
+                />
               </div>
 
               <div className="space-y-2">

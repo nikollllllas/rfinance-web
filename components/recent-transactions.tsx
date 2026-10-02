@@ -87,7 +87,7 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
           </div>
           <div
             className={cn(
-              "text-[13.5px] font-semibold",
+              "whitespace-nowrap text-[13.5px] font-semibold",
               isIncome ? "text-green-600 dark:text-green-500" : "text-destructive"
             )}
           >
