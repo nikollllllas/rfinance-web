@@ -10,7 +10,8 @@
 			"format": "date-time",
 			"nullable": true
 		},
-		"privacyPolicyVersion": { "type": "string", "nullable": true }
+		"privacyPolicyVersion": { "type": "string", "nullable": true },
+		"createdAt": { "type": "string", "format": "date-time" }
 	},
 	"required": [
 		"id",
@@ -18,7 +19,8 @@
 		"email",
 		"role",
 		"privacyAcceptedAt",
-		"privacyPolicyVersion"
+		"privacyPolicyVersion",
+		"createdAt"
 	],
 	"x-readme-ref-name": "MeUserDto"
 }
