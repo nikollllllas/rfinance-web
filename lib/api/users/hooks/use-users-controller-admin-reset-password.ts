@@ -4,14 +4,6 @@
  */
 
 import type {
-	UsersControllerAdminResetPasswordMutationRequest,
-	UsersControllerAdminResetPasswordMutationResponse,
-	UsersControllerAdminResetPasswordPathParams,
-	UsersControllerAdminResetPassword401,
-	UsersControllerAdminResetPassword403,
-	UsersControllerAdminResetPassword404,
-} from "../../schemas/users/users-controller-admin-reset-password.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -21,8 +13,16 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { usersControllerAdminResetPassword } from "../users-controller-admin-reset-password.ts";
+import type {
+	UsersControllerAdminResetPasswordMutationRequest,
+	UsersControllerAdminResetPasswordMutationResponse,
+	UsersControllerAdminResetPasswordPathParams,
+	UsersControllerAdminResetPassword401,
+	UsersControllerAdminResetPassword403,
+	UsersControllerAdminResetPassword404,
+} from "../../schemas/users/users-controller-admin-reset-password.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { usersControllerAdminResetPassword } from "../users-controller-admin-reset-password.ts";
 
 export const usersControllerAdminResetPasswordMutationKey = () =>
 	[{ url: "/v1/users/:id/password" }] as const;

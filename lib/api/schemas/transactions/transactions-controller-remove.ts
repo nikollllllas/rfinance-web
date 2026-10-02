@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { MessageResponseDto } from "../message-response-dto.ts";
+
 export type TransactionsControllerRemovePathParams = {
 	/**
 	 * @type string
@@ -10,10 +12,7 @@ export type TransactionsControllerRemovePathParams = {
 	id: string;
 };
 
-/**
- * @example [object Object]
- */
-export type TransactionsControllerRemove200 = any;
+export type TransactionsControllerRemove200 = MessageResponseDto;
 
 export type TransactionsControllerRemoveMutationResponse =
 	TransactionsControllerRemove200;

@@ -4,15 +4,6 @@
  */
 
 import type {
-	UsersControllerUpdateByAdminMutationRequest,
-	UsersControllerUpdateByAdminMutationResponse,
-	UsersControllerUpdateByAdminPathParams,
-	UsersControllerUpdateByAdmin401,
-	UsersControllerUpdateByAdmin403,
-	UsersControllerUpdateByAdmin404,
-	UsersControllerUpdateByAdmin409,
-} from "../../schemas/users/users-controller-update-by-admin.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -22,8 +13,17 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { usersControllerUpdateByAdmin } from "../users-controller-update-by-admin.ts";
+import type {
+	UsersControllerUpdateByAdminMutationRequest,
+	UsersControllerUpdateByAdminMutationResponse,
+	UsersControllerUpdateByAdminPathParams,
+	UsersControllerUpdateByAdmin401,
+	UsersControllerUpdateByAdmin403,
+	UsersControllerUpdateByAdmin404,
+	UsersControllerUpdateByAdmin409,
+} from "../../schemas/users/users-controller-update-by-admin.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { usersControllerUpdateByAdmin } from "../users-controller-update-by-admin.ts";
 
 export const usersControllerUpdateByAdminMutationKey = () =>
 	[{ url: "/v1/users/:id" }] as const;

@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { TransactionListResponseDto } from "../transaction-list-response-dto.ts";
+
 export type TransactionsControllerListQueryParams = {
 	/**
 	 * @description Formato YYYY-MM
@@ -11,10 +13,7 @@ export type TransactionsControllerListQueryParams = {
 	month?: string;
 };
 
-/**
- * @example [object Object]
- */
-export type TransactionsControllerList200 = any;
+export type TransactionsControllerList200 = TransactionListResponseDto;
 
 /**
  * @description Formato de mês inválido (YYYY-MM)

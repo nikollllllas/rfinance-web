@@ -5,15 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	TransactionsControllerCreateMutationRequest,
-	TransactionsControllerCreateMutationResponse,
-	TransactionsControllerCreate404,
-} from "../schemas/transactions/transactions-controller-create.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	TransactionsControllerCreateMutationRequest,
+	TransactionsControllerCreateMutationResponse,
+	TransactionsControllerCreateHeaderParams,
+	TransactionsControllerCreate404,
+} from "../schemas/transactions/transactions-controller-create.ts";
 
 function getTransactionsControllerCreateUrl() {
 	const res = { method: "POST", url: `/v1/transactions` as const };
@@ -25,6 +26,7 @@ function getTransactionsControllerCreateUrl() {
  */
 export async function transactionsControllerCreate(
 	data: TransactionsControllerCreateMutationRequest,
+	headers?: TransactionsControllerCreateHeaderParams,
 	config: Partial<
 		RequestConfig<TransactionsControllerCreateMutationRequest>
 	> & { client?: Client } = {},
@@ -42,6 +44,7 @@ export async function transactionsControllerCreate(
 		url: getTransactionsControllerCreateUrl().url.toString(),
 		data: requestData,
 		...requestConfig,
+		headers: { ...headers, ...requestConfig.headers },
 	});
 	return res.data;
 }

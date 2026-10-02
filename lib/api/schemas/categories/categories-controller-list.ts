@@ -3,10 +3,9 @@
  * Do not edit manually.
  */
 
-/**
- * @example [object Object]
- */
-export type CategoriesControllerList200 = any;
+import type { CategoryListItemDto } from "../category-list-item-dto.ts";
+
+export type CategoriesControllerList200 = CategoryListItemDto[];
 
 /**
  * @description Não autenticado

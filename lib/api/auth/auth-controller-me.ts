@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	AuthControllerMeQueryResponse,
-	AuthControllerMe401,
-} from "../schemas/auth/auth-controller-me.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	AuthControllerMeQueryResponse,
+	AuthControllerMe401,
+} from "../schemas/auth/auth-controller-me.ts";
 
 function getAuthControllerMeUrl() {
 	const res = { method: "GET", url: `/v1/auth/me` as const };

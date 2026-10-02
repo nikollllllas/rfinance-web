@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { MessageResponseDto } from "../message-response-dto.ts";
+
 export type BudgetsControllerRemovePathParams = {
 	/**
 	 * @type string
@@ -10,10 +12,12 @@ export type BudgetsControllerRemovePathParams = {
 	id: string;
 };
 
+export type BudgetsControllerRemove200 = MessageResponseDto;
+
 /**
- * @example [object Object]
+ * @description Orçamento possui transações no mês
  */
-export type BudgetsControllerRemove200 = any;
+export type BudgetsControllerRemove409 = any;
 
 export type BudgetsControllerRemoveMutationResponse =
 	BudgetsControllerRemove200;
@@ -21,5 +25,5 @@ export type BudgetsControllerRemoveMutationResponse =
 export type BudgetsControllerRemoveMutation = {
 	Response: BudgetsControllerRemove200;
 	PathParams: BudgetsControllerRemovePathParams;
-	Errors: any;
+	Errors: BudgetsControllerRemove409;
 };

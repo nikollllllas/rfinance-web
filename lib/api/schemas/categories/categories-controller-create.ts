@@ -3,12 +3,13 @@
  * Do not edit manually.
  */
 
+import type { CategoryResponseDto } from "../category-response-dto.ts";
 import type { CreateCategoryDto } from "../create-category-dto.ts";
 
 /**
  * @description Categoria criada com sucesso
  */
-export type CategoriesControllerCreate201 = any;
+export type CategoriesControllerCreate201 = CategoryResponseDto;
 
 /**
  * @description Não autenticado

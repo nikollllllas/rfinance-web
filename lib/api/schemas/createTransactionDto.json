@@ -13,7 +13,7 @@
 		"notes": { "type": "string", "example": "Compra mensal" },
 		"tag": {
 			"type": "string",
-			"enum": ["FALTA", "PAGO", "DEVOLVER", "ECONOMIA"],
+			"enum": ["FALTA", "PAGO", "DEVOLVER", "ECONOMIA", "RECEBIDO"],
 			"nullable": true
 		},
 		"paymentMethod": {

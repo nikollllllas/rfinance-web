@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	TransactionsControllerUpdateMutationRequest,
 	TransactionsControllerUpdateMutationResponse,
 	TransactionsControllerUpdatePathParams,
 	TransactionsControllerUpdate404,
 } from "../schemas/transactions/transactions-controller-update.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getTransactionsControllerUpdateUrl(
 	id: TransactionsControllerUpdatePathParams["id"],

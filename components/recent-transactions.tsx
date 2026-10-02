@@ -37,7 +37,9 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
   if (recentTransactions.length === 0) {
     return (
       <div className="p-4 text-center">
-        <p className="text-muted-foreground">Nenhuma transação encontrada.</p>
+        <p className="text-muted-foreground">
+          Nenhuma transação ainda. Use “Nova Transação” no topo para registrar a primeira.
+        </p>
       </div>
     );
   }

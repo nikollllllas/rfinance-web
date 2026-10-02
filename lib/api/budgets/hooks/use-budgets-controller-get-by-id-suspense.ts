@@ -4,11 +4,6 @@
  */
 
 import type {
-	BudgetsControllerGetByIdQueryResponse,
-	BudgetsControllerGetByIdPathParams,
-	BudgetsControllerGetById404,
-} from "../../schemas/budgets/budgets-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +14,13 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerGetById } from "../budgets-controller-get-by-id.ts";
+import type {
+	BudgetsControllerGetByIdQueryResponse,
+	BudgetsControllerGetByIdPathParams,
+	BudgetsControllerGetById404,
+} from "../../schemas/budgets/budgets-controller-get-by-id.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { budgetsControllerGetById } from "../budgets-controller-get-by-id.ts";
 
 export const budgetsControllerGetByIdSuspenseQueryKey = (
 	id: BudgetsControllerGetByIdPathParams["id"],
