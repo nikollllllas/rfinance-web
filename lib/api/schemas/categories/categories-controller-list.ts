@@ -3,9 +3,9 @@
  * Do not edit manually.
  */
 
-import type { CategoryResponseDto } from "../category-response-dto.ts";
+import type { CategoryListItemDto } from "../category-list-item-dto.ts";
 
-export type CategoriesControllerList200 = CategoryResponseDto[];
+export type CategoriesControllerList200 = CategoryListItemDto[];
 
 /**
  * @description Não autenticado

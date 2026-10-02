@@ -24,7 +24,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { categoriesControllerGetById } from "../categories-controller-get-by-id.ts";
 
 export const categoriesControllerGetByIdQueryKey = (
-	id: CategoriesControllerGetByIdPathParams["id"] | undefined,
+	id: CategoriesControllerGetByIdPathParams["id"],
 ) => [{ url: "/v1/categories/:id", params: { id: id } }] as const;
 
 export type CategoriesControllerGetByIdQueryKey = ReturnType<
@@ -32,7 +32,7 @@ export type CategoriesControllerGetByIdQueryKey = ReturnType<
 >;
 
 export function useCategoriesControllerGetByIdQueryOptions(
-	id: CategoriesControllerGetByIdPathParams["id"] | undefined,
+	id: CategoriesControllerGetByIdPathParams["id"],
 	config: Partial<RequestConfig> & { client?: Client } = {},
 ) {
 	const queryKey = categoriesControllerGetByIdQueryKey(id);
@@ -47,7 +47,7 @@ export function useCategoriesControllerGetByIdQueryOptions(
 		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
-			return categoriesControllerGetById(id!, {
+			return categoriesControllerGetById(id, {
 				...config,
 				signal: config.signal ?? signal,
 			});
@@ -63,7 +63,7 @@ export function useCategoriesControllerGetById<
 	TQueryData = CategoriesControllerGetByIdQueryResponse,
 	TQueryKey extends QueryKey = CategoriesControllerGetByIdQueryKey,
 >(
-	id: CategoriesControllerGetByIdPathParams["id"] | undefined,
+	id: CategoriesControllerGetByIdPathParams["id"],
 	options: {
 		query?: Partial<
 			QueryObserverOptions<

@@ -23,7 +23,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
 
 export const transactionsControllerGetByIdSuspenseQueryKey = (
-	id: TransactionsControllerGetByIdPathParams["id"] | undefined,
+	id: TransactionsControllerGetByIdPathParams["id"],
 ) => [{ url: "/v1/transactions/:id", params: { id: id } }] as const;
 
 export type TransactionsControllerGetByIdSuspenseQueryKey = ReturnType<
@@ -41,6 +41,7 @@ export function useTransactionsControllerGetByIdSuspenseQueryOptions(
 		TransactionsControllerGetByIdQueryResponse,
 		typeof queryKey
 	>({
+		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
 			return transactionsControllerGetById(id, {

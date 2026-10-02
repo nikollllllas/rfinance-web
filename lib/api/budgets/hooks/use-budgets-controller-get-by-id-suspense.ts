@@ -23,7 +23,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { budgetsControllerGetById } from "../budgets-controller-get-by-id.ts";
 
 export const budgetsControllerGetByIdSuspenseQueryKey = (
-	id: BudgetsControllerGetByIdPathParams["id"] | undefined,
+	id: BudgetsControllerGetByIdPathParams["id"],
 ) => [{ url: "/v1/budgets/:id", params: { id: id } }] as const;
 
 export type BudgetsControllerGetByIdSuspenseQueryKey = ReturnType<
@@ -41,6 +41,7 @@ export function useBudgetsControllerGetByIdSuspenseQueryOptions(
 		BudgetsControllerGetByIdQueryResponse,
 		typeof queryKey
 	>({
+		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
 			return budgetsControllerGetById(id, {

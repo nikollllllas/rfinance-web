@@ -23,7 +23,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
 
 export const transactionsControllerGetByIdQueryKey = (
-	id: TransactionsControllerGetByIdPathParams["id"] | undefined,
+	id: TransactionsControllerGetByIdPathParams["id"],
 ) => [{ url: "/v1/transactions/:id", params: { id: id } }] as const;
 
 export type TransactionsControllerGetByIdQueryKey = ReturnType<
@@ -31,7 +31,7 @@ export type TransactionsControllerGetByIdQueryKey = ReturnType<
 >;
 
 export function useTransactionsControllerGetByIdQueryOptions(
-	id: TransactionsControllerGetByIdPathParams["id"] | undefined,
+	id: TransactionsControllerGetByIdPathParams["id"],
 	config: Partial<RequestConfig> & { client?: Client } = {},
 ) {
 	const queryKey = transactionsControllerGetByIdQueryKey(id);
@@ -44,7 +44,7 @@ export function useTransactionsControllerGetByIdQueryOptions(
 		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
-			return transactionsControllerGetById(id!, {
+			return transactionsControllerGetById(id, {
 				...config,
 				signal: config.signal ?? signal,
 			});
@@ -60,7 +60,7 @@ export function useTransactionsControllerGetById<
 	TQueryData = TransactionsControllerGetByIdQueryResponse,
 	TQueryKey extends QueryKey = TransactionsControllerGetByIdQueryKey,
 >(
-	id: TransactionsControllerGetByIdPathParams["id"] | undefined,
+	id: TransactionsControllerGetByIdPathParams["id"],
 	options: {
 		query?: Partial<
 			QueryObserverOptions<
