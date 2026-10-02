@@ -120,8 +120,8 @@ export default function TransactionDetailsPage() {
                 <span className="sr-only">Voltar</span>
               </Link>
             </Button>
-            <div className="ml-4 flex items-center gap-2 font-semibold">
-              <span className="text-lg">Detalhes da Transação</span>
+            <div className="ml-2 flex min-w-0 items-center gap-2 font-semibold">
+              <span className="truncate text-lg">Detalhes da Transação</span>
             </div>
           </div>
         </header>
@@ -146,8 +146,8 @@ export default function TransactionDetailsPage() {
                 <span className="sr-only">Voltar</span>
               </Link>
             </Button>
-            <div className="ml-4 flex items-center gap-2 font-semibold">
-              <span className="text-lg">Detalhes da Transação</span>
+            <div className="ml-2 flex min-w-0 items-center gap-2 font-semibold">
+              <span className="truncate text-lg">Detalhes da Transação</span>
             </div>
           </div>
         </header>
@@ -189,19 +189,19 @@ export default function TransactionDetailsPage() {
               <span className="sr-only">Voltar</span>
             </Link>
           </Button>
-          <div className="ml-4 flex items-center gap-2 font-semibold">
-            <span className="text-lg">Detalhes da Transação</span>
+          <div className="ml-2 flex min-w-0 items-center gap-2 font-semibold">
+            <span className="truncate text-lg">Detalhes da Transação</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" size="sm" asChild aria-label="Editar">
               <Link href={`/transactions/${id}/edit`}>
-                <Pencil className="mr-1 h-4 w-4" />
-                Editar
+                <Pencil className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">Editar</span>
               </Link>
             </Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm" disabled={isDeleting}>
+                <Button variant="destructive" size="sm" disabled={isDeleting} aria-label="Excluir">
                   {isDeleting ? (
                     <>
                       <Loader2 className="mr-1 h-4 w-4 animate-spin" />
@@ -209,8 +209,8 @@ export default function TransactionDetailsPage() {
                     </>
                   ) : (
                     <>
-                      <Trash2 className="mr-1 h-4 w-4" />
-                      Excluir
+                      <Trash2 className="h-4 w-4 sm:mr-1" />
+                      <span className="hidden sm:inline">Excluir</span>
                     </>
                   )}
                 </Button>

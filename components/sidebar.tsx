@@ -120,7 +120,7 @@ export default function Sidebar() {
           variant="outline"
           size="icon"
           onClick={() => setIsMobileOpen(true)}
-          className="fixed left-4 top-4 z-40 bg-background md:hidden"
+          className="fixed left-4 top-2.5 z-40 bg-background md:hidden"
           aria-label="Abrir menu"
         >
           <Menu className="h-4 w-4" />
