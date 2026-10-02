@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -21,24 +20,35 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { MonthPicker } from "./ui/monthpicker"
+import { CategoryCreateDialog } from "@/components/category-create-dialog"
 
 interface BudgetCreateDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   onSuccess?: () => void
+  initialMonth?: string // "YYYY-MM"
 }
 
-export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCreateDialogProps) {
-  const router = useRouter()
+const parseMonth = (value?: string) => {
+  if (!value) return new Date()
+  const [year, month] = value.split("-").map(Number)
+  return new Date(year, month - 1)
+}
+
+const toBudgetMonth = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`
+
+export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth }: BudgetCreateDialogProps) {
   const { toast } = useToast()
-  const { categories, isLoading: categoriesLoading } = useCategories()
-  const [month, setMonth] = useState<Date>();
+  const { categories, isLoading: categoriesLoading, refreshCategories } = useCategories()
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false)
+  const [month, setMonth] = useState<Date>(() => parseMonth(initialMonth))
   const [amount, setAmount] = useState("")
-  const [budgetMonth, setBudgetMonth] = useState(() => {
-    const now = new Date()
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
-  })
   const [categoryId, setCategoryId] = useState("")
+
+  useEffect(() => {
+    if (open) setMonth(parseMonth(initialMonth))
+  }, [open, initialMonth])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const incomeCategories = categories.filter((c) => c.type === "GANHO")
@@ -52,7 +62,7 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
     try {
       const budgetData = {
         amount: Number.parseFloat(amount),
-        budgetMonth,
+        budgetMonth: toBudgetMonth(month),
         categoryId,
       }
 
@@ -64,10 +74,6 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
       })
 
       setAmount("")
-      setBudgetMonth(() => {
-        const now = new Date()
-        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
-      })
       setCategoryId("")
 
       onOpenChange(false)
@@ -111,16 +117,6 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
                     </SelectItem>
                   ) : (
                     <>
-                      {incomeCategories.length > 0 && (
-                        <SelectGroup>
-                          <SelectLabel>Ganho</SelectLabel>
-                          {incomeCategories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
-                              {category.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      )}
                       {expenseCategories.length > 0 && (
                         <SelectGroup>
                           <SelectLabel>Gasto</SelectLabel>
@@ -141,10 +137,29 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
                           ))}
                         </SelectGroup>
                       )}
+                      {incomeCategories.length > 0 && (
+                        <SelectGroup>
+                          <SelectLabel>Ganho</SelectLabel>
+                          {incomeCategories.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      )}
                     </>
                   )}
                 </SelectContent>
               </Select>
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                className="h-auto p-0"
+                onClick={() => setIsCategoryDialogOpen(true)}
+              >
+                + Nova categoria
+              </Button>
             </div>
 
             <div className="space-y-2">
@@ -190,6 +205,16 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess }: BudgetCrea
             </Button>
           </DialogFooter>
         </form>
+        {/* Dentro do DialogContent (fora do <form>) para o Radix empilhar os diálogos. */}
+        <CategoryCreateDialog
+          open={isCategoryDialogOpen}
+          onOpenChange={setIsCategoryDialogOpen}
+          defaultType="GASTO"
+          onSuccess={async (category) => {
+            await refreshCategories()
+            setCategoryId(category.id)
+          }}
+        />
       </DialogContent>
     </Dialog>
   )

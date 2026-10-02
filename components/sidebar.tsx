@@ -19,6 +19,8 @@ type SidebarRoute = {
   icon: typeof Home
   href: string
   adminOnly?: boolean
+  // Gerenciamento: vai para o rodapé, longe do fluxo principal.
+  secondary?: boolean
 }
 
 const routes: SidebarRoute[] = [
@@ -38,15 +40,16 @@ const routes: SidebarRoute[] = [
     href: "/budgets",
   },
   {
-    label: "Categorias",
-    icon: PieChart,
-    href: "/categories",
-  },
-  {
     label: "Usuários",
     icon: Users,
     href: "/admin/users",
     adminOnly: true,
+  },
+  {
+    label: "Categorias",
+    icon: PieChart,
+    href: "/categories",
+    secondary: true,
   },
 ]
 
@@ -95,6 +98,27 @@ export default function Sidebar() {
   }, [pathname])
 
   const collapsed = !isMobile && isCollapsed
+  const mainRoutes = visibleRoutes.filter((route) => !route.secondary)
+  const secondaryRoutes = visibleRoutes.filter((route) => route.secondary)
+
+  const renderRoute = (route: SidebarRoute) => (
+    <Link
+      key={route.href}
+      href={route.href}
+      aria-label={route.label}
+      title={route.label}
+      className={cn(
+        "flex items-center py-3 px-3 text-sm font-medium rounded-lg transition-colors hover:bg-accent hover:text-accent-foreground",
+        pathname === route.href
+          ? "bg-success/15 text-foreground"
+          : "text-muted-foreground",
+        collapsed && "justify-center px-0",
+      )}
+    >
+      <route.icon className={cn("h-5 w-5", pathname === route.href && "text-success")} />
+      {!collapsed && <span className="ml-3">{route.label}</span>}
+    </Link>
+  )
 
   return (
     <>
@@ -179,28 +203,11 @@ export default function Sidebar() {
           </div>
 
           <div className="space-y-1">
-            {visibleRoutes
-              .map((route) => (
-              <Link
-                key={route.href}
-                href={route.href}
-                aria-label={route.label}
-                title={route.label}
-                className={cn(
-                  "flex items-center py-3 px-3 text-sm font-medium rounded-lg transition-colors hover:bg-accent hover:text-accent-foreground",
-                  pathname === route.href
-                    ? "bg-success/15 text-foreground"
-                    : "text-muted-foreground",
-                  collapsed && "justify-center px-0",
-                )}
-              >
-                <route.icon className={cn("h-5 w-5", pathname === route.href && "text-success")} />
-                {!collapsed && <span className="ml-3">{route.label}</span>}
-              </Link>
-            ))}
+            {mainRoutes.map(renderRoute)}
           </div>
 
           <div className="mt-auto space-y-2">
+            {secondaryRoutes.map(renderRoute)}
             <ThemeToggle collapsed={collapsed} />
             <Button
               variant="ghost"
