@@ -122,6 +122,13 @@ export default function LoginPage() {
           )}
         </Button>
 
+        <p className="text-center text-[13.5px] text-muted-foreground">
+          Não tem conta?{" "}
+          <Link href="/register" className="font-medium text-foreground hover:underline">
+            Criar conta
+          </Link>
+        </p>
+
         <a href="/privacidade" className="text-xs text-muted-foreground underline">
           Política de Privacidade
         </a>
