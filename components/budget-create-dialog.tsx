@@ -117,16 +117,6 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth
                     </SelectItem>
                   ) : (
                     <>
-                      {incomeCategories.length > 0 && (
-                        <SelectGroup>
-                          <SelectLabel>Ganho</SelectLabel>
-                          {incomeCategories.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
-                              {category.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      )}
                       {expenseCategories.length > 0 && (
                         <SelectGroup>
                           <SelectLabel>Gasto</SelectLabel>
@@ -141,6 +131,16 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth
                         <SelectGroup>
                           <SelectLabel>Ganho e Gasto</SelectLabel>
                           {bothCategories.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      )}
+                      {incomeCategories.length > 0 && (
+                        <SelectGroup>
+                          <SelectLabel>Ganho</SelectLabel>
+                          {incomeCategories.map((category) => (
                             <SelectItem key={category.id} value={category.id}>
                               {category.name}
                             </SelectItem>

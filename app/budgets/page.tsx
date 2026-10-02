@@ -23,6 +23,7 @@ import { BudgetCreateDialog } from "@/components/budget-create-dialog"
 import { formatBudgetMonth, formatCurrency } from "@/lib/utils"
 import { useCategories } from "@/hooks/use-categories"
 import { getBudgetStatusColors } from "@/lib/budget-status-colors"
+import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 
 const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?: () => void }) => {
   const { progress, isLoading, error } = useBudgetProgress(budget.id)
@@ -43,8 +44,8 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
       if (onDeleted) onDeleted()
     } catch (error) {
       toast({
-        title: "Erro",
-        description: error instanceof Error ? error.message : "Falha ao excluir orçamento",
+        title: "Não foi possível excluir",
+        description: getApiErrorMessage(error, "Falha ao excluir orçamento"),
         variant: "destructive",
       })
     } finally {
@@ -90,6 +91,7 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
   }
 
   const { percentage, isOverBudget } = progress
+  const hasTransactions = progress.transactionCount > 0
   const categoryType = (budget.category?.type ??
     getCategoryById(budget.categoryId)?.type) as "GANHO" | "GASTO" | "AMBOS" | undefined
 
@@ -129,6 +131,11 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
               {formatCurrency(progress.current)} / {formatCurrency(Number(budget.amount))}
             </span>
           </div>
+          {hasTransactions ? (
+            <p className="mt-1 text-xs text-muted-foreground">
+              {progress.transactionCount} transaç{progress.transactionCount === 1 ? "ão" : "ões"} neste mês
+            </p>
+          ) : null}
 
           <div className="flex justify-end gap-2 mt-4">
             <Button variant="outline" size="sm" onClick={() => setShowEditDialog(true)}>
@@ -136,21 +143,30 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
               Editar
             </Button>
             <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm" disabled={isDeleting}>
-                  {isDeleting ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                      Excluindo...
-                    </>
-                  ) : (
-                    <>
-                      <Trash2 className="h-4 w-4 mr-1" />
-                      Excluir
-                    </>
-                  )}
-                </Button>
-              </AlertDialogTrigger>
+              {/* Botão desabilitado não dispara tooltip; o span carrega a explicação. */}
+              <span
+                title={
+                  hasTransactions
+                    ? "Não dá para excluir: há transações desta categoria neste mês. Exclua-as primeiro."
+                    : "Excluir orçamento"
+                }
+              >
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm" disabled={isDeleting || hasTransactions}>
+                    {isDeleting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                        Excluindo...
+                      </>
+                    ) : (
+                      <>
+                        <Trash2 className="h-4 w-4 mr-1" />
+                        Excluir
+                      </>
+                    )}
+                  </Button>
+                </AlertDialogTrigger>
+              </span>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
@@ -190,10 +206,16 @@ export default function BudgetsPage() {
     const now = new Date()
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
   })
+  // Mês atual + 2 seguintes ficam sempre disponíveis para planejar, mesmo sem orçamentos.
   const availableMonths = React.useMemo(() => {
-    const months = [...new Set(budgets.map((budget: any) => budget.budgetMonth))].sort().reverse() as string[]
-    return months
-  }, [budgets])
+    const now = new Date()
+    const upcoming = [0, 1, 2].map((offset) => {
+      const date = new Date(now.getFullYear(), now.getMonth() + offset)
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+    })
+    const budgetMonths = budgets.map((budget: any) => budget.budgetMonth as string)
+    return [...new Set([...budgetMonths, ...upcoming, selectedMonth])].sort().reverse()
+  }, [budgets, selectedMonth])
 
   const formatMonthDisplay = (monthValue: string) => {
     const [year, month] = monthValue.split('-')
@@ -236,13 +258,13 @@ export default function BudgetsPage() {
     return (
       <div className="flex flex-col min-h-screen">
         <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-14 items-center px-4">
+          <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
             <div className="flex items-center gap-2 font-semibold">
               <span className="font-display text-lg">Orçamentos</span>
             </div>
-            <div className="ml-auto flex items-center gap-2">
+            <div className="ml-auto flex flex-wrap items-center gap-2">
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-[200px]">
+                <SelectTrigger className="w-full sm:w-[200px]">
                   <SelectValue placeholder="Selecione o mês" />
                 </SelectTrigger>
                 <SelectContent>
@@ -293,13 +315,13 @@ export default function BudgetsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center px-4">
+        <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
           <div className="flex items-center gap-2 font-semibold">
             <span className="font-display text-lg">Orçamentos</span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex flex-wrap items-center gap-2">
             <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="w-full sm:w-[200px]">
                 <SelectValue placeholder="Selecione o mês" />
               </SelectTrigger>
               <SelectContent>
