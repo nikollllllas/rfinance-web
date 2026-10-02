@@ -1,8 +1,10 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
+import type { Category } from "@/lib/api-types";
+import { getApiErrorMessage } from "@/lib/errors/get-api-error-message";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,27 +29,35 @@ import { kubbClientConfig } from "@/lib/kubb-client";
 import { CategoryColorPicker } from "@/components/category-color-picker";
 import { CategoryIconPicker } from "@/components/category-icon-picker";
 
+type CategoryTypeValue = "GANHO" | "GASTO" | "AMBOS";
+
 interface CategoryCreateDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSuccess?: () => void;
+  onSuccess?: (category: Category) => void;
+  defaultType?: CategoryTypeValue;
 }
 
 export function CategoryCreateDialog({
   open,
   onOpenChange,
   onSuccess,
+  defaultType = "GASTO",
 }: CategoryCreateDialogProps) {
   const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
   const [name, setName] = useState("");
-  const [type, setType] = useState<"GANHO" | "GASTO" | "AMBOS">("GASTO");
+  const [type, setType] = useState<CategoryTypeValue>(defaultType);
   const [color, setColor] = useState("#6366f1");
   const [icon, setIcon] = useState("");
 
+  useEffect(() => {
+    if (open) setType(defaultType);
+  }, [open, defaultType]);
+
   const resetForm = () => {
     setName("");
-    setType("GASTO");
+    setType(defaultType);
     setColor("#6366f1");
     setIcon("");
   };
@@ -61,10 +71,12 @@ export function CategoryCreateDialog({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    // Pode estar dentro de outro diálogo com <form>: o submit não deve subir pela árvore React.
+    event.stopPropagation();
     setIsSaving(true);
 
     try {
-      await categoriesControllerCreate(
+      const created = await categoriesControllerCreate(
         {
           name,
           color,
@@ -81,12 +93,11 @@ export function CategoryCreateDialog({
       });
 
       handleOpenChange(false);
-      onSuccess?.();
+      onSuccess?.(created as Category);
     } catch (error) {
       toast({
         title: "Erro",
-        description:
-          error instanceof Error ? error.message : "Falha ao criar categoria",
+        description: getApiErrorMessage(error, "Falha ao criar categoria"),
         variant: "destructive",
       });
     } finally {
