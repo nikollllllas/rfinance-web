@@ -262,9 +262,9 @@ export default function BudgetsPage() {
             <div className="flex items-center gap-2 font-semibold">
               <span className="font-display text-lg">Orçamentos</span>
             </div>
-            <div className="ml-auto flex flex-wrap items-center gap-2">
+            <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-[160px] sm:w-[200px]">
+                <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
                   <SelectValue placeholder="Selecione o mês" />
                 </SelectTrigger>
                 <SelectContent>
@@ -320,9 +320,9 @@ export default function BudgetsPage() {
           <div className="flex items-center gap-2 font-semibold">
             <span className="font-display text-lg">Orçamentos</span>
           </div>
-          <div className="ml-auto flex flex-wrap items-center gap-2">
+          <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
             <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-              <SelectTrigger className="w-[160px] sm:w-[200px]">
+              <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
                 <SelectValue placeholder="Selecione o mês" />
               </SelectTrigger>
               <SelectContent>
@@ -408,7 +408,7 @@ export default function BudgetsPage() {
               <Button
                 onClick={() => setIsCreateDialogOpen(true)}
                 variant="outline"
-                className="h-auto p-8 w-full flex flex-col items-center gap-2"
+                className="h-auto p-8 w-full flex flex-col items-center gap-2 whitespace-normal"
               >
                 <Plus className="h-6 w-6" />
                 <span className="text-lg font-medium">Adicionar Novo Orçamento</span>
