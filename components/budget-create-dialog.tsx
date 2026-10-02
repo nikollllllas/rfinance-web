@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { MonthPicker } from "./ui/monthpicker"
+import { CategoryCreateDialog } from "@/components/category-create-dialog"
 
 interface BudgetCreateDialogProps {
   open: boolean
@@ -39,7 +40,8 @@ const toBudgetMonth = (date: Date) =>
 
 export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth }: BudgetCreateDialogProps) {
   const { toast } = useToast()
-  const { categories, isLoading: categoriesLoading } = useCategories()
+  const { categories, isLoading: categoriesLoading, refreshCategories } = useCategories()
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false)
   const [month, setMonth] = useState<Date>(() => parseMonth(initialMonth))
   const [amount, setAmount] = useState("")
   const [categoryId, setCategoryId] = useState("")
@@ -149,6 +151,15 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth
                   )}
                 </SelectContent>
               </Select>
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                className="h-auto p-0"
+                onClick={() => setIsCategoryDialogOpen(true)}
+              >
+                + Nova categoria
+              </Button>
             </div>
 
             <div className="space-y-2">
@@ -194,6 +205,16 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth
             </Button>
           </DialogFooter>
         </form>
+        {/* Dentro do DialogContent (fora do <form>) para o Radix empilhar os diálogos. */}
+        <CategoryCreateDialog
+          open={isCategoryDialogOpen}
+          onOpenChange={setIsCategoryDialogOpen}
+          defaultType="GASTO"
+          onSuccess={async (category) => {
+            await refreshCategories()
+            setCategoryId(category.id)
+          }}
+        />
       </DialogContent>
     </Dialog>
   )
