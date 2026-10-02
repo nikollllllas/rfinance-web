@@ -24,7 +24,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <CategoriesProvider>
       <Sidebar />
       <PrivacyConsentGate />
-      <div className="min-h-screen bg-muted/40 pl-[var(--sidebar-width,256px)] transition-all duration-300">
+      <div className="min-h-screen bg-muted/40 pl-[var(--sidebar-width,256px)] transition-all duration-300 max-md:[&_header>div]:pl-16">
         {children}
       </div>
     </CategoriesProvider>

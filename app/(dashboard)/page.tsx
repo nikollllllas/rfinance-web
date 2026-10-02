@@ -51,7 +51,7 @@ function DashboardContent() {
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="w-[160px] sm:w-[200px]">
                 <SelectValue placeholder="Selecione o mês" />
               </SelectTrigger>
               <SelectContent>
@@ -62,9 +62,9 @@ function DashboardContent() {
                 ))}
               </SelectContent>
             </Select>
-            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)}>
-              <Plus className="mr-1 h-4 w-4" />
-              Nova Transação
+            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Nova Transação">
+              <Plus className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">Nova Transação</span>
             </Button>
           </div>
         </div>
