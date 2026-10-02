@@ -16,6 +16,7 @@ import type {
 import type {
 	BudgetsControllerRemoveMutationResponse,
 	BudgetsControllerRemovePathParams,
+	BudgetsControllerRemove409,
 } from "../../schemas/budgets/budgets-controller-remove.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
 import { budgetsControllerRemove } from "../budgets-controller-remove.ts";
@@ -33,7 +34,7 @@ export function useBudgetsControllerRemoveMutationOptions<TContext = unknown>(
 	const mutationKey = budgetsControllerRemoveMutationKey();
 	return mutationOptions<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		{ id: BudgetsControllerRemovePathParams["id"] },
 		TContext
 	>({
@@ -51,7 +52,7 @@ export function useBudgetsControllerRemove<TContext>(
 	options: {
 		mutation?: UseMutationOptions<
 			BudgetsControllerRemoveMutationResponse,
-			ResponseErrorConfig<Error>,
+			ResponseErrorConfig<BudgetsControllerRemove409>,
 			{ id: BudgetsControllerRemovePathParams["id"] },
 			TContext
 		> & { client?: QueryClient };
@@ -67,14 +68,14 @@ export function useBudgetsControllerRemove<TContext>(
 		config,
 	) as UseMutationOptions<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		{ id: BudgetsControllerRemovePathParams["id"] },
 		TContext
 	>;
 
 	return useMutation<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		{ id: BudgetsControllerRemovePathParams["id"] },
 		TContext
 	>(
@@ -86,7 +87,7 @@ export function useBudgetsControllerRemove<TContext>(
 		queryClient,
 	) as UseMutationResult<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		{ id: BudgetsControllerRemovePathParams["id"] },
 		TContext
 	>;

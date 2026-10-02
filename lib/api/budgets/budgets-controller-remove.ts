@@ -12,6 +12,7 @@ import type {
 import type {
 	BudgetsControllerRemoveMutationResponse,
 	BudgetsControllerRemovePathParams,
+	BudgetsControllerRemove409,
 } from "../schemas/budgets/budgets-controller-remove.ts";
 
 function getBudgetsControllerRemoveUrl(
@@ -32,7 +33,7 @@ export async function budgetsControllerRemove(
 
 	const res = await request<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		unknown
 	>({
 		method: "DELETE",

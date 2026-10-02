@@ -21,6 +21,11 @@ export type BudgetProgressResponseDto = {
 	 */
 	isOverBudget: boolean;
 	/**
+	 * @description Transações (ganho ou gasto) da categoria no mês
+	 * @type number
+	 */
+	transactionCount: number;
+	/**
 	 * @type string
 	 */
 	budgetMonth: string;

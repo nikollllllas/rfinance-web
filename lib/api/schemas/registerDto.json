@@ -1,0 +1,10 @@
+{
+	"type": "object",
+	"properties": {
+		"name": { "type": "string", "example": "Maria Silva" },
+		"email": { "type": "string", "example": "maria@email.com" },
+		"password": { "type": "string", "example": "Senha@123" }
+	},
+	"required": ["name", "email", "password"],
+	"x-readme-ref-name": "RegisterDto"
+}

@@ -23,7 +23,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { budgetsControllerGetById } from "../budgets-controller-get-by-id.ts";
 
 export const budgetsControllerGetByIdQueryKey = (
-	id: BudgetsControllerGetByIdPathParams["id"] | undefined,
+	id: BudgetsControllerGetByIdPathParams["id"],
 ) => [{ url: "/v1/budgets/:id", params: { id: id } }] as const;
 
 export type BudgetsControllerGetByIdQueryKey = ReturnType<
@@ -31,7 +31,7 @@ export type BudgetsControllerGetByIdQueryKey = ReturnType<
 >;
 
 export function useBudgetsControllerGetByIdQueryOptions(
-	id: BudgetsControllerGetByIdPathParams["id"] | undefined,
+	id: BudgetsControllerGetByIdPathParams["id"],
 	config: Partial<RequestConfig> & { client?: Client } = {},
 ) {
 	const queryKey = budgetsControllerGetByIdQueryKey(id);
@@ -44,7 +44,7 @@ export function useBudgetsControllerGetByIdQueryOptions(
 		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
-			return budgetsControllerGetById(id!, {
+			return budgetsControllerGetById(id, {
 				...config,
 				signal: config.signal ?? signal,
 			});
@@ -60,7 +60,7 @@ export function useBudgetsControllerGetById<
 	TQueryData = BudgetsControllerGetByIdQueryResponse,
 	TQueryKey extends QueryKey = BudgetsControllerGetByIdQueryKey,
 >(
-	id: BudgetsControllerGetByIdPathParams["id"] | undefined,
+	id: BudgetsControllerGetByIdPathParams["id"],
 	options: {
 		query?: Partial<
 			QueryObserverOptions<
