@@ -4,10 +4,9 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { CreditCard, Home, LogOut, Menu, PieChart, UserX, Users, Wallet, X } from "lucide-react"
+import { CreditCard, Home, Menu, PieChart, Users, Wallet, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { DeleteAccountDialog } from "@/components/delete-account-dialog"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { UserMenu } from "@/components/user-menu"
 import { useMediaQuery } from "@/hooks/use-mobile"
 import { useAuthControllerLogout } from "@/lib/api/auth/hooks/use-auth-controller-logout"
 import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
@@ -19,8 +18,6 @@ type SidebarRoute = {
   icon: typeof Home
   href: string
   adminOnly?: boolean
-  // Gerenciamento: vai para o rodapé, longe do fluxo principal.
-  secondary?: boolean
 }
 
 const routes: SidebarRoute[] = [
@@ -40,16 +37,15 @@ const routes: SidebarRoute[] = [
     href: "/budgets",
   },
   {
+    label: "Categorias",
+    icon: PieChart,
+    href: "/categories",
+  },
+  {
     label: "Usuários",
     icon: Users,
     href: "/admin/users",
     adminOnly: true,
-  },
-  {
-    label: "Categorias",
-    icon: PieChart,
-    href: "/categories",
-    secondary: true,
   },
 ]
 
@@ -58,7 +54,6 @@ export default function Sidebar() {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const meQuery = useAuthControllerMe({
     client: kubbClientConfig,
   })
@@ -98,8 +93,6 @@ export default function Sidebar() {
   }, [pathname])
 
   const collapsed = !isMobile && isCollapsed
-  const mainRoutes = visibleRoutes.filter((route) => !route.secondary)
-  const secondaryRoutes = visibleRoutes.filter((route) => route.secondary)
 
   const renderRoute = (route: SidebarRoute) => (
     <Link
@@ -203,35 +196,23 @@ export default function Sidebar() {
           </div>
 
           <div className="space-y-1">
-            {mainRoutes.map(renderRoute)}
+            {visibleRoutes.map(renderRoute)}
           </div>
 
-          <div className="mt-auto space-y-2">
-            {secondaryRoutes.map(renderRoute)}
-            <ThemeToggle collapsed={collapsed} />
-            <Button
-              variant="ghost"
-              className={cn("w-full justify-center gap-2 text-destructive", collapsed && "px-0")}
-              onClick={() => setIsDeleteOpen(true)}
-            >
-              <UserX className="h-4 w-4" />
-              {!collapsed && <span>Excluir conta</span>}
-            </Button>
-            <DeleteAccountDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen} />
-            <Button
-              variant="outline"
-              className={cn("w-full justify-center gap-2", collapsed && "px-0")}
-              onClick={async () => {
+          <div className="mt-auto border-t pt-2">
+            <UserMenu
+              name={currentUser?.name ?? ""}
+              email={currentUser?.email ?? ""}
+              collapsed={collapsed}
+              accountHref="/account"
+              onLogout={async () => {
                 try {
                   await logoutMutation.mutateAsync()
                 } finally {
                   window.location.href = "/login"
                 }
               }}
-            >
-              <LogOut className="h-4 w-4" />
-              {!collapsed && <span>Sair</span>}
-            </Button>
+            />
           </div>
         </div>
       </div>
