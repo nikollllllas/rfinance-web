@@ -3,10 +3,9 @@
  * Do not edit manually.
  */
 
-/**
- * @example [object Object]
- */
-export type AppControllerGetHealth200 = any;
+import type { HealthResponseDto } from "../health-response-dto.ts";
+
+export type AppControllerGetHealth200 = HealthResponseDto;
 
 export type AppControllerGetHealthQueryResponse = AppControllerGetHealth200;
 

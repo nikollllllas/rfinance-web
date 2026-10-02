@@ -1,0 +1,16 @@
+{
+	"type": "object",
+	"properties": {
+		"id": { "type": "string", "example": "uuid-budget" },
+		"category": {
+			"type": "string",
+			"example": "Alimentação",
+			"description": "Nome da categoria"
+		},
+		"current": { "type": "number", "example": 320.5 },
+		"max": { "type": "number", "example": 500 },
+		"color": { "type": "string", "example": "#22C55E" }
+	},
+	"required": ["id", "category", "current", "max", "color"],
+	"x-readme-ref-name": "DashboardBudgetProgressDto"
+}

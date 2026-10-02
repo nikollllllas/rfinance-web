@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { BudgetProgressResponseDto } from "../budget-progress-response-dto.ts";
+
 export type BudgetsControllerProgressPathParams = {
 	/**
 	 * @type string
@@ -13,7 +15,7 @@ export type BudgetsControllerProgressPathParams = {
 /**
  * @description Progresso do orçamento do mês
  */
-export type BudgetsControllerProgress200 = any;
+export type BudgetsControllerProgress200 = BudgetProgressResponseDto;
 
 export type BudgetsControllerProgressQueryResponse =
 	BudgetsControllerProgress200;

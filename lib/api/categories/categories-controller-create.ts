@@ -5,17 +5,17 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	CategoriesControllerCreateMutationRequest,
 	CategoriesControllerCreateMutationResponse,
 	CategoriesControllerCreate401,
 	CategoriesControllerCreate403,
 	CategoriesControllerCreate409,
 } from "../schemas/categories/categories-controller-create.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getCategoriesControllerCreateUrl() {
 	const res = { method: "POST", url: `/v1/categories` as const };

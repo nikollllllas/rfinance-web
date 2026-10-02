@@ -4,10 +4,6 @@
  */
 
 import type {
-	AuthControllerForgotPasswordMutationRequest,
-	AuthControllerForgotPasswordMutationResponse,
-} from "../../schemas/auth/auth-controller-forgot-password.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -17,8 +13,12 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { authControllerForgotPassword } from "../auth-controller-forgot-password.ts";
+import type {
+	AuthControllerForgotPasswordMutationRequest,
+	AuthControllerForgotPasswordMutationResponse,
+} from "../../schemas/auth/auth-controller-forgot-password.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { authControllerForgotPassword } from "../auth-controller-forgot-password.ts";
 
 export const authControllerForgotPasswordMutationKey = () =>
 	[{ url: "/v1/auth/forgot-password" }] as const;

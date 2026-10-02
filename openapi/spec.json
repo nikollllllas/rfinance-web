@@ -11,9 +11,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "status": "ok"
-                  }
+                  "$ref": "#/components/schemas/HealthResponseDto"
                 }
               }
             }
@@ -64,7 +62,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Usuários listados com sucesso"
+            "description": "Usuários listados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUsersResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
@@ -97,7 +102,14 @@
         },
         "responses": {
           "201": {
-            "description": "Usuário criado com sucesso"
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
@@ -135,13 +147,83 @@
         },
         "responses": {
           "200": {
-            "description": "Perfil atualizado com sucesso"
+            "description": "Perfil atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
           },
           "409": {
             "description": "E-mail já está em uso"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_deleteOwnAccount",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOwnAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Senha incorreta"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/v1/users/me/privacy-consent": {
+      "post": {
+        "operationId": "UsersController_acceptPrivacy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponseDto"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -179,7 +261,14 @@
         },
         "responses": {
           "200": {
-            "description": "Usuário atualizado com sucesso"
+            "description": "Usuário atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
@@ -233,9 +322,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "success": true
-                  }
+                  "$ref": "#/components/schemas/SuccessResponseDto"
                 }
               }
             }
@@ -280,15 +367,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "accessToken": "jwt.token.value",
-                    "user": {
-                      "id": "uuid",
-                      "name": "Administrador",
-                      "email": "admin@rfinance.local",
-                      "role": "ADMIN"
-                    }
-                  }
+                  "$ref": "#/components/schemas/LoginResponseDto"
                 }
               }
             }
@@ -322,9 +401,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "message": "Se existir uma conta com este e-mail, enviaremos as instruções de recuperação."
-                  }
+                  "$ref": "#/components/schemas/ForgotPasswordResponseDto"
                 }
               }
             }
@@ -355,9 +432,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "success": true
-                  }
+                  "$ref": "#/components/schemas/SuccessResponseDto"
                 }
               }
             }
@@ -381,19 +456,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "success": true
-                  }
+                  "$ref": "#/components/schemas/SuccessResponseDto"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "bearer": []
-          }
-        ],
         "tags": [
           "auth"
         ]
@@ -409,14 +477,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "user": {
-                      "id": "uuid",
-                      "name": "Administrador",
-                      "email": "admin@rfinance.local",
-                      "role": "ADMIN"
-                    }
-                  }
+                  "$ref": "#/components/schemas/MeResponseDto"
                 }
               }
             }
@@ -445,17 +506,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": [
-                    {
-                      "id": "uuid",
-                      "name": "Alimentação",
-                      "color": "#22C55E",
-                      "icon": "food",
-                      "type": "GASTO",
-                      "isDefault": false,
-                      "userId": "uuid"
-                    }
-                  ]
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryResponseDto"
+                  }
                 }
               }
             }
@@ -488,7 +542,14 @@
         },
         "responses": {
           "201": {
-            "description": "Categoria criada com sucesso"
+            "description": "Categoria criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
@@ -529,15 +590,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "id": "uuid",
-                    "name": "Alimentação",
-                    "color": "#22C55E",
-                    "icon": "food",
-                    "type": "GASTO",
-                    "isDefault": false,
-                    "userId": "uuid"
-                  }
+                  "$ref": "#/components/schemas/CategoryResponseDto"
                 }
               }
             }
@@ -582,7 +635,14 @@
         },
         "responses": {
           "200": {
-            "description": "Categoria atualizada com sucesso"
+            "description": "Categoria atualizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryResponseDto"
+                }
+              }
+            }
           },
           "401": {
             "description": "Não autenticado"
@@ -624,9 +684,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "message": "Categoria excluída com sucesso"
-                  }
+                  "$ref": "#/components/schemas/MessageResponseDto"
                 }
               }
             }
@@ -675,9 +733,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "transactions": []
-                  }
+                  "$ref": "#/components/schemas/TransactionListResponseDto"
                 }
               }
             }
@@ -697,7 +753,17 @@
       },
       "post": {
         "operationId": "TransactionsController_create",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "idempotency-key",
+            "required": false,
+            "in": "header",
+            "description": "Opcional. Reenviar a mesma chave devolve o resultado da primeira criação em vez de duplicar (usado pela fila offline do app).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -710,13 +776,11 @@
         },
         "responses": {
           "201": {
-            "description": "",
+            "description": "Uma transação, ou N parcelas quando installmentCount >= 2",
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "transactions": []
-                  }
+                  "$ref": "#/components/schemas/TransactionListResponseDto"
                 }
               }
             }
@@ -741,14 +805,20 @@
         "parameters": [],
         "responses": {
           "200": {
+            "schema": {
+              "example": [
+                "2026-03",
+                "2026-02"
+              ]
+            },
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "example": [
-                    "2026-03",
-                    "2026-02"
-                  ]
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -779,7 +849,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Transação encontrada"
+            "description": "Transação encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseDto"
+                }
+              }
+            }
           },
           "404": {
             "description": "Transação não encontrada"
@@ -818,7 +895,14 @@
         },
         "responses": {
           "200": {
-            "description": "Transação atualizada"
+            "description": "Transação atualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseDto"
+                }
+              }
+            }
           },
           "404": {
             "description": "Transação ou categoria não encontrada"
@@ -851,9 +935,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "message": "Transação apagada com sucesso"
-                  }
+                  "$ref": "#/components/schemas/MessageResponseDto"
                 }
               }
             }
@@ -885,7 +967,14 @@
         },
         "responses": {
           "201": {
-            "description": "Orçamento criado com sucesso"
+            "description": "Orçamento criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetResponseDto"
+                }
+              }
+            }
           },
           "404": {
             "description": "Categoria não encontrada"
@@ -923,7 +1012,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": []
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BudgetResponseDto"
+                  }
                 }
               }
             }
@@ -953,7 +1045,14 @@
         },
         "responses": {
           "200": {
-            "description": "Orçamentos replicados"
+            "description": "Orçamentos replicados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplicateBudgetsResponseDto"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -981,7 +1080,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Orçamento encontrado"
+            "description": "Orçamento encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetResponseDto"
+                }
+              }
+            }
           },
           "404": {
             "description": "Orçamento não encontrado"
@@ -1020,7 +1126,14 @@
         },
         "responses": {
           "200": {
-            "description": "Orçamento atualizado"
+            "description": "Orçamento atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetResponseDto"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1050,9 +1163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "message": "Orçamento apagado com sucesso"
-                  }
+                  "$ref": "#/components/schemas/MessageResponseDto"
                 }
               }
             }
@@ -1083,7 +1194,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Progresso do orçamento do mês"
+            "description": "Progresso do orçamento do mês",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetProgressResponseDto"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -1117,27 +1235,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "summary": {
-                      "income": {
-                        "amount": 0,
-                        "change": 0
-                      },
-                      "expenses": {
-                        "amount": 0,
-                        "change": 0
-                      },
-                      "savings": {
-                        "amount": 0,
-                        "change": 0
-                      },
-                      "balance": 0
-                    },
-                    "expensesByCategory": [],
-                    "recentTransactions": [],
-                    "budgets": [],
-                    "monthlyData": []
-                  }
+                  "$ref": "#/components/schemas/DashboardResponseDto"
                 }
               }
             }
@@ -1177,6 +1275,93 @@
       }
     },
     "schemas": {
+      "HealthResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "UserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Administrador"
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@rfinance.local"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "ADMIN"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ListUsersResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponseDto"
+            }
+          },
+          "page": {
+            "type": "number",
+            "example": 1
+          },
+          "perPage": {
+            "type": "number",
+            "example": 20
+          },
+          "total": {
+            "type": "number",
+            "example": 3
+          },
+          "totalPages": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "perPage",
+          "total",
+          "totalPages"
+        ]
+      },
       "CreateUserDto": {
         "type": "object",
         "properties": {
@@ -1220,6 +1405,30 @@
             "example": "maria@rfinance.local"
           }
         }
+      },
+      "DeleteOwnAccountDto": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "MinhaSenha@123"
+          }
+        },
+        "required": [
+          "password"
+        ]
+      },
+      "SuccessResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "required": [
+          "success"
+        ]
       },
       "UpdateUserByAdminDto": {
         "type": "object",
@@ -1271,6 +1480,48 @@
           "password"
         ]
       },
+      "UserSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Administrador"
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@rfinance.local"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "ADMIN"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role"
+        ]
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserSummaryDto"
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
       "ForgotPasswordDto": {
         "type": "object",
         "properties": {
@@ -1281,6 +1532,22 @@
         },
         "required": [
           "email"
+        ]
+      },
+      "ForgotPasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Se existir uma conta com este e-mail, enviaremos as instruções de recuperação."
+          },
+          "resetToken": {
+            "type": "string",
+            "description": "Só presente fora de produção, pra facilitar testes locais"
+          }
+        },
+        "required": [
+          "message"
         ]
       },
       "ResetPasswordDto": {
@@ -1298,6 +1565,115 @@
         "required": [
           "token",
           "password"
+        ]
+      },
+      "MeUserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Administrador"
+          },
+          "email": {
+            "type": "string",
+            "example": "admin@rfinance.local"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER"
+            ],
+            "example": "ADMIN"
+          },
+          "privacyAcceptedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "privacyPolicyVersion": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "privacyAcceptedAt",
+          "privacyPolicyVersion"
+        ]
+      },
+      "MeResponseDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/MeUserDto"
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "CategoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-category"
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "color": {
+            "type": "string",
+            "example": "#22C55E"
+          },
+          "icon": {
+            "type": "string",
+            "example": "food",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "example": false
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GANHO",
+              "GASTO",
+              "AMBOS"
+            ],
+            "nullable": true
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "name",
+          "color",
+          "isDefault",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "CreateCategoryDto": {
@@ -1366,6 +1742,132 @@
           }
         }
       },
+      "MessageResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Operação realizada com sucesso"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "TransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-transaction"
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "description": {
+            "type": "string",
+            "example": "Supermercado"
+          },
+          "amount": {
+            "type": "string",
+            "example": "145.90",
+            "description": "Valor decimal como string"
+          },
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2026-03-31T00:00:00.000Z"
+          },
+          "notes": {
+            "type": "string",
+            "example": "Compra mensal",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GANHO",
+              "GASTO"
+            ],
+            "example": "GASTO"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "uuid-category"
+          },
+          "tag": {
+            "type": "string",
+            "enum": [
+              "FALTA",
+              "PAGO",
+              "DEVOLVER",
+              "ECONOMIA",
+              "RECEBIDO"
+            ],
+            "nullable": true
+          },
+          "paymentMethod": {
+            "type": "string",
+            "enum": [
+              "PIX",
+              "DEBITO",
+              "CREDITO"
+            ],
+            "nullable": true
+          },
+          "installmentGroupId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Preenchido quando parte de um parcelamento"
+          },
+          "installmentIndex": {
+            "type": "number",
+            "nullable": true
+          },
+          "installmentCount": {
+            "type": "number",
+            "nullable": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/CategoryResponseDto"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "description",
+          "amount",
+          "date",
+          "type",
+          "createdAt",
+          "updatedAt",
+          "categoryId",
+          "category"
+        ]
+      },
+      "TransactionListResponseDto": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionResponseDto"
+            }
+          }
+        },
+        "required": [
+          "transactions"
+        ]
+      },
       "CreateTransactionDto": {
         "type": "object",
         "properties": {
@@ -1403,7 +1905,8 @@
               "FALTA",
               "PAGO",
               "DEVOLVER",
-              "ECONOMIA"
+              "ECONOMIA",
+              "RECEBIDO"
             ],
             "nullable": true
           },
@@ -1468,7 +1971,8 @@
               "FALTA",
               "PAGO",
               "DEVOLVER",
-              "ECONOMIA"
+              "ECONOMIA",
+              "RECEBIDO"
             ],
             "nullable": true
           },
@@ -1511,6 +2015,57 @@
           "categoryId"
         ]
       },
+      "BudgetResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-budget"
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "amount": {
+            "type": "string",
+            "example": "500.00",
+            "description": "Valor decimal como string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "categoryId": {
+            "type": "string",
+            "example": "uuid-category"
+          },
+          "budgetMonth": {
+            "type": "string",
+            "example": "2026-03"
+          },
+          "category": {
+            "description": "Presente em list/getById/update; ausente na resposta de create",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryResponseDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "amount",
+          "createdAt",
+          "updatedAt",
+          "categoryId",
+          "budgetMonth"
+        ]
+      },
       "ReplicateBudgetsDto": {
         "type": "object",
         "properties": {
@@ -1526,6 +2081,25 @@
         "required": [
           "action",
           "targetMonth"
+        ]
+      },
+      "ReplicateBudgetsResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "3 orçamentos replicados com sucesso"
+          },
+          "budgets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetResponseDto"
+            }
+          }
+        },
+        "required": [
+          "message",
+          "budgets"
         ]
       },
       "UpdateBudgetDto": {
@@ -1544,6 +2118,222 @@
             "example": "uuid-category"
           }
         }
+      },
+      "BudgetProgressResponseDto": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "number",
+            "example": 320.5
+          },
+          "max": {
+            "type": "number",
+            "example": 500
+          },
+          "percentage": {
+            "type": "number",
+            "example": 64.1
+          },
+          "isOverBudget": {
+            "type": "boolean",
+            "example": false
+          },
+          "budgetMonth": {
+            "type": "string",
+            "example": "2026-03"
+          },
+          "categoryName": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "categoryColor": {
+            "type": "string",
+            "example": "#22C55E"
+          },
+          "startDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "current",
+          "max",
+          "percentage",
+          "isOverBudget",
+          "budgetMonth",
+          "categoryName",
+          "categoryColor",
+          "startDate",
+          "endDate"
+        ]
+      },
+      "DashboardStatDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "example": 4200.5
+          },
+          "change": {
+            "type": "number",
+            "example": 12.4,
+            "description": "Variação percentual vs. mês anterior"
+          }
+        },
+        "required": [
+          "amount",
+          "change"
+        ]
+      },
+      "DashboardSummaryDto": {
+        "type": "object",
+        "properties": {
+          "income": {
+            "$ref": "#/components/schemas/DashboardStatDto"
+          },
+          "expenses": {
+            "$ref": "#/components/schemas/DashboardStatDto"
+          },
+          "savings": {
+            "$ref": "#/components/schemas/DashboardStatDto"
+          },
+          "balance": {
+            "type": "number",
+            "example": 1800.25
+          }
+        },
+        "required": [
+          "income",
+          "expenses",
+          "savings",
+          "balance"
+        ]
+      },
+      "DashboardExpenseByCategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "value": {
+            "type": "number",
+            "example": 540.9
+          },
+          "color": {
+            "type": "string",
+            "example": "#22C55E"
+          }
+        },
+        "required": [
+          "name",
+          "value",
+          "color"
+        ]
+      },
+      "DashboardBudgetProgressDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-budget"
+          },
+          "category": {
+            "type": "string",
+            "example": "Alimentação",
+            "description": "Nome da categoria"
+          },
+          "current": {
+            "type": "number",
+            "example": 320.5
+          },
+          "max": {
+            "type": "number",
+            "example": 500
+          },
+          "color": {
+            "type": "string",
+            "example": "#22C55E"
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "current",
+          "max",
+          "color"
+        ]
+      },
+      "DashboardMonthlyDataDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string",
+            "example": "mar"
+          },
+          "income": {
+            "type": "number",
+            "example": 4200.5
+          },
+          "expenses": {
+            "type": "number",
+            "example": 2600.25
+          },
+          "savings": {
+            "type": "number",
+            "example": 1600.25
+          }
+        },
+        "required": [
+          "month",
+          "income",
+          "expenses",
+          "savings"
+        ]
+      },
+      "DashboardResponseDto": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "$ref": "#/components/schemas/DashboardSummaryDto"
+          },
+          "expensesByCategory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardExpenseByCategoryDto"
+            }
+          },
+          "recentTransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionResponseDto"
+            }
+          },
+          "budgets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardBudgetProgressDto"
+            }
+          },
+          "monthlyData": {
+            "description": "Últimos 6 meses",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DashboardMonthlyDataDto"
+            }
+          }
+        },
+        "required": [
+          "summary",
+          "expensesByCategory",
+          "recentTransactions",
+          "budgets",
+          "monthlyData"
+        ]
       }
     }
   }

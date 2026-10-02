@@ -3,7 +3,6 @@
  * Do not edit manually.
  */
 
-import type { AuthControllerLogoutMutationResponse } from "../../schemas/auth/auth-controller-logout.ts";
 import type {
 	Client,
 	RequestConfig,
@@ -14,8 +13,9 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { authControllerLogout } from "../auth-controller-logout.ts";
+import type { AuthControllerLogoutMutationResponse } from "../../schemas/auth/auth-controller-logout.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { authControllerLogout } from "../auth-controller-logout.ts";
 
 export const authControllerLogoutMutationKey = () =>
 	[{ url: "/v1/auth/logout" }] as const;

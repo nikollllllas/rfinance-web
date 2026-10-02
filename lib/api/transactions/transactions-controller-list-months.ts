@@ -4,12 +4,12 @@
  */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { TransactionsControllerListMonthsQueryResponse } from "../schemas/transactions/transactions-controller-list-months.ts";
 import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type { TransactionsControllerListMonthsQueryResponse } from "../schemas/transactions/transactions-controller-list-months.ts";
 
 function getTransactionsControllerListMonthsUrl() {
 	const res = { method: "GET", url: `/v1/transactions/months` as const };

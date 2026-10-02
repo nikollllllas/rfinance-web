@@ -4,13 +4,6 @@
  */
 
 import type {
-	UsersControllerCreateMutationRequest,
-	UsersControllerCreateMutationResponse,
-	UsersControllerCreate401,
-	UsersControllerCreate403,
-	UsersControllerCreate409,
-} from "../../schemas/users/users-controller-create.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +13,15 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { usersControllerCreate } from "../users-controller-create.ts";
+import type {
+	UsersControllerCreateMutationRequest,
+	UsersControllerCreateMutationResponse,
+	UsersControllerCreate401,
+	UsersControllerCreate403,
+	UsersControllerCreate409,
+} from "../../schemas/users/users-controller-create.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { usersControllerCreate } from "../users-controller-create.ts";
 
 export const usersControllerCreateMutationKey = () =>
 	[{ url: "/v1/users" }] as const;

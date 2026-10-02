@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	UsersControllerUpdateOwnProfileMutationRequest,
 	UsersControllerUpdateOwnProfileMutationResponse,
 	UsersControllerUpdateOwnProfile401,
 	UsersControllerUpdateOwnProfile409,
 } from "../schemas/users/users-controller-update-own-profile.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getUsersControllerUpdateOwnProfileUrl() {
 	const res = { method: "PUT", url: `/v1/users/me` as const };

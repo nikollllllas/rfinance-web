@@ -3,6 +3,7 @@
  * Do not edit manually.
  */
 
+import type { CategoryResponseDto } from "../category-response-dto.ts";
 import type { UpdateCategoryDto } from "../update-category-dto.ts";
 
 export type CategoriesControllerUpdatePathParams = {
@@ -15,7 +16,7 @@ export type CategoriesControllerUpdatePathParams = {
 /**
  * @description Categoria atualizada com sucesso
  */
-export type CategoriesControllerUpdate200 = any;
+export type CategoriesControllerUpdate200 = CategoryResponseDto;
 
 /**
  * @description Não autenticado

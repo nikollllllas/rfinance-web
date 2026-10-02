@@ -5,15 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	AuthControllerResetPasswordMutationRequest,
-	AuthControllerResetPasswordMutationResponse,
-	AuthControllerResetPassword401,
-} from "../schemas/auth/auth-controller-reset-password.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	AuthControllerResetPasswordMutationRequest,
+	AuthControllerResetPasswordMutationResponse,
+	AuthControllerResetPassword401,
+} from "../schemas/auth/auth-controller-reset-password.ts";
 
 function getAuthControllerResetPasswordUrl() {
 	const res = { method: "POST", url: `/v1/auth/reset-password` as const };

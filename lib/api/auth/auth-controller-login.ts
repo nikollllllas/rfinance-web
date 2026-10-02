@@ -5,15 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	AuthControllerLoginMutationRequest,
-	AuthControllerLoginMutationResponse,
-	AuthControllerLogin401,
-} from "../schemas/auth/auth-controller-login.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	AuthControllerLoginMutationRequest,
+	AuthControllerLoginMutationResponse,
+	AuthControllerLogin401,
+} from "../schemas/auth/auth-controller-login.ts";
 
 function getAuthControllerLoginUrl() {
 	const res = { method: "POST", url: `/v1/auth/login` as const };

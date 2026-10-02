@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerProgressQueryResponse,
-	BudgetsControllerProgressPathParams,
-} from "../schemas/budgets/budgets-controller-progress.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerProgressQueryResponse,
+	BudgetsControllerProgressPathParams,
+} from "../schemas/budgets/budgets-controller-progress.ts";
 
 function getBudgetsControllerProgressUrl(
 	id: BudgetsControllerProgressPathParams["id"],

@@ -16,6 +16,17 @@ export const middleware = (request: NextRequest) => {
     return NextResponse.next()
   }
 
+  // A API faz sua própria autenticação; o middleware roda antes do rewrite
+  // pro backend e não deve bloquear rotas públicas como /api/v1/auth/login.
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next()
+  }
+
+  // Acessível logado ou deslogado: o gate de consentimento linka pra cá mesmo autenticado.
+  if (pathname === "/privacidade") {
+    return NextResponse.next()
+  }
+
   // Token emitido pela API externa; o middleware só exige presença (validação no backend).
   const token = request.cookies.get(AUTH_COOKIE_NAME)?.value
   if (!token || token.length === 0) {

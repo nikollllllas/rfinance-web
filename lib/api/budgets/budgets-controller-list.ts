@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerListQueryResponse,
-	BudgetsControllerListQueryParams,
-} from "../schemas/budgets/budgets-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerListQueryResponse,
+	BudgetsControllerListQueryParams,
+} from "../schemas/budgets/budgets-controller-list.ts";
 
 function getBudgetsControllerListUrl() {
 	const res = { method: "GET", url: `/v1/budgets` as const };

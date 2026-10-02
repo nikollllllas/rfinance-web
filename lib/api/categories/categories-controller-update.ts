@@ -5,6 +5,11 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	CategoriesControllerUpdateMutationRequest,
 	CategoriesControllerUpdateMutationResponse,
 	CategoriesControllerUpdatePathParams,
@@ -13,11 +18,6 @@ import type {
 	CategoriesControllerUpdate404,
 	CategoriesControllerUpdate409,
 } from "../schemas/categories/categories-controller-update.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getCategoriesControllerUpdateUrl(
 	id: CategoriesControllerUpdatePathParams["id"],

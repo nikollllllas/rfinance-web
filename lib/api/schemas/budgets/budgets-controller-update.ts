@@ -3,6 +3,7 @@
  * Do not edit manually.
  */
 
+import type { BudgetResponseDto } from "../budget-response-dto.ts";
 import type { UpdateBudgetDto } from "../update-budget-dto.ts";
 
 export type BudgetsControllerUpdatePathParams = {
@@ -15,7 +16,7 @@ export type BudgetsControllerUpdatePathParams = {
 /**
  * @description Orçamento atualizado
  */
-export type BudgetsControllerUpdate200 = any;
+export type BudgetsControllerUpdate200 = BudgetResponseDto;
 
 export type BudgetsControllerUpdateMutationRequest = UpdateBudgetDto;
 
