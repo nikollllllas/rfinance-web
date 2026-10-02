@@ -5,14 +5,14 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	AuthControllerForgotPasswordMutationRequest,
-	AuthControllerForgotPasswordMutationResponse,
-} from "../schemas/auth/auth-controller-forgot-password.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	AuthControllerForgotPasswordMutationRequest,
+	AuthControllerForgotPasswordMutationResponse,
+} from "../schemas/auth/auth-controller-forgot-password.ts";
 
 function getAuthControllerForgotPasswordUrl() {
 	const res = { method: "POST", url: `/v1/auth/forgot-password` as const };

@@ -3,11 +3,12 @@
  * Do not edit manually.
  */
 
+import type { MeResponseDto } from "../me-response-dto.ts";
+
 /**
  * @description Dados do usuário autenticado
- * @example [object Object]
  */
-export type AuthControllerMe200 = any;
+export type AuthControllerMe200 = MeResponseDto;
 
 /**
  * @description Não autenticado

@@ -5,15 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerUpdateMutationRequest,
-	BudgetsControllerUpdateMutationResponse,
-	BudgetsControllerUpdatePathParams,
-} from "../schemas/budgets/budgets-controller-update.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerUpdateMutationRequest,
+	BudgetsControllerUpdateMutationResponse,
+	BudgetsControllerUpdatePathParams,
+} from "../schemas/budgets/budgets-controller-update.ts";
 
 function getBudgetsControllerUpdateUrl(
 	id: BudgetsControllerUpdatePathParams["id"],

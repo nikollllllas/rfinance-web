@@ -16,6 +16,7 @@ export const createTransactionDtoTagEnum = {
 	PAGO: "PAGO",
 	DEVOLVER: "DEVOLVER",
 	ECONOMIA: "ECONOMIA",
+	RECEBIDO: "RECEBIDO",
 } as const;
 
 export type CreateTransactionDtoTagEnumKey =

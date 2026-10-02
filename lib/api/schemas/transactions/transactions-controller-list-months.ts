@@ -3,10 +3,7 @@
  * Do not edit manually.
  */
 
-/**
- * @example 2026-03,2026-02
- */
-export type TransactionsControllerListMonths200 = any;
+export type TransactionsControllerListMonths200 = string[];
 
 export type TransactionsControllerListMonthsQueryResponse =
 	TransactionsControllerListMonths200;

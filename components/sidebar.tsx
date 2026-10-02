@@ -4,13 +4,13 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { CreditCard, Home, LogOut, Menu, PieChart, Users, Wallet, X } from "lucide-react"
+import { CreditCard, Home, LogOut, Menu, PieChart, UserX, Users, Wallet, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DeleteAccountDialog } from "@/components/delete-account-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { useMediaQuery } from "@/hooks/use-mobile"
 import { useAuthControllerLogout } from "@/lib/api/auth/hooks/use-auth-controller-logout"
 import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
-import { clearAuthTokenCookie } from "@/lib/auth/token-cookie"
 import { parseCurrentUser } from "@/lib/auth/current-user"
 import { kubbClientConfig } from "@/lib/kubb-client"
 
@@ -55,6 +55,7 @@ export default function Sidebar() {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const meQuery = useAuthControllerMe({
     client: kubbClientConfig,
   })
@@ -202,13 +203,21 @@ export default function Sidebar() {
           <div className="mt-auto space-y-2">
             <ThemeToggle collapsed={collapsed} />
             <Button
+              variant="ghost"
+              className={cn("w-full justify-center gap-2 text-destructive", collapsed && "px-0")}
+              onClick={() => setIsDeleteOpen(true)}
+            >
+              <UserX className="h-4 w-4" />
+              {!collapsed && <span>Excluir conta</span>}
+            </Button>
+            <DeleteAccountDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen} />
+            <Button
               variant="outline"
               className={cn("w-full justify-center gap-2", collapsed && "px-0")}
               onClick={async () => {
                 try {
                   await logoutMutation.mutateAsync()
                 } finally {
-                  clearAuthTokenCookie()
                   window.location.href = "/login"
                 }
               }}

@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { TransactionResponseDto } from "../transaction-response-dto.ts";
+
 export type TransactionsControllerGetByIdPathParams = {
 	/**
 	 * @type string
@@ -13,7 +15,7 @@ export type TransactionsControllerGetByIdPathParams = {
 /**
  * @description Transação encontrada
  */
-export type TransactionsControllerGetById200 = any;
+export type TransactionsControllerGetById200 = TransactionResponseDto;
 
 /**
  * @description Transação não encontrada

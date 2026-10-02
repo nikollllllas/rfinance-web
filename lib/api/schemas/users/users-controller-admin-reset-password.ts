@@ -4,6 +4,7 @@
  */
 
 import type { AdminResetPasswordDto } from "../admin-reset-password-dto.ts";
+import type { SuccessResponseDto } from "../success-response-dto.ts";
 
 export type UsersControllerAdminResetPasswordPathParams = {
 	/**
@@ -12,10 +13,7 @@ export type UsersControllerAdminResetPasswordPathParams = {
 	id: string;
 };
 
-/**
- * @example [object Object]
- */
-export type UsersControllerAdminResetPassword200 = any;
+export type UsersControllerAdminResetPassword200 = SuccessResponseDto;
 
 /**
  * @description Não autenticado

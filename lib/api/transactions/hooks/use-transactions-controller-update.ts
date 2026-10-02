@@ -4,12 +4,6 @@
  */
 
 import type {
-	TransactionsControllerUpdateMutationRequest,
-	TransactionsControllerUpdateMutationResponse,
-	TransactionsControllerUpdatePathParams,
-	TransactionsControllerUpdate404,
-} from "../../schemas/transactions/transactions-controller-update.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +13,14 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { transactionsControllerUpdate } from "../transactions-controller-update.ts";
+import type {
+	TransactionsControllerUpdateMutationRequest,
+	TransactionsControllerUpdateMutationResponse,
+	TransactionsControllerUpdatePathParams,
+	TransactionsControllerUpdate404,
+} from "../../schemas/transactions/transactions-controller-update.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { transactionsControllerUpdate } from "../transactions-controller-update.ts";
 
 export const transactionsControllerUpdateMutationKey = () =>
 	[{ url: "/v1/transactions/:id" }] as const;

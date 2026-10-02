@@ -4,12 +4,6 @@
  */
 
 import type {
-	UsersControllerUpdateOwnProfileMutationRequest,
-	UsersControllerUpdateOwnProfileMutationResponse,
-	UsersControllerUpdateOwnProfile401,
-	UsersControllerUpdateOwnProfile409,
-} from "../../schemas/users/users-controller-update-own-profile.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +13,14 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { usersControllerUpdateOwnProfile } from "../users-controller-update-own-profile.ts";
+import type {
+	UsersControllerUpdateOwnProfileMutationRequest,
+	UsersControllerUpdateOwnProfileMutationResponse,
+	UsersControllerUpdateOwnProfile401,
+	UsersControllerUpdateOwnProfile409,
+} from "../../schemas/users/users-controller-update-own-profile.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { usersControllerUpdateOwnProfile } from "../users-controller-update-own-profile.ts";
 
 export const usersControllerUpdateOwnProfileMutationKey = () =>
 	[{ url: "/v1/users/me" }] as const;

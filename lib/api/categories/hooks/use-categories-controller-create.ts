@@ -4,13 +4,6 @@
  */
 
 import type {
-	CategoriesControllerCreateMutationRequest,
-	CategoriesControllerCreateMutationResponse,
-	CategoriesControllerCreate401,
-	CategoriesControllerCreate403,
-	CategoriesControllerCreate409,
-} from "../../schemas/categories/categories-controller-create.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +13,15 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { categoriesControllerCreate } from "../categories-controller-create.ts";
+import type {
+	CategoriesControllerCreateMutationRequest,
+	CategoriesControllerCreateMutationResponse,
+	CategoriesControllerCreate401,
+	CategoriesControllerCreate403,
+	CategoriesControllerCreate409,
+} from "../../schemas/categories/categories-controller-create.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { categoriesControllerCreate } from "../categories-controller-create.ts";
 
 export const categoriesControllerCreateMutationKey = () =>
 	[{ url: "/v1/categories" }] as const;

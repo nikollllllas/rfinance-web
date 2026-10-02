@@ -4,12 +4,12 @@
  */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { AppControllerGetHealthQueryResponse } from "../schemas/health/app-controller-get-health.ts";
 import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type { AppControllerGetHealthQueryResponse } from "../schemas/health/app-controller-get-health.ts";
 
 function getAppControllerGetHealthUrl() {
 	const res = { method: "GET", url: `/v1` as const };

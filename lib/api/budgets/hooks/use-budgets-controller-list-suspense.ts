@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerListQueryResponse,
-	BudgetsControllerListQueryParams,
-} from "../../schemas/budgets/budgets-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerList } from "../budgets-controller-list.ts";
+import type {
+	BudgetsControllerListQueryResponse,
+	BudgetsControllerListQueryParams,
+} from "../../schemas/budgets/budgets-controller-list.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { budgetsControllerList } from "../budgets-controller-list.ts";
 
 export const budgetsControllerListSuspenseQueryKey = (
 	params?: BudgetsControllerListQueryParams,

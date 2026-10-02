@@ -4,11 +4,12 @@
  */
 
 import type { ReplicateBudgetsDto } from "../replicate-budgets-dto.ts";
+import type { ReplicateBudgetsResponseDto } from "../replicate-budgets-response-dto.ts";
 
 /**
  * @description Orçamentos replicados
  */
-export type BudgetsControllerReplicate200 = any;
+export type BudgetsControllerReplicate200 = ReplicateBudgetsResponseDto;
 
 export type BudgetsControllerReplicateMutationRequest = ReplicateBudgetsDto;
 

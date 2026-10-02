@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { MessageResponseDto } from "../message-response-dto.ts";
+
 export type BudgetsControllerRemovePathParams = {
 	/**
 	 * @type string
@@ -10,10 +12,7 @@ export type BudgetsControllerRemovePathParams = {
 	id: string;
 };
 
-/**
- * @example [object Object]
- */
-export type BudgetsControllerRemove200 = any;
+export type BudgetsControllerRemove200 = MessageResponseDto;
 
 export type BudgetsControllerRemoveMutationResponse =
 	BudgetsControllerRemove200;

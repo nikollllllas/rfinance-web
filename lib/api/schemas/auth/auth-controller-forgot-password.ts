@@ -4,12 +4,12 @@
  */
 
 import type { ForgotPasswordDto } from "../forgot-password-dto.ts";
+import type { ForgotPasswordResponseDto } from "../forgot-password-response-dto.ts";
 
 /**
  * @description Solicitação de recuperação recebida
- * @example [object Object]
  */
-export type AuthControllerForgotPassword200 = any;
+export type AuthControllerForgotPassword200 = ForgotPasswordResponseDto;
 
 export type AuthControllerForgotPasswordMutationRequest = ForgotPasswordDto;
 

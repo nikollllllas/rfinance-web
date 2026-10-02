@@ -4,11 +4,9 @@
  */
 
 import type { ResetPasswordDto } from "../reset-password-dto.ts";
+import type { SuccessResponseDto } from "../success-response-dto.ts";
 
-/**
- * @example [object Object]
- */
-export type AuthControllerResetPassword200 = any;
+export type AuthControllerResetPassword200 = SuccessResponseDto;
 
 /**
  * @description Token de recuperação inválido ou expirado

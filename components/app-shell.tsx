@@ -4,6 +4,7 @@ import type React from "react"
 import { usePathname } from "next/navigation"
 import Sidebar from "@/components/sidebar"
 import { CategoriesProvider } from "@/components/categories-provider"
+import { PrivacyConsentGate } from "@/components/privacy-consent-gate"
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -11,7 +12,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     pathname.startsWith("/login") ||
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password") ||
-    pathname.startsWith("/preview")
+    pathname.startsWith("/preview") ||
+    pathname.startsWith("/privacidade")
 
   if (isBareLayoutPage) {
     return <>{children}</>
@@ -20,6 +22,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <CategoriesProvider>
       <Sidebar />
+      <PrivacyConsentGate />
       <div className="min-h-screen bg-muted/40 pl-[var(--sidebar-width,256px)] transition-all duration-300">
         {children}
       </div>

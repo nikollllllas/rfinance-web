@@ -3,7 +3,6 @@
  * Do not edit manually.
  */
 
-import type { TransactionsControllerListMonthsQueryResponse } from "../../schemas/transactions/transactions-controller-list-months.ts";
 import type {
 	Client,
 	RequestConfig,
@@ -15,8 +14,9 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { transactionsControllerListMonths } from "../transactions-controller-list-months.ts";
+import type { TransactionsControllerListMonthsQueryResponse } from "../../schemas/transactions/transactions-controller-list-months.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { transactionsControllerListMonths } from "../transactions-controller-list-months.ts";
 
 export const transactionsControllerListMonthsQueryKey = () =>
 	[{ url: "/v1/transactions/months" }] as const;

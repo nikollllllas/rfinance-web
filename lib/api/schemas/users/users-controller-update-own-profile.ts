@@ -4,11 +4,12 @@
  */
 
 import type { UpdateOwnProfileDto } from "../update-own-profile-dto.ts";
+import type { UserResponseDto } from "../user-response-dto.ts";
 
 /**
  * @description Perfil atualizado com sucesso
  */
-export type UsersControllerUpdateOwnProfile200 = any;
+export type UsersControllerUpdateOwnProfile200 = UserResponseDto;
 
 /**
  * @description Não autenticado
