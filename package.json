@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.10",
-    "@kubb/cli": "^4.37.1",
+    "@kubb/cli": "^5.3.19",
     "@kubb/core": "^4.37.1",
     "@kubb/plugin-client": "^4.37.1",
     "@kubb/plugin-oas": "^4.37.1",
