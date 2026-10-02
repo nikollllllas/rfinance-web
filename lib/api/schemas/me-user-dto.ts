@@ -36,4 +36,8 @@ export type MeUserDto = {
 	 * @type string
 	 */
 	privacyPolicyVersion: string | null;
+	/**
+	 * @type string, date-time
+	 */
+	createdAt: string;
 };
