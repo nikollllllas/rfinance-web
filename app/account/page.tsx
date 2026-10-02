@@ -73,12 +73,15 @@ export default function AccountPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold tabular-nums">
-                      {categoriesQuery.isLoading ? "—" : stat.value.toLocaleString("pt-BR")}
+                      {categoriesQuery.isLoading || categoriesQuery.isError ? "—" : stat.value.toLocaleString("pt-BR")}
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
+            {categoriesQuery.isError && (
+              <p className="text-sm text-destructive">Não foi possível carregar os totais. Tente novamente mais tarde.</p>
+            )}
 
             <Card className="border-destructive/50">
               <CardHeader>

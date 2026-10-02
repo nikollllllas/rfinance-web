@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <h2 className="text-lg font-medium">Por quanto tempo</h2>
       <p>Enquanto sua conta existir. Ao excluir a conta, todos os seus dados financeiros são apagados imediatamente. Registros de segurança (data de login e ações administrativas, sem conteúdo financeiro) são mantidos por até 6 meses para prevenção a fraudes.</p>
       <h2 className="text-lg font-medium">Seus direitos (LGPD, art. 18)</h2>
-      <p>Você pode acessar, corrigir e excluir seus dados a qualquer momento pelo próprio app (menu lateral → Excluir conta), além de revogar este consentimento. Para outras solicitações, fale com o encarregado: {DPO_NAME} (<a href={`mailto:${DPO_EMAIL}`} className="underline underline-offset-4">{DPO_EMAIL}</a>).</p>
+      <p>Você pode acessar, corrigir e excluir seus dados a qualquer momento pelo próprio app (menu do usuário → Minha conta → Excluir minha conta), além de revogar este consentimento. Para outras solicitações, fale com o encarregado: {DPO_NAME} (<a href={`mailto:${DPO_EMAIL}`} className="underline underline-offset-4">{DPO_EMAIL}</a>).</p>
     </main>
   )
 }
