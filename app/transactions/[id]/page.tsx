@@ -240,8 +240,8 @@ export default function TransactionDetailsPage() {
       <main className="flex-1 p-4 md:p-6">
         <Card className="mx-auto max-w-2xl">
           <CardHeader>
-            <div className="flex justify-between items-start">
-              <div>
+            <div className="flex justify-between items-start gap-4">
+              <div className="min-w-0 [overflow-wrap:anywhere]">
                 <CardTitle className="text-xl">
                   {transaction.description}
                   {installmentSuffix ? ` ${installmentSuffix}` : ""}
@@ -256,7 +256,7 @@ export default function TransactionDetailsPage() {
               </div>
               <div
                 className={cn(
-                  "text-2xl font-bold",
+                  "whitespace-nowrap text-2xl font-bold",
                   transaction.type === "GANHO"
                     ? "text-green-600"
                     : "text-red-600"
@@ -360,11 +360,11 @@ export default function TransactionDetailsPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" asChild>
+          <CardFooter className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
+            <Button variant="outline" asChild className="w-full sm:w-auto">
               <Link href="/transactions">Voltar para Transações</Link>
             </Button>
-            <Button asChild>
+            <Button asChild className="w-full sm:w-auto">
               <Link href={`/transactions/${id}/edit`}>
                 <Pencil className="mr-1 h-4 w-4" />
                 Editar Transação
