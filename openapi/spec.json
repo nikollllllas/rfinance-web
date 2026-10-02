@@ -381,6 +381,40 @@
         ]
       }
     },
+    "/v1/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Conta criada e sessão iniciada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "E-mail já está em uso"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/v1/auth/forgot-password": {
       "post": {
         "operationId": "AuthController_forgotPassword",
@@ -508,7 +542,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/CategoryResponseDto"
+                    "$ref": "#/components/schemas/CategoryListItemDto"
                   }
                 }
               }
@@ -1167,6 +1201,9 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "Orçamento possui transações no mês"
           }
         },
         "security": [
@@ -1522,6 +1559,28 @@
           "user"
         ]
       },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Maria Silva"
+          },
+          "email": {
+            "type": "string",
+            "example": "maria@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Senha@123"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
       "ForgotPasswordDto": {
         "type": "object",
         "properties": {
@@ -1618,6 +1677,74 @@
         },
         "required": [
           "user"
+        ]
+      },
+      "CategoryListItemDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-category"
+          },
+          "userId": {
+            "type": "string",
+            "example": "uuid-user"
+          },
+          "name": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "color": {
+            "type": "string",
+            "example": "#22C55E"
+          },
+          "icon": {
+            "type": "string",
+            "example": "food",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "example": false
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GANHO",
+              "GASTO",
+              "AMBOS"
+            ],
+            "nullable": true
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "transactionCount": {
+            "type": "number",
+            "example": 4,
+            "description": "Transações lançadas nesta categoria"
+          },
+          "budgetCount": {
+            "type": "number",
+            "example": 1,
+            "description": "Orçamentos que usam esta categoria"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "name",
+          "color",
+          "isDefault",
+          "createdAt",
+          "updatedAt",
+          "transactionCount",
+          "budgetCount"
         ]
       },
       "CategoryResponseDto": {
@@ -2138,6 +2265,11 @@
             "type": "boolean",
             "example": false
           },
+          "transactionCount": {
+            "type": "number",
+            "example": 3,
+            "description": "Transações (ganho ou gasto) da categoria no mês"
+          },
           "budgetMonth": {
             "type": "string",
             "example": "2026-03"
@@ -2164,6 +2296,7 @@
           "max",
           "percentage",
           "isOverBudget",
+          "transactionCount",
           "budgetMonth",
           "categoryName",
           "categoryColor",

@@ -66,25 +66,13 @@ export function useBudgets() {
     [updateMutation, budgetsQuery, toast],
   )
 
+  // Sem toast: quem chama mostra o feedback (evita toast duplicado).
   const removeBudget = useCallback(
     async (id: string) => {
-      try {
-        await removeMutation.mutateAsync({ id })
-        await budgetsQuery.refetch()
-        toast({
-          title: "Sucesso",
-          description: "Orçamento excluído com sucesso",
-        })
-      } catch (err) {
-        toast({
-          title: "Error",
-          description: err instanceof Error ? err.message : "Failed to delete budget",
-          variant: "destructive",
-        })
-        throw err
-      }
+      await removeMutation.mutateAsync({ id })
+      await budgetsQuery.refetch()
     },
-    [removeMutation, budgetsQuery, toast],
+    [removeMutation, budgetsQuery],
   )
 
   const replicateBudgetsFromPreviousMonth = useCallback(
@@ -137,9 +125,10 @@ export function useBudgetProgress(budgetId: string) {
     },
     client: kubbClientConfig,
   })
-  const progressData = (progressQuery.data ?? { current: 0, max: 0 }) as {
+  const progressData = (progressQuery.data ?? { current: 0, max: 0, transactionCount: 0 }) as {
     current: number
     max: number
+    transactionCount?: number
   }
   const percentage =
     progressData.max > 0
@@ -151,6 +140,7 @@ export function useBudgetProgress(budgetId: string) {
       current: progressData.current ?? 0,
       percentage,
       isOverBudget: (progressData.current ?? 0) > (progressData.max ?? 0),
+      transactionCount: progressData.transactionCount ?? 0,
     },
     isLoading: progressQuery.isLoading,
     error: (progressQuery.error as Error | null) ?? null,

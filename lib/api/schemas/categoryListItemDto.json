@@ -1,0 +1,40 @@
+{
+	"type": "object",
+	"properties": {
+		"id": { "type": "string", "example": "uuid-category" },
+		"userId": { "type": "string", "example": "uuid-user" },
+		"name": { "type": "string", "example": "Alimentação" },
+		"color": { "type": "string", "example": "#22C55E" },
+		"icon": { "type": "string", "example": "food", "nullable": true },
+		"isDefault": { "type": "boolean", "example": false },
+		"type": {
+			"type": "string",
+			"enum": ["GANHO", "GASTO", "AMBOS"],
+			"nullable": true
+		},
+		"createdAt": { "format": "date-time", "type": "string" },
+		"updatedAt": { "format": "date-time", "type": "string" },
+		"transactionCount": {
+			"type": "number",
+			"example": 4,
+			"description": "Transações lançadas nesta categoria"
+		},
+		"budgetCount": {
+			"type": "number",
+			"example": 1,
+			"description": "Orçamentos que usam esta categoria"
+		}
+	},
+	"required": [
+		"id",
+		"userId",
+		"name",
+		"color",
+		"isDefault",
+		"createdAt",
+		"updatedAt",
+		"transactionCount",
+		"budgetCount"
+	],
+	"x-readme-ref-name": "CategoryListItemDto"
+}

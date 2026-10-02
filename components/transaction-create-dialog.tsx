@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCategories } from "@/hooks/use-categories";
+import { CategoryCreateDialog } from "@/components/category-create-dialog";
 import { type TransactionData } from "@/lib/api-types";
 import { useTransactionsControllerCreate } from "@/lib/api/transactions/hooks/use-transactions-controller-create";
 import { kubbClientConfig } from "@/lib/kubb-client";
@@ -51,7 +52,8 @@ export const TransactionCreateDialog = ({
   onSuccess,
 }: TransactionCreateDialogProps) => {
   const { toast } = useToast();
-  const { categories, isLoading: categoriesLoading } = useCategories();
+  const { categories, isLoading: categoriesLoading, refreshCategories } = useCategories();
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
   const createMutation = useTransactionsControllerCreate({
     client: kubbClientConfig,
   });
@@ -350,6 +352,15 @@ export const TransactionCreateDialog = ({
                   )}
                 </SelectContent>
               </Select>
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                className="h-auto p-0"
+                onClick={() => setIsCategoryDialogOpen(true)}
+              >
+                + Nova categoria
+              </Button>
             </div>
 
             <div className="space-y-2">
@@ -452,6 +463,16 @@ export const TransactionCreateDialog = ({
             </Button>
           </DialogFooter>
         </form>
+        {/* Dentro do DialogContent (fora do <form>) para o Radix empilhar os diálogos. */}
+        <CategoryCreateDialog
+          open={isCategoryDialogOpen}
+          onOpenChange={setIsCategoryDialogOpen}
+          defaultType={transactionType}
+          onSuccess={async (category) => {
+            await refreshCategories();
+            setCategoryId(category.id);
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

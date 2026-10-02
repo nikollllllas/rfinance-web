@@ -22,7 +22,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
 
 export const budgetsControllerProgressSuspenseQueryKey = (
-	id: BudgetsControllerProgressPathParams["id"] | undefined,
+	id: BudgetsControllerProgressPathParams["id"],
 ) => [{ url: "/v1/budgets/:id/progress", params: { id: id } }] as const;
 
 export type BudgetsControllerProgressSuspenseQueryKey = ReturnType<
@@ -40,6 +40,7 @@ export function useBudgetsControllerProgressSuspenseQueryOptions(
 		BudgetsControllerProgressQueryResponse,
 		typeof queryKey
 	>({
+		enabled: !!id,
 		queryKey,
 		queryFn: async ({ signal }) => {
 			return budgetsControllerProgress(id, {

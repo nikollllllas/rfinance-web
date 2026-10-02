@@ -14,11 +14,16 @@ export type BudgetsControllerRemovePathParams = {
 
 export type BudgetsControllerRemove200 = MessageResponseDto;
 
+/**
+ * @description Orçamento possui transações no mês
+ */
+export type BudgetsControllerRemove409 = any;
+
 export type BudgetsControllerRemoveMutationResponse =
 	BudgetsControllerRemove200;
 
 export type BudgetsControllerRemoveMutation = {
 	Response: BudgetsControllerRemove200;
 	PathParams: BudgetsControllerRemovePathParams;
-	Errors: any;
+	Errors: BudgetsControllerRemove409;
 };
