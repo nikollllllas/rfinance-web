@@ -400,6 +400,7 @@ export default function BudgetsPage() {
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
         onSuccess={handleBudgetChanged}
+        initialMonth={selectedMonth}
       />
     </div>
   )
