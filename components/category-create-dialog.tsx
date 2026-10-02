@@ -136,7 +136,7 @@ export function CategoryCreateDialog({
                 <SelectContent>
                   <SelectItem value="GANHO">Ganho</SelectItem>
                   <SelectItem value="GASTO">Gasto</SelectItem>
-                  <SelectItem value="AMBOS">Ambos</SelectItem>
+                  <SelectItem value="AMBOS">Ambos (ganhos e gastos)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

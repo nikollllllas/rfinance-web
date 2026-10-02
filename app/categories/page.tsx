@@ -20,6 +20,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CategoryEditDialog } from "@/components/category-edit-dialog";
 import { CategoryCreateDialog } from "@/components/category-create-dialog";
+import { getApiErrorMessage } from "@/lib/errors/get-api-error-message";
+
+const plural = (count: number, singular: string, pluralForm: string) =>
+  `${count} ${count === 1 ? singular : pluralForm}`;
+
+// Texto de uso da categoria; vazio quando ela pode ser excluída.
+const getUsageText = (category: { transactionCount?: number; budgetCount?: number }) =>
+  [
+    category.transactionCount ? plural(category.transactionCount, "transação", "transações") : null,
+    category.budgetCount ? plural(category.budgetCount, "orçamento", "orçamentos") : null,
+  ]
+    .filter(Boolean)
+    .join(" e ");
 
 export default function CategoriesPage() {
   const { categories, isLoading, error, removeCategory, refreshCategories } =
@@ -42,11 +55,8 @@ export default function CategoriesPage() {
       });
     } catch (error) {
       toast({
-        title: "Erro",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Não foi possível excluir a categoria. Ela pode estar sendo usada em transações.",
+        title: "Não foi possível excluir",
+        description: getApiErrorMessage(error, "Não foi possível excluir a categoria."),
         variant: "destructive",
       });
     } finally {
@@ -147,7 +157,9 @@ export default function CategoriesPage() {
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => (
+            {categories.map((category) => {
+              const usageText = getUsageText(category);
+              return (
               <Card
                 key={`${category.id}-${refreshKey}`}
                 className="overflow-hidden flex flex-col justify-between"
@@ -165,6 +177,9 @@ export default function CategoriesPage() {
                   </Badge>
                 </CardHeader>
                 <CardContent>
+                  {usageText ? (
+                    <p className="text-xs text-muted-foreground">Em uso: {usageText}</p>
+                  ) : null}
                   <div className="flex justify-end gap-2 mt-2">
                     <Button
                       variant="outline"
@@ -175,11 +190,20 @@ export default function CategoriesPage() {
                       Editar
                     </Button>
                     <AlertDialog>
+                      {/* Botão desabilitado não dispara tooltip; o span carrega a explicação. */}
+                      <span
+                        title={
+                          usageText
+                            ? `Não dá para excluir: categoria em uso (${usageText}). Exclua os lançamentos primeiro.`
+                            : "Excluir categoria"
+                        }
+                      >
                       <AlertDialogTrigger asChild>
                         <Button
                           variant="destructive"
                           size="sm"
-                          disabled={!!deletingId || category.isDefault}
+                          disabled={!!deletingId || !!usageText}
+                          aria-label={`Excluir categoria ${category.name}`}
                         >
                           {deletingId === category.id ? (
                             <>
@@ -193,6 +217,7 @@ export default function CategoriesPage() {
                           )}
                         </Button>
                       </AlertDialogTrigger>
+                      </span>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
@@ -200,12 +225,6 @@ export default function CategoriesPage() {
                             Esta ação não pode ser desfeita. Isso excluirá
                             permanentemente a categoria &quot;
                             {category.name}&quot;.
-                            {category.isDefault && (
-                              <p className="mt-2 text-destructive font-semibold">
-                                Esta é uma categoria padrão e não pode ser
-                                excluída.
-                              </p>
-                            )}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -213,7 +232,6 @@ export default function CategoriesPage() {
                           <AlertDialogAction
                             onClick={() => handleDelete(category.id)}
                             className="bg-destructive text-destructive-foreground"
-                            disabled={category.isDefault}
                           >
                             Excluir
                           </AlertDialogAction>
@@ -223,7 +241,8 @@ export default function CategoriesPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
 
             <Card className="flex flex-col items-center justify-center p-6 border-dashed">
               <Button

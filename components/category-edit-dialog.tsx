@@ -166,13 +166,7 @@ export function CategoryEditDialog({
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  disabled={category?.isDefault}
                 />
-                {category?.isDefault && (
-                  <p className="text-xs text-muted-foreground">
-                    Esta é uma categoria padrão. O nome não pode ser alterado.
-                  </p>
-                )}
               </div>
 
               <div className="space-y-2">
@@ -184,7 +178,6 @@ export function CategoryEditDialog({
                   onValueChange={(value) =>
                     setType(value as "GANHO" | "GASTO" | "AMBOS")
                   }
-                  disabled={category?.isDefault}
                 >
                   <SelectTrigger id="type">
                     <SelectValue placeholder="Selecione um tipo" />
@@ -192,24 +185,19 @@ export function CategoryEditDialog({
                   <SelectContent>
                     <SelectItem value="GANHO">Ganho</SelectItem>
                     <SelectItem value="GASTO">Gasto</SelectItem>
-                    <SelectItem value="AMBOS">Ambos</SelectItem>
+                    <SelectItem value="AMBOS">Ambos (ganhos e gastos)</SelectItem>
                   </SelectContent>
                 </Select>
-                {category?.isDefault && (
-                  <p className="text-xs text-muted-foreground">
-                    Esta é uma categoria padrão. O tipo não pode ser alterado.
-                  </p>
-                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="color">Cor</Label>
-                <CategoryColorPicker color={color} onColorChange={setColor} disabled={category?.isDefault} />
+                <CategoryColorPicker color={color} onColorChange={setColor} />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="icon">Ícone (Opcional)</Label>
-                <CategoryIconPicker icon={icon} onIconChange={setIcon} disabled={category?.isDefault} />
+                <CategoryIconPicker icon={icon} onIconChange={setIcon} />
               </div>
             </div>
             <DialogFooter>
@@ -221,7 +209,7 @@ export function CategoryEditDialog({
               >
                 Cancelar
               </Button>
-              <Button type="submit" disabled={isSaving || !!category?.isDefault}>
+              <Button type="submit" disabled={isSaving}>
                 {isSaving ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

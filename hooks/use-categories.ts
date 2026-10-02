@@ -70,25 +70,13 @@ export function useCategories() {
     [updateMutation, categoriesQuery, toast],
   )
 
+  // Sem toast: quem chama mostra o feedback (evita toast duplicado).
   const removeCategory = useCallback(
     async (id: string) => {
-      try {
-        await removeMutation.mutateAsync({ id })
-        await categoriesQuery.refetch()
-        toast({
-          title: "Success",
-          description: "Category deleted successfully",
-        })
-      } catch (err) {
-        toast({
-          title: "Error",
-          description: err instanceof Error ? err.message : "Failed to delete category",
-          variant: "destructive",
-        })
-        throw err
-      }
+      await removeMutation.mutateAsync({ id })
+      await categoriesQuery.refetch()
     },
-    [removeMutation, categoriesQuery, toast],
+    [removeMutation, categoriesQuery],
   )
 
   return {
