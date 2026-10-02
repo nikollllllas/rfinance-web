@@ -264,7 +264,7 @@ export default function BudgetsPage() {
             </div>
             <div className="ml-auto flex flex-wrap items-center gap-2">
               <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-full sm:w-[200px]">
+                <SelectTrigger className="w-[160px] sm:w-[200px]">
                   <SelectValue placeholder="Selecione o mês" />
                 </SelectTrigger>
                 <SelectContent>
@@ -280,6 +280,7 @@ export default function BudgetsPage() {
                   size="sm" 
                   variant="outline" 
                   onClick={handleReplicateBudgets}
+                  aria-label="Replicar Mês Anterior"
                   disabled={isReplicating}
                 >
                   {isReplicating ? (
@@ -289,15 +290,15 @@ export default function BudgetsPage() {
                     </>
                   ) : (
                     <>
-                      <Copy className="mr-1 h-4 w-4" />
-                      Replicar Mês Anterior
+                      <Copy className="h-4 w-4 sm:mr-1" />
+                      <span className="hidden sm:inline">Replicar Mês Anterior</span>
                     </>
                   )}
                 </Button>
               )}
-              <Button size="sm" onClick={() => setIsCreateDialogOpen(true)}>
-                <Plus className="mr-1 h-4 w-4" />
-                Novo Orçamento
+              <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
+                <Plus className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">Novo Orçamento</span>
               </Button>
             </div>
           </div>
@@ -321,7 +322,7 @@ export default function BudgetsPage() {
           </div>
           <div className="ml-auto flex flex-wrap items-center gap-2">
             <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-              <SelectTrigger className="w-full sm:w-[200px]">
+              <SelectTrigger className="w-[160px] sm:w-[200px]">
                 <SelectValue placeholder="Selecione o mês" />
               </SelectTrigger>
               <SelectContent>
@@ -337,6 +338,7 @@ export default function BudgetsPage() {
                 size="sm" 
                 variant="outline" 
                 onClick={handleReplicateBudgets}
+                aria-label="Replicar Mês Anterior"
                 disabled={isReplicating}
               >
                 {isReplicating ? (
@@ -346,15 +348,15 @@ export default function BudgetsPage() {
                   </>
                 ) : (
                   <>
-                    <Copy className="mr-1 h-4 w-4" />
-                    Replicar Mês Anterior
+                    <Copy className="h-4 w-4 sm:mr-1" />
+                    <span className="hidden sm:inline">Replicar Mês Anterior</span>
                   </>
                 )}
               </Button>
             )}
-            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)}>
-              <Plus className="mr-1 h-4 w-4" />
-              Novo Orçamento
+            <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
+              <Plus className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">Novo Orçamento</span>
             </Button>
           </div>
         </div>
@@ -374,6 +376,7 @@ export default function BudgetsPage() {
                 <Button 
                   variant="outline" 
                   onClick={handleReplicateBudgets}
+                  aria-label="Replicar Mês Anterior"
                   disabled={isReplicating}
                 >
                   {isReplicating ? (
