@@ -4,12 +4,6 @@
  */
 
 import type {
-	DashboardControllerGetSummaryQueryResponse,
-	DashboardControllerGetSummaryQueryParams,
-	DashboardControllerGetSummary400,
-	DashboardControllerGetSummary401,
-} from "../../schemas/dashboard/dashboard-controller-get-summary.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +14,14 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { dashboardControllerGetSummary } from "../dashboard-controller-get-summary.ts";
+import type {
+	DashboardControllerGetSummaryQueryResponse,
+	DashboardControllerGetSummaryQueryParams,
+	DashboardControllerGetSummary400,
+	DashboardControllerGetSummary401,
+} from "../../schemas/dashboard/dashboard-controller-get-summary.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { dashboardControllerGetSummary } from "../dashboard-controller-get-summary.ts";
 
 export const dashboardControllerGetSummaryQueryKey = (
 	params?: DashboardControllerGetSummaryQueryParams,

@@ -4,12 +4,6 @@
  */
 
 import type {
-	CategoriesControllerGetByIdQueryResponse,
-	CategoriesControllerGetByIdPathParams,
-	CategoriesControllerGetById401,
-	CategoriesControllerGetById404,
-} from "../../schemas/categories/categories-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +14,14 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { categoriesControllerGetById } from "../categories-controller-get-by-id.ts";
+import type {
+	CategoriesControllerGetByIdQueryResponse,
+	CategoriesControllerGetByIdPathParams,
+	CategoriesControllerGetById401,
+	CategoriesControllerGetById404,
+} from "../../schemas/categories/categories-controller-get-by-id.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { categoriesControllerGetById } from "../categories-controller-get-by-id.ts";
 
 export const categoriesControllerGetByIdSuspenseQueryKey = (
 	id: CategoriesControllerGetByIdPathParams["id"],

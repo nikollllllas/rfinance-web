@@ -4,12 +4,6 @@
  */
 
 import type {
-	UsersControllerListQueryResponse,
-	UsersControllerListQueryParams,
-	UsersControllerList401,
-	UsersControllerList403,
-} from "../../schemas/users/users-controller-list.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -20,8 +14,14 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { usersControllerList } from "../users-controller-list.ts";
+import type {
+	UsersControllerListQueryResponse,
+	UsersControllerListQueryParams,
+	UsersControllerList401,
+	UsersControllerList403,
+} from "../../schemas/users/users-controller-list.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { usersControllerList } from "../users-controller-list.ts";
 
 export const usersControllerListSuspenseQueryKey = (
 	params?: UsersControllerListQueryParams,

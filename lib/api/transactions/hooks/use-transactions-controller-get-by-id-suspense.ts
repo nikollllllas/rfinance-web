@@ -4,11 +4,6 @@
  */
 
 import type {
-	TransactionsControllerGetByIdQueryResponse,
-	TransactionsControllerGetByIdPathParams,
-	TransactionsControllerGetById404,
-} from "../../schemas/transactions/transactions-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +14,13 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
+import type {
+	TransactionsControllerGetByIdQueryResponse,
+	TransactionsControllerGetByIdPathParams,
+	TransactionsControllerGetById404,
+} from "../../schemas/transactions/transactions-controller-get-by-id.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
 
 export const transactionsControllerGetByIdSuspenseQueryKey = (
 	id: TransactionsControllerGetByIdPathParams["id"],

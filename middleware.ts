@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { AUTH_COOKIE_NAME } from "@/lib/auth/constants"
 
-const publicPaths = ["/login", "/forgot-password", "/reset-password"]
+const publicPaths = ["/login", "/register", "/forgot-password", "/reset-password"]
 
 export const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl
@@ -13,6 +13,17 @@ export const middleware = (request: NextRequest) => {
     publicPaths.includes(pathname) || pathname.startsWith("/preview")
 
   if (isStaticPath) {
+    return NextResponse.next()
+  }
+
+  // A API faz sua própria autenticação; o middleware roda antes do rewrite
+  // pro backend e não deve bloquear rotas públicas como /api/v1/auth/login.
+  if (pathname.startsWith("/api/")) {
+    return NextResponse.next()
+  }
+
+  // Acessível logado ou deslogado: o gate de consentimento linka pra cá mesmo autenticado.
+  if (pathname === "/privacidade") {
     return NextResponse.next()
   }
 

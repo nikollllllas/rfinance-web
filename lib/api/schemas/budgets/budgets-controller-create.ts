@@ -3,12 +3,13 @@
  * Do not edit manually.
  */
 
+import type { BudgetResponseDto } from "../budget-response-dto.ts";
 import type { CreateBudgetDto } from "../create-budget-dto.ts";
 
 /**
  * @description Orçamento criado com sucesso
  */
-export type BudgetsControllerCreate201 = any;
+export type BudgetsControllerCreate201 = BudgetResponseDto;
 
 /**
  * @description Categoria não encontrada

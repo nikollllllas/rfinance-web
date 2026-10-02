@@ -3,7 +3,6 @@
  * Do not edit manually.
  */
 
-import type { AppControllerGetHealthQueryResponse } from "../../schemas/health/app-controller-get-health.ts";
 import type {
 	Client,
 	RequestConfig,
@@ -15,8 +14,9 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { appControllerGetHealth } from "../app-controller-get-health.ts";
+import type { AppControllerGetHealthQueryResponse } from "../../schemas/health/app-controller-get-health.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { appControllerGetHealth } from "../app-controller-get-health.ts";
 
 export const appControllerGetHealthSuspenseQueryKey = () =>
 	[{ url: "/v1" }] as const;

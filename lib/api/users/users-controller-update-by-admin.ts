@@ -5,6 +5,11 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	UsersControllerUpdateByAdminMutationRequest,
 	UsersControllerUpdateByAdminMutationResponse,
 	UsersControllerUpdateByAdminPathParams,
@@ -13,11 +18,6 @@ import type {
 	UsersControllerUpdateByAdmin404,
 	UsersControllerUpdateByAdmin409,
 } from "../schemas/users/users-controller-update-by-admin.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getUsersControllerUpdateByAdminUrl(
 	id: UsersControllerUpdateByAdminPathParams["id"],

@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { MessageResponseDto } from "../message-response-dto.ts";
+
 export type CategoriesControllerRemovePathParams = {
 	/**
 	 * @type string
@@ -10,10 +12,7 @@ export type CategoriesControllerRemovePathParams = {
 	id: string;
 };
 
-/**
- * @example [object Object]
- */
-export type CategoriesControllerRemove200 = any;
+export type CategoriesControllerRemove200 = MessageResponseDto;
 
 /**
  * @description Não autenticado

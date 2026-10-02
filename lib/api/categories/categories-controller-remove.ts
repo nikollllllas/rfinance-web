@@ -5,6 +5,11 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	CategoriesControllerRemoveMutationResponse,
 	CategoriesControllerRemovePathParams,
 	CategoriesControllerRemove401,
@@ -12,11 +17,6 @@ import type {
 	CategoriesControllerRemove404,
 	CategoriesControllerRemove409,
 } from "../schemas/categories/categories-controller-remove.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getCategoriesControllerRemoveUrl(
 	id: CategoriesControllerRemovePathParams["id"],

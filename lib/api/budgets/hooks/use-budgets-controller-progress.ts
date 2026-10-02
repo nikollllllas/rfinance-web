@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerProgressQueryResponse,
-	BudgetsControllerProgressPathParams,
-} from "../../schemas/budgets/budgets-controller-progress.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
+import type {
+	BudgetsControllerProgressQueryResponse,
+	BudgetsControllerProgressPathParams,
+} from "../../schemas/budgets/budgets-controller-progress.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
 
 export const budgetsControllerProgressQueryKey = (
 	id: BudgetsControllerProgressPathParams["id"],

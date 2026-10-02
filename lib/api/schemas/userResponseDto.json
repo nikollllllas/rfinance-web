@@ -1,0 +1,13 @@
+{
+	"type": "object",
+	"properties": {
+		"id": { "type": "string", "example": "uuid-user" },
+		"name": { "type": "string", "example": "Administrador" },
+		"email": { "type": "string", "example": "admin@rfinance.local" },
+		"role": { "type": "string", "enum": ["ADMIN", "USER"], "example": "ADMIN" },
+		"createdAt": { "format": "date-time", "type": "string" },
+		"updatedAt": { "format": "date-time", "type": "string" }
+	},
+	"required": ["id", "name", "email", "role", "createdAt", "updatedAt"],
+	"x-readme-ref-name": "UserResponseDto"
+}

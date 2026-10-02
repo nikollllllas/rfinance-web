@@ -3,6 +3,7 @@
  * Do not edit manually.
  */
 
+import type { TransactionResponseDto } from "../transaction-response-dto.ts";
 import type { UpdateTransactionDto } from "../update-transaction-dto.ts";
 
 export type TransactionsControllerUpdatePathParams = {
@@ -15,7 +16,7 @@ export type TransactionsControllerUpdatePathParams = {
 /**
  * @description Transação atualizada
  */
-export type TransactionsControllerUpdate200 = any;
+export type TransactionsControllerUpdate200 = TransactionResponseDto;
 
 /**
  * @description Transação ou categoria não encontrada

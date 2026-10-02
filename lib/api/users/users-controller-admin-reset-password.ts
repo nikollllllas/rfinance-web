@@ -5,6 +5,11 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	UsersControllerAdminResetPasswordMutationRequest,
 	UsersControllerAdminResetPasswordMutationResponse,
 	UsersControllerAdminResetPasswordPathParams,
@@ -12,11 +17,6 @@ import type {
 	UsersControllerAdminResetPassword403,
 	UsersControllerAdminResetPassword404,
 } from "../schemas/users/users-controller-admin-reset-password.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getUsersControllerAdminResetPasswordUrl(
 	id: UsersControllerAdminResetPasswordPathParams["id"],

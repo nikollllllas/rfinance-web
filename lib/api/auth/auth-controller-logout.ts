@@ -4,12 +4,12 @@
  */
 
 import fetch from "@kubb/plugin-client/clients/axios";
-import type { AuthControllerLogoutMutationResponse } from "../schemas/auth/auth-controller-logout.ts";
 import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type { AuthControllerLogoutMutationResponse } from "../schemas/auth/auth-controller-logout.ts";
 
 function getAuthControllerLogoutUrl() {
 	const res = { method: "POST", url: `/v1/auth/logout` as const };

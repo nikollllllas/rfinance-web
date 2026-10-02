@@ -4,10 +4,6 @@
  */
 
 import type {
-	BudgetsControllerProgressQueryResponse,
-	BudgetsControllerProgressPathParams,
-} from "../../schemas/budgets/budgets-controller-progress.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -18,8 +14,12 @@ import type {
 	UseSuspenseQueryOptions,
 	UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
+import type {
+	BudgetsControllerProgressQueryResponse,
+	BudgetsControllerProgressPathParams,
+} from "../../schemas/budgets/budgets-controller-progress.ts";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { budgetsControllerProgress } from "../budgets-controller-progress.ts";
 
 export const budgetsControllerProgressSuspenseQueryKey = (
 	id: BudgetsControllerProgressPathParams["id"],

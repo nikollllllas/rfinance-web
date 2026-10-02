@@ -4,11 +4,6 @@
  */
 
 import type {
-	TransactionsControllerGetByIdQueryResponse,
-	TransactionsControllerGetByIdPathParams,
-	TransactionsControllerGetById404,
-} from "../../schemas/transactions/transactions-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -19,8 +14,13 @@ import type {
 	QueryObserverOptions,
 	UseQueryResult,
 } from "@tanstack/react-query";
-import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
+import type {
+	TransactionsControllerGetByIdQueryResponse,
+	TransactionsControllerGetByIdPathParams,
+	TransactionsControllerGetById404,
+} from "../../schemas/transactions/transactions-controller-get-by-id.ts";
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { transactionsControllerGetById } from "../transactions-controller-get-by-id.ts";
 
 export const transactionsControllerGetByIdQueryKey = (
 	id: TransactionsControllerGetByIdPathParams["id"],

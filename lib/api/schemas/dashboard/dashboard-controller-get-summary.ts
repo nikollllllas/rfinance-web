@@ -3,6 +3,8 @@
  * Do not edit manually.
  */
 
+import type { DashboardResponseDto } from "../dashboard-response-dto.ts";
+
 export type DashboardControllerGetSummaryQueryParams = {
 	/**
 	 * @description Formato YYYY-MM
@@ -11,10 +13,7 @@ export type DashboardControllerGetSummaryQueryParams = {
 	month?: string;
 };
 
-/**
- * @example [object Object]
- */
-export type DashboardControllerGetSummary200 = any;
+export type DashboardControllerGetSummary200 = DashboardResponseDto;
 
 /**
  * @description Formato de mês inválido (YYYY-MM)

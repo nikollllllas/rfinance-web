@@ -5,14 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerRemoveMutationResponse,
-	BudgetsControllerRemovePathParams,
-} from "../schemas/budgets/budgets-controller-remove.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerRemoveMutationResponse,
+	BudgetsControllerRemovePathParams,
+	BudgetsControllerRemove409,
+} from "../schemas/budgets/budgets-controller-remove.ts";
 
 function getBudgetsControllerRemoveUrl(
 	id: BudgetsControllerRemovePathParams["id"],
@@ -32,7 +33,7 @@ export async function budgetsControllerRemove(
 
 	const res = await request<
 		BudgetsControllerRemoveMutationResponse,
-		ResponseErrorConfig<Error>,
+		ResponseErrorConfig<BudgetsControllerRemove409>,
 		unknown
 	>({
 		method: "DELETE",

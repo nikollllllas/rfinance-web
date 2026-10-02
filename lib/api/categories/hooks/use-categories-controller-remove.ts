@@ -4,14 +4,6 @@
  */
 
 import type {
-	CategoriesControllerRemoveMutationResponse,
-	CategoriesControllerRemovePathParams,
-	CategoriesControllerRemove401,
-	CategoriesControllerRemove403,
-	CategoriesControllerRemove404,
-	CategoriesControllerRemove409,
-} from "../../schemas/categories/categories-controller-remove.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
@@ -21,8 +13,16 @@ import type {
 	UseMutationResult,
 	QueryClient,
 } from "@tanstack/react-query";
-import { categoriesControllerRemove } from "../categories-controller-remove.ts";
+import type {
+	CategoriesControllerRemoveMutationResponse,
+	CategoriesControllerRemovePathParams,
+	CategoriesControllerRemove401,
+	CategoriesControllerRemove403,
+	CategoriesControllerRemove404,
+	CategoriesControllerRemove409,
+} from "../../schemas/categories/categories-controller-remove.ts";
 import { mutationOptions, useMutation } from "@tanstack/react-query";
+import { categoriesControllerRemove } from "../categories-controller-remove.ts";
 
 export const categoriesControllerRemoveMutationKey = () =>
 	[{ url: "/v1/categories/:id" }] as const;

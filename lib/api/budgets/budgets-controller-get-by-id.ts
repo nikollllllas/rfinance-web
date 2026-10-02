@@ -5,15 +5,15 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
-	BudgetsControllerGetByIdQueryResponse,
-	BudgetsControllerGetByIdPathParams,
-	BudgetsControllerGetById404,
-} from "../schemas/budgets/budgets-controller-get-by-id.ts";
-import type {
 	Client,
 	RequestConfig,
 	ResponseErrorConfig,
 } from "@kubb/plugin-client/clients/axios";
+import type {
+	BudgetsControllerGetByIdQueryResponse,
+	BudgetsControllerGetByIdPathParams,
+	BudgetsControllerGetById404,
+} from "../schemas/budgets/budgets-controller-get-by-id.ts";
 
 function getBudgetsControllerGetByIdUrl(
 	id: BudgetsControllerGetByIdPathParams["id"],

@@ -5,16 +5,16 @@
 
 import fetch from "@kubb/plugin-client/clients/axios";
 import type {
+	Client,
+	RequestConfig,
+	ResponseErrorConfig,
+} from "@kubb/plugin-client/clients/axios";
+import type {
 	DashboardControllerGetSummaryQueryResponse,
 	DashboardControllerGetSummaryQueryParams,
 	DashboardControllerGetSummary400,
 	DashboardControllerGetSummary401,
 } from "../schemas/dashboard/dashboard-controller-get-summary.ts";
-import type {
-	Client,
-	RequestConfig,
-	ResponseErrorConfig,
-} from "@kubb/plugin-client/clients/axios";
 
 function getDashboardControllerGetSummaryUrl() {
 	const res = { method: "GET", url: `/v1/dashboard` as const };
