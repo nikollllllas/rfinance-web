@@ -11,12 +11,12 @@ export function AuthShell({ title, subtitle, children }: AuthShellProps) {
   return (
     <main className="relative flex min-h-screen w-full bg-background">
       {/* gradient seam between panels */}
-      <div className="pointer-events-none absolute inset-y-0 left-[620px] z-10 hidden w-[30px] -translate-x-1/2 bg-gradient-to-r from-transparent via-[oklch(0.15_0.02_255/0.2)] to-transparent lg:block" />
+      <div className="pointer-events-none absolute inset-y-0 left-[620px] z-10 hidden w-[30px] -translate-x-1/2 bg-linear-to-r from-transparent via-[oklch(0.15_0.02_255/0.2)] to-transparent lg:block" />
 
       <div className="flex w-full flex-col px-6 py-12 sm:px-12 lg:w-[620px] lg:flex-none lg:px-24 lg:py-16">
         <div className="flex items-center gap-2.5">
           <div
-            className="h-[30px] w-[30px] flex-shrink-0 rounded-[9px]"
+            className="h-[30px] w-[30px] shrink-0 rounded-[9px]"
             style={{
               background:
                 "linear-gradient(135deg, oklch(0.2 0.02 250) 0%, oklch(0.2 0.02 250) 50%, oklch(0.75 0.17 165) 50%, oklch(0.75 0.17 165) 100%)",

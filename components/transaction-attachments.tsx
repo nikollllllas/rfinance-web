@@ -133,23 +133,23 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
                 className="flex min-w-0 flex-1 items-center gap-2 text-left"
               >
                 {attachment.mimeType === "application/pdf" ? (
-                  <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                  <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                 ) : (
-                  <ImageIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                  <ImageIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
                 )}
                 <span className="truncate text-xs">{attachment.fileName}</span>
-                <span className="flex-shrink-0 text-xs text-muted-foreground">
+                <span className="shrink-0 text-xs text-muted-foreground">
                   {formatBytes(attachment.sizeBytes)}
                 </span>
                 {openingId === attachment.id && (
-                  <Loader2 className="h-3 w-3 flex-shrink-0 animate-spin" />
+                  <Loader2 className="h-3 w-3 shrink-0 animate-spin" />
                 )}
               </button>
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 flex-shrink-0 text-destructive hover:text-destructive"
+                className="h-7 w-7 shrink-0 text-destructive hover:text-destructive"
                 onClick={() => removeMutation.mutate({ id: attachment.id })}
                 disabled={removeMutation.isPending}
               >

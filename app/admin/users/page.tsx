@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <div className="flex flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:px-6">
           <div>
             <h1 className="text-lg font-semibold">Usuários</h1>

@@ -56,7 +56,7 @@ export function CategoryColorPicker({
             disabled={disabled}
             aria-label={`Selecionar cor ${presetColor}`}
             className={cn(
-              "h-7 w-7 rounded-full border border-black/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
+              "h-7 w-7 rounded-full border border-black/10 transition focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
               color.toLowerCase() === presetColor
                 ? "ring-2 ring-primary ring-offset-2"
                 : "hover:scale-105"

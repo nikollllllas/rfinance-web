@@ -61,7 +61,7 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
           <div className="flex min-w-0 items-center gap-3">
             <div
               className={cn(
-                "flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px]",
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px]",
                 isIncome ? "bg-green-500/15" : "bg-destructive/15"
               )}
             >
@@ -71,7 +71,7 @@ export default function RecentTransactions({dashboardData, isLoading, error}: Re
                 <ArrowDownIcon className="h-4 w-4 text-destructive" strokeWidth={2.2} />
               )}
             </div>
-            <div className="min-w-0 [overflow-wrap:anywhere]">
+            <div className="min-w-0 wrap-anywhere">
               <p className="text-[13.5px] font-medium">
                 {transaction.description}
                 {installmentSuffix ? ` ${installmentSuffix}` : ""}

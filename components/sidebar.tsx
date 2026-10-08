@@ -148,7 +148,7 @@ export default function Sidebar() {
             {!collapsed && (
               <Link href="/" className="flex items-center gap-2">
                 <span
-                  className="h-7 w-7 flex-shrink-0 rounded-[8px]"
+                  className="h-7 w-7 shrink-0 rounded-[8px]"
                   style={{
                     background:
                       "linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--foreground)) 50%, hsl(var(--success)) 50%, hsl(var(--success)) 100%)",
@@ -159,7 +159,7 @@ export default function Sidebar() {
             )}
             {collapsed && (
               <span
-                className="h-7 w-7 mx-auto flex-shrink-0 rounded-[8px]"
+                className="h-7 w-7 mx-auto shrink-0 rounded-[8px]"
                 style={{
                   background:
                     "linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--foreground)) 50%, hsl(var(--success)) 50%, hsl(var(--success)) 100%)",

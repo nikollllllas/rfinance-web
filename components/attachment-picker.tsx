@@ -110,12 +110,12 @@ export function AttachmentPicker({
             >
               <div className="flex min-w-0 items-center gap-2">
                 {file.type === "application/pdf" ? (
-                  <FileText className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                  <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                 ) : (
-                  <ImageIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                  <ImageIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
                 )}
                 <span className="truncate text-xs">{file.name}</span>
-                <span className="flex-shrink-0 text-xs text-muted-foreground">
+                <span className="shrink-0 text-xs text-muted-foreground">
                   {formatBytes(file.size)}
                 </span>
               </div>
@@ -123,7 +123,7 @@ export function AttachmentPicker({
                 type="button"
                 disabled={disabled}
                 onClick={() => removeFile(index)}
-                className="flex-shrink-0 text-muted-foreground hover:text-destructive disabled:pointer-events-none"
+                className="shrink-0 text-muted-foreground hover:text-destructive disabled:pointer-events-none"
               >
                 <X className="h-3.5 w-3.5" />
                 <span className="sr-only">Remover</span>

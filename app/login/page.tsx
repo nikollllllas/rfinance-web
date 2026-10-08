@@ -94,7 +94,7 @@ export default function LoginPage() {
 
         <label className="group mt-0.5 flex cursor-pointer select-none items-center gap-[9px]">
           <input type="checkbox" defaultChecked className="peer sr-only" />
-          <span className="flex h-[17px] w-[17px] flex-shrink-0 items-center justify-center rounded-[5px] bg-muted transition-colors group-hover:bg-muted-foreground/30 peer-checked:bg-success peer-checked:group-hover:bg-success/85 peer-focus-visible:ring-2 peer-focus-visible:ring-success peer-focus-visible:ring-offset-2">
+          <span className="flex h-[17px] w-[17px] shrink-0 items-center justify-center rounded-[5px] bg-muted transition-colors group-hover:bg-muted-foreground/30 peer-checked:bg-success group-hover:peer-checked:bg-success/85 peer-focus-visible:ring-2 peer-focus-visible:ring-success peer-focus-visible:ring-offset-2">
             <Check className="h-[11px] w-[11px] text-white" strokeWidth={3} />
           </span>
           <span className="text-[13.5px] text-muted-foreground transition-colors group-hover:text-foreground">

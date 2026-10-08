@@ -44,7 +44,7 @@ export default function PreviewTransactionsPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="sticky top-14 z-10 border-b bg-background/95 backdrop-blur">
+      <header className="sticky top-14 z-10 border-b bg-background/95 backdrop-blur-sm">
         <div className="flex h-14 items-center px-4">
           <span className="font-display text-lg">Transações</span>
         </div>

@@ -25,7 +25,7 @@ export default function PreviewLayout({ children }: { children: React.ReactNode 
 
       <PreviewSidebar />
 
-      <div className="pl-[var(--sidebar-width,256px)] pt-14 transition-all duration-300">
+      <div className="pl-(--sidebar-width,256px) pt-14 transition-all duration-300">
         {children}
       </div>
     </div>

@@ -134,7 +134,7 @@ export default function TransactionsPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2 md:px-6">
           <div className="flex items-center gap-2 font-semibold">
             <span className="font-display text-lg">Transações</span>
@@ -208,7 +208,7 @@ export default function TransactionsPage() {
                       return (
                       <TableRow key={`${transaction.id}-${refreshKey}`}>
                         <TableCell className="font-medium">
-                          <div className="flex flex-col gap-0.5 [overflow-wrap:anywhere]">
+                          <div className="flex flex-col gap-0.5 wrap-anywhere">
                             <Link
                               href={`/transactions/${transaction.id}`}
                               className="hover:underline"
