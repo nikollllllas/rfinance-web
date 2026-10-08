@@ -257,7 +257,7 @@ export default function BudgetsPage() {
   if (isLoading) {
     return (
       <div className="flex flex-col min-h-screen">
-        <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
           <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
             <div className="flex items-center gap-2 font-semibold">
               <span className="font-display text-lg">Orçamentos</span>
@@ -315,7 +315,7 @@ export default function BudgetsPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
         <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
           <div className="flex items-center gap-2 font-semibold">
             <span className="font-display text-lg">Orçamentos</span>

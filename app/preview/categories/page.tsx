@@ -21,7 +21,7 @@ const TYPE_COLOR: Record<string, string> = {
 export default function PreviewCategoriesPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="sticky top-14 z-10 border-b bg-background/95 backdrop-blur">
+      <header className="sticky top-14 z-10 border-b bg-background/95 backdrop-blur-sm">
         <div className="flex h-14 items-center px-4 md:px-6">
           <span className="text-lg font-semibold">Categorias</span>
         </div>

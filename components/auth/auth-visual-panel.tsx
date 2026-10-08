@@ -72,7 +72,7 @@ export function AuthVisualPanel() {
       <div className="absolute right-[6%] top-[70px] w-[196px] rotate-2 rounded-2xl border border-white/10 bg-[oklch(0.3_0.02_255/0.55)] p-[18px] shadow-[0_20px_40px_-12px_oklch(0_0_0/0.5)] backdrop-blur-md">
         <p className="mb-3.5 text-xs font-medium text-white/70">Por categoria</p>
         <div className="flex items-center gap-3.5">
-          <svg width="72" height="72" viewBox="0 0 100 100" className="-rotate-90 flex-shrink-0">
+          <svg width="72" height="72" viewBox="0 0 100 100" className="-rotate-90 shrink-0">
             <circle cx="50" cy="50" r="42" fill="none" stroke="white" strokeOpacity="0.1" strokeWidth="12" />
             <circle
               cx="50"
