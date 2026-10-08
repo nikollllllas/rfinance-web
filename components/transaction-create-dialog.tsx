@@ -38,6 +38,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { TransactionAttachments } from "@/components/transaction-attachments";
 
 interface TransactionCreateDialogProps {
   open: boolean;
@@ -71,6 +72,7 @@ export const TransactionCreateDialog = ({
   const [paymentMethod, setPaymentMethod] = useState<ExpensePaymentMethod>("PIX");
   const [creditInstallments, setCreditInstallments] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createdTransactionId, setCreatedTransactionId] = useState<string | null>(null);
 
   const filteredCategories = categories.filter(
     (category) =>
@@ -92,6 +94,25 @@ export const TransactionCreateDialog = ({
     isCreditSplit && parcelAmounts.length > 0 && firstParcel !== undefined;
   const dateLabel =
     isCreditSplit && showParcelPreview ? "Primeira parcela" : "Data";
+
+  const resetForm = () => {
+    setDescription("");
+    setAmount("");
+    setDate(new Date());
+    setCategoryId("");
+    setNotes("");
+    setTag(null);
+    setPaymentMethod("PIX");
+    setCreditInstallments(1);
+  };
+
+  const handleDialogOpenChange = (next: boolean) => {
+    if (!next) {
+      resetForm();
+      setCreatedTransactionId(null);
+    }
+    onOpenChange(next);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -125,24 +146,24 @@ export const TransactionCreateDialog = ({
         }
       }
 
-      await createMutation.mutateAsync({ data: transactionData as any });
+      const result = await createMutation.mutateAsync({ data: transactionData as any });
+      const newTransactionId = (result as any)?.transactions?.[0]?.id as
+        | string
+        | undefined;
 
       toast({
         title: "Transação criada",
-        description: "Sua transação foi criada com sucesso.",
+        description: "Anexe um comprovante se quiser, ou feche quando terminar.",
       });
 
-      setDescription("");
-      setAmount("");
-      setDate(new Date());
-      setCategoryId("");
-      setNotes("");
-      setTag(null);
-      setPaymentMethod("PIX");
-      setCreditInstallments(1);
-
-      onOpenChange(false);
+      resetForm();
       if (onSuccess) onSuccess();
+
+      if (newTransactionId) {
+        setCreatedTransactionId(newTransactionId);
+      } else {
+        handleDialogOpenChange(false);
+      }
     } catch (error) {
       toast({
         title: "Erro",
@@ -160,15 +181,27 @@ export const TransactionCreateDialog = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-[560px]">
         <DialogHeader>
           <DialogTitle>Nova Transação</DialogTitle>
           <DialogDescription>
-            Registre uma nova receita ou despesa
+            {createdTransactionId
+              ? "Transação criada. Anexe um comprovante se quiser."
+              : "Registre uma nova receita ou despesa"}
           </DialogDescription>
         </DialogHeader>
 
+        {createdTransactionId ? (
+          <div className="space-y-4 py-4">
+            <TransactionAttachments transactionId={createdTransactionId} />
+            <DialogFooter>
+              <Button type="button" onClick={() => handleDialogOpenChange(false)}>
+                Concluir
+              </Button>
+            </DialogFooter>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
@@ -435,7 +468,7 @@ export const TransactionCreateDialog = ({
             <Button
               variant="outline"
               type="button"
-              onClick={() => onOpenChange(false)}
+              onClick={() => handleDialogOpenChange(false)}
               disabled={isSubmitting}
             >
               Cancelar
@@ -452,6 +485,7 @@ export const TransactionCreateDialog = ({
             </Button>
           </DialogFooter>
         </form>
+        )}
         {/* Dentro do DialogContent (fora do <form>) para o Radix empilhar os diálogos. */}
         <CategoryCreateDialog
           open={isCategoryDialogOpen}

@@ -35,6 +35,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { TransactionAttachments } from "@/components/transaction-attachments";
 
 interface TransactionEditDialogProps {
   transactionId: string;
@@ -379,6 +380,10 @@ export function TransactionEditDialog({
                   onChange={(e) => setNotes(e.target.value)}
                   rows={3}
                 />
+              </div>
+
+              <div className="sm:col-span-2">
+                <TransactionAttachments transactionId={transactionId} />
               </div>
             </div>
             <DialogFooter>
