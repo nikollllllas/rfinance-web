@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  DefaultLegendContent,
   ResponsiveContainer,
 } from "recharts";
 import { Loader2 } from "lucide-react";
@@ -73,11 +74,15 @@ export default function FinancialOverview({dashboardData, isLoading, error}: Fin
           }}
         />
         <Legend
-          payload={[
-            { value: "Ganhos", type: "line", color: COLOR_INCOME },
-            { value: "Gastos", type: "line", color: COLOR_EXPENSES },
-            { value: "Economia", type: "line", color: COLOR_SAVINGS },
-          ]}
+          content={
+            <DefaultLegendContent
+              payload={[
+                { value: "Ganhos", type: "line", color: COLOR_INCOME },
+                { value: "Gastos", type: "line", color: COLOR_EXPENSES },
+                { value: "Economia", type: "line", color: COLOR_SAVINGS },
+              ]}
+            />
+          }
         />
         <Line
           type="monotone"
