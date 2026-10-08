@@ -1293,6 +1293,181 @@
           "dashboard"
         ]
       }
+    },
+    "/v1/transactions/{transactionId}/attachments": {
+      "post": {
+        "operationId": "TransactionAttachmentsController_upload",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Arquivo inválido ou maior que o limite"
+          },
+          "404": {
+            "description": "Transação não encontrada"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "attachments"
+        ]
+      },
+      "get": {
+        "operationId": "TransactionAttachmentsController_list",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transação não encontrada"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "attachments"
+        ]
+      }
+    },
+    "/v1/attachments/{id}/download": {
+      "get": {
+        "operationId": "AttachmentsController_getDownloadUrl",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "URL assinada, válida por 5 minutos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentDownloadResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Anexo não encontrado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "attachments"
+        ]
+      }
+    },
+    "/v1/attachments/{id}": {
+      "delete": {
+        "operationId": "AttachmentsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Anexo não encontrado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "attachments"
+        ]
+      }
     }
   },
   "info": {
@@ -2471,6 +2646,61 @@
           "recentTransactions",
           "budgets",
           "monthlyData"
+        ]
+      },
+      "AttachmentResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-attachment"
+          },
+          "transactionId": {
+            "type": "string",
+            "example": "uuid-transaction"
+          },
+          "fileName": {
+            "type": "string",
+            "example": "conta_de_luz.pdf"
+          },
+          "mimeType": {
+            "type": "string",
+            "example": "application/pdf"
+          },
+          "sizeBytes": {
+            "type": "number",
+            "example": 214532
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "example": "2026-08-05T12:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "transactionId",
+          "fileName",
+          "mimeType",
+          "sizeBytes",
+          "createdAt"
+        ]
+      },
+      "AttachmentDownloadResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://....r2.cloudflarestorage.com/..."
+          },
+          "fileName": {
+            "type": "string",
+            "example": "conta_de_luz.pdf"
+          }
+        },
+        "required": [
+          "url",
+          "fileName"
         ]
       }
     }
