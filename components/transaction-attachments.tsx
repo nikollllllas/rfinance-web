@@ -13,8 +13,7 @@ import {
 } from "@/lib/api/attachments/hooks/use-transaction-attachments-controller-list"
 import { useTransactionAttachmentsControllerUpload } from "@/lib/api/attachments/hooks/use-transaction-attachments-controller-upload"
 import { useAttachmentsControllerRemove } from "@/lib/api/attachments/hooks/use-attachments-controller-remove"
-
-const ACCEPTED_TYPES = ".pdf,.jpg,.jpeg,.png,.webp,.heic"
+import { ATTACHMENT_ACCEPTED_TYPES } from "@/components/attachment-picker"
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -110,7 +109,7 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
         <input
           ref={fileInputRef}
           type="file"
-          accept={ACCEPTED_TYPES}
+          accept={ATTACHMENT_ACCEPTED_TYPES}
           className="hidden"
           onChange={handleFileSelected}
         />
