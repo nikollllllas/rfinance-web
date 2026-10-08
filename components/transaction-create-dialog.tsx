@@ -38,7 +38,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { TransactionAttachments } from "@/components/transaction-attachments";
+import { AttachmentPicker } from "@/components/attachment-picker";
+import { transactionAttachmentsControllerUpload } from "@/lib/api/attachments/transaction-attachments-controller-upload";
 
 interface TransactionCreateDialogProps {
   open: boolean;
@@ -72,7 +73,8 @@ export const TransactionCreateDialog = ({
   const [paymentMethod, setPaymentMethod] = useState<ExpensePaymentMethod>("PIX");
   const [creditInstallments, setCreditInstallments] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createdTransactionId, setCreatedTransactionId] = useState<string | null>(null);
+  const [isUploadingAttachments, setIsUploadingAttachments] = useState(false);
+  const [pendingFiles, setPendingFiles] = useState<File[]>([]);
 
   const filteredCategories = categories.filter(
     (category) =>
@@ -104,13 +106,11 @@ export const TransactionCreateDialog = ({
     setTag(null);
     setPaymentMethod("PIX");
     setCreditInstallments(1);
+    setPendingFiles([]);
   };
 
   const handleDialogOpenChange = (next: boolean) => {
-    if (!next) {
-      resetForm();
-      setCreatedTransactionId(null);
-    }
+    if (!next) resetForm();
     onOpenChange(next);
   };
 
@@ -151,19 +151,43 @@ export const TransactionCreateDialog = ({
         | string
         | undefined;
 
-      toast({
-        title: "Transação criada",
-        description: "Anexe um comprovante se quiser, ou feche quando terminar.",
-      });
-
-      resetForm();
-      if (onSuccess) onSuccess();
-
-      if (newTransactionId) {
-        setCreatedTransactionId(newTransactionId);
+      if (newTransactionId && pendingFiles.length > 0) {
+        setIsUploadingAttachments(true);
+        const failedFileNames: string[] = [];
+        for (const file of pendingFiles) {
+          try {
+            const formData = new FormData();
+            formData.append("file", file);
+            await transactionAttachmentsControllerUpload(
+              newTransactionId,
+              formData,
+              kubbClientConfig
+            );
+          } catch {
+            failedFileNames.push(file.name);
+          }
+        }
+        if (failedFileNames.length > 0) {
+          toast({
+            title: "Transação criada, mas alguns comprovantes falharam",
+            description: `Não deu pra anexar: ${failedFileNames.join(", ")}. Tente de novo em Editar.`,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Transação criada",
+            description: "Comprovante anexado com sucesso.",
+          });
+        }
       } else {
-        handleDialogOpenChange(false);
+        toast({
+          title: "Transação criada",
+          description: "Sua transação foi criada com sucesso.",
+        });
       }
+
+      handleDialogOpenChange(false);
+      if (onSuccess) onSuccess();
     } catch (error) {
       toast({
         title: "Erro",
@@ -173,6 +197,7 @@ export const TransactionCreateDialog = ({
       });
     } finally {
       setIsSubmitting(false);
+      setIsUploadingAttachments(false);
     }
   };
 
@@ -186,22 +211,10 @@ export const TransactionCreateDialog = ({
         <DialogHeader>
           <DialogTitle>Nova Transação</DialogTitle>
           <DialogDescription>
-            {createdTransactionId
-              ? "Transação criada. Anexe um comprovante se quiser."
-              : "Registre uma nova receita ou despesa"}
+            Registre uma nova receita ou despesa
           </DialogDescription>
         </DialogHeader>
 
-        {createdTransactionId ? (
-          <div className="space-y-4 py-4">
-            <TransactionAttachments transactionId={createdTransactionId} />
-            <DialogFooter>
-              <Button type="button" onClick={() => handleDialogOpenChange(false)}>
-                Concluir
-              </Button>
-            </DialogFooter>
-          </div>
-        ) : (
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
@@ -460,7 +473,20 @@ export const TransactionCreateDialog = ({
                 placeholder="Detalhes adicionais..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                rows={3}
+                rows={2}
+                className="resize-none overflow-y-auto"
+              />
+            </div>
+
+            <div className="space-y-2 sm:col-span-2">
+              <Label>Comprovante (Opcional)</Label>
+              <AttachmentPicker
+                files={pendingFiles}
+                onFilesChange={setPendingFiles}
+                disabled={isSubmitting}
+                onRejected={(reason) =>
+                  toast({ title: "Arquivo recusado", description: reason, variant: "destructive" })
+                }
               />
             </div>
           </div>
@@ -477,7 +503,7 @@ export const TransactionCreateDialog = ({
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
+                  {isUploadingAttachments ? "Enviando comprovantes..." : "Salvando..."}
                 </>
               ) : (
                 "Salvar Transação"
@@ -485,7 +511,6 @@ export const TransactionCreateDialog = ({
             </Button>
           </DialogFooter>
         </form>
-        )}
         {/* Dentro do DialogContent (fora do <form>) para o Radix empilhar os diálogos. */}
         <CategoryCreateDialog
           open={isCategoryDialogOpen}
