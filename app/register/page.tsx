@@ -4,9 +4,8 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowRight, Eye, EyeOff, Loader2, LockKeyhole, Mail, User } from "lucide-react"
-import { useAuthControllerRegister } from "@/lib/api/auth/hooks/use-auth-controller-register"
+import { useAuthControllerRegister } from "@/lib/api/auth/hooks/useAuthControllerRegister"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
@@ -22,9 +21,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [error, setError] = useState("")
-  const registerMutation = useAuthControllerRegister({
-    client: kubbClientConfig,
-  })
+  const registerMutation = useAuthControllerRegister()
 
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -37,7 +34,7 @@ export default function RegisterPage() {
 
     try {
       await registerMutation.mutateAsync({
-        data: { name, email, password },
+        body: { name, email, password },
       })
 
       router.replace("/")

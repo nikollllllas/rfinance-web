@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useUsersControllerDeleteOwnAccount } from "@/lib/api/users/hooks/use-users-controller-delete-own-account"
+import { useUsersControllerDeleteOwnAccount } from "@/lib/api/users/hooks/useUsersControllerDeleteOwnAccount"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 
 type DeleteAccountDialogProps = {
   open: boolean
@@ -18,13 +17,13 @@ type DeleteAccountDialogProps = {
 export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogProps) {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const mutation = useUsersControllerDeleteOwnAccount({ client: kubbClientConfig })
+  const mutation = useUsersControllerDeleteOwnAccount()
 
   const handleDelete = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError("")
     try {
-      await mutation.mutateAsync({ data: { password } })
+      await mutation.mutateAsync({ body: { password } })
       window.location.href = "/login"
     } catch (err) {
       setError(getApiErrorMessage(err, "Não foi possível excluir a conta."))

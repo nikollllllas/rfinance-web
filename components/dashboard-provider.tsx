@@ -4,8 +4,7 @@ import type React from "react";
 
 import { createContext, useContext, useState, useCallback } from "react";
 import { type DashboardData } from "@/lib/api-types";
-import { useDashboardControllerGetSummary } from "@/lib/api/dashboard/hooks/use-dashboard-controller-get-summary";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { useDashboardControllerGetSummary } from "@/lib/api/dashboard/hooks/useDashboardControllerGetSummary";
 import { useToast } from "@/hooks/use-toast";
 
 interface DashboardContextType {
@@ -35,8 +34,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   });
   const { toast } = useToast();
   const dashboardQuery = useDashboardControllerGetSummary(
-    { month: selectedMonth },
-    { client: kubbClientConfig },
+    { query: { month: selectedMonth } }
   );
   const fetchDashboardData = useCallback(async () => {
     try {

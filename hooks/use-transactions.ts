@@ -2,28 +2,20 @@
 
 import { useCallback } from "react"
 import { type Transaction, type TransactionData } from "@/lib/api-types"
-import { useTransactionsControllerList } from "@/lib/api/transactions/hooks/use-transactions-controller-list"
-import { useTransactionsControllerCreate } from "@/lib/api/transactions/hooks/use-transactions-controller-create"
-import { useTransactionsControllerUpdate } from "@/lib/api/transactions/hooks/use-transactions-controller-update"
-import { useTransactionsControllerRemove } from "@/lib/api/transactions/hooks/use-transactions-controller-remove"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useTransactionsControllerList } from "@/lib/api/transactions/hooks/useTransactionsControllerList"
+import { useTransactionsControllerCreate } from "@/lib/api/transactions/hooks/useTransactionsControllerCreate"
+import { useTransactionsControllerUpdate } from "@/lib/api/transactions/hooks/useTransactionsControllerUpdate"
+import { useTransactionsControllerRemove } from "@/lib/api/transactions/hooks/useTransactionsControllerRemove"
 import { useToast } from "@/hooks/use-toast"
 
 export function useTransactions(month?: string) {
   const { toast } = useToast()
   const transactionsQuery = useTransactionsControllerList(
-    month ? { month } : undefined,
-    { client: kubbClientConfig },
+    { query: month ? { month } : undefined }
   )
-  const createMutation = useTransactionsControllerCreate({
-    client: kubbClientConfig,
-  })
-  const updateMutation = useTransactionsControllerUpdate({
-    client: kubbClientConfig,
-  })
-  const removeMutation = useTransactionsControllerRemove({
-    client: kubbClientConfig,
-  })
+  const createMutation = useTransactionsControllerCreate()
+  const updateMutation = useTransactionsControllerUpdate()
+  const removeMutation = useTransactionsControllerRemove()
   const queryData = transactionsQuery.data as any
   const transactions = (Array.isArray(queryData) ? queryData : queryData?.transactions ?? []) as Transaction[]
 
@@ -46,7 +38,7 @@ export function useTransactions(month?: string) {
           ...data,
           date: typeof data.date === "string" ? data.date : data.date.toISOString(),
         }
-        const created = await createMutation.mutateAsync({ data: payload as any })
+        const created = await createMutation.mutateAsync({ body: payload as any })
         await fetchTransactions()
         toast({
           title: "Success",
@@ -74,7 +66,7 @@ export function useTransactions(month?: string) {
             ? { date: typeof data.date === "string" ? data.date : data.date.toISOString() }
             : {}),
         }
-        const updatedTransaction = await updateMutation.mutateAsync({ id, data: payload as any })
+        const updatedTransaction = await updateMutation.mutateAsync({ path: { id }, body: payload as any })
         await fetchTransactions()
         toast({
           title: "Success",
@@ -96,7 +88,7 @@ export function useTransactions(month?: string) {
   const removeTransaction = useCallback(
     async (id: string) => {
       try {
-        await removeMutation.mutateAsync({ id })
+        await removeMutation.mutateAsync({ path: { id } })
         await fetchTransactions()
         toast({
           title: "Success",

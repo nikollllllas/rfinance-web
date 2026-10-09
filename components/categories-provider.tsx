@@ -3,8 +3,7 @@
 import type React from "react";
 
 import { createContext, useContext } from "react";
-import { useCategoriesControllerList } from "@/lib/api/categories/hooks/use-categories-controller-list";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { useCategoriesControllerList } from "@/lib/api/categories/hooks/useCategoriesControllerList";
 
 interface Category {
   id: string;
@@ -35,9 +34,7 @@ export function CategoriesProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const categoriesQuery = useCategoriesControllerList({
-    client: kubbClientConfig,
-  });
+  const categoriesQuery = useCategoriesControllerList();
   const categories = (categoriesQuery.data ?? []) as Category[];
   const isLoading = categoriesQuery.isLoading;
   const error = (categoriesQuery.error as Error | null) ?? null;
