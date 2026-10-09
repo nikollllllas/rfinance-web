@@ -7,18 +7,15 @@ import { ArrowLeft, Loader2, Mail } from "lucide-react"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
-import { useAuthControllerForgotPassword } from "@/lib/api/auth/hooks/use-auth-controller-forgot-password"
+import { useAuthControllerForgotPassword } from "@/lib/api/auth/hooks/useAuthControllerForgotPassword"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 
 type ForgotPasswordResult = {
   message?: string
 }
 
 export default function ForgotPasswordPage() {
-  const forgotPasswordMutation = useAuthControllerForgotPassword({
-    client: kubbClientConfig,
-  })
+  const forgotPasswordMutation = useAuthControllerForgotPassword()
   const [email, setEmail] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
@@ -30,7 +27,7 @@ export default function ForgotPasswordPage() {
     setErrorMessage("")
 
     try {
-      const response = (await forgotPasswordMutation.mutateAsync({ data: { email } })) as ForgotPasswordResult
+      const response = (await forgotPasswordMutation.mutateAsync({ body: { email } })) as ForgotPasswordResult
       setSuccessMessage(
         response?.message ??
           "Se existir uma conta com este e-mail, enviaremos as instruções de recuperação.",

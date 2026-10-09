@@ -7,14 +7,11 @@ import { ArrowLeft, KeyRound, Loader2, LockKeyhole } from "lucide-react"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
-import { useAuthControllerResetPassword } from "@/lib/api/auth/hooks/use-auth-controller-reset-password"
+import { useAuthControllerResetPassword } from "@/lib/api/auth/hooks/useAuthControllerResetPassword"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 
 export default function ResetPasswordPage() {
-  const resetPasswordMutation = useAuthControllerResetPassword({
-    client: kubbClientConfig,
-  })
+  const resetPasswordMutation = useAuthControllerResetPassword()
   const [token, setToken] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -53,7 +50,7 @@ export default function ResetPasswordPage() {
 
     try {
       await resetPasswordMutation.mutateAsync({
-        data: {
+        body: {
           token,
           password,
         },

@@ -24,8 +24,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { categoriesControllerCreate } from "@/lib/api/categories/categories-controller-create";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { categoriesControllerCreate } from "@/lib/api/categories/categoriesControllerCreate";
 import { CategoryColorPicker } from "@/components/category-color-picker";
 import { CategoryIconPicker } from "@/components/category-icon-picker";
 
@@ -76,16 +75,13 @@ export function CategoryCreateDialog({
     setIsSaving(true);
 
     try {
-      const created = await categoriesControllerCreate(
-        {
+      const created = await categoriesControllerCreate({ body: {
           name,
           color,
           type,
           icon: icon || undefined,
           isDefault: false,
-        } as any,
-        kubbClientConfig
-      );
+        } as any });
 
       toast({
         title: "Categoria criada",

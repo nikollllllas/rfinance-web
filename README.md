@@ -51,7 +51,7 @@ O cliente TypeScript (tipos + hooks do React Query) é gerado a partir do OpenAP
 bun run kubb:generate
 ```
 
-Isso executa `openapi:prepare` (busca/prepara o spec) e depois roda o Kubb, gerando os arquivos em `openapi/`.
+Isso executa `openapi:prepare` (busca/prepara o spec) e depois roda o Kubb, gerando os arquivos em `lib/api/`.
 
 ### Build de produção
 
