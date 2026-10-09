@@ -1,8 +1,0 @@
-{
-	"type": "object",
-	"properties": {
-		"password": { "type": "string", "example": "MinhaSenha@123" }
-	},
-	"required": ["password"],
-	"x-readme-ref-name": "DeleteOwnAccountDto"
-}

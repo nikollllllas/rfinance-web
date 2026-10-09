@@ -8,10 +8,9 @@ import { CreditCard, Home, Menu, PieChart, Users, Wallet, X } from "lucide-react
 import { Button } from "@/components/ui/button"
 import { UserMenu } from "@/components/user-menu"
 import { useMediaQuery } from "@/hooks/use-mobile"
-import { useAuthControllerLogout } from "@/lib/api/auth/hooks/use-auth-controller-logout"
-import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
+import { useAuthControllerLogout } from "@/lib/api/auth/hooks/useAuthControllerLogout"
+import { useAuthControllerMe } from "@/lib/api/auth/hooks/useAuthControllerMe"
 import { parseCurrentUser } from "@/lib/auth/current-user"
-import { kubbClientConfig } from "@/lib/kubb-client"
 
 type SidebarRoute = {
   label: string
@@ -54,15 +53,11 @@ export default function Sidebar() {
   const isMobile = useMediaQuery("(max-width: 768px)")
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const meQuery = useAuthControllerMe({
-    client: kubbClientConfig,
-  })
+  const meQuery = useAuthControllerMe()
   const currentUser = parseCurrentUser(meQuery.data)
   const isAdmin = currentUser?.role === "ADMIN"
   const visibleRoutes = routes.filter((route) => !route.adminOnly || isAdmin)
-  const logoutMutation = useAuthControllerLogout({
-    client: kubbClientConfig,
-  })
+  const logoutMutation = useAuthControllerLogout()
 
   useEffect(() => {
     const savedState = localStorage.getItem("sidebarCollapsed")

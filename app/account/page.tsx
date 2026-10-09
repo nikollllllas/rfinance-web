@@ -8,15 +8,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DeleteAccountDialog } from "@/components/delete-account-dialog"
-import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
-import { useCategoriesControllerList } from "@/lib/api/categories/hooks/use-categories-controller-list"
+import { useAuthControllerMe } from "@/lib/api/auth/hooks/useAuthControllerMe"
+import { useCategoriesControllerList } from "@/lib/api/categories/hooks/useCategoriesControllerList"
 import { parseCurrentUser } from "@/lib/auth/current-user"
-import { kubbClientConfig } from "@/lib/kubb-client"
 
 export default function AccountPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  const meQuery = useAuthControllerMe({ client: kubbClientConfig })
-  const categoriesQuery = useCategoriesControllerList({ client: kubbClientConfig })
+  const meQuery = useAuthControllerMe()
+  const categoriesQuery = useCategoriesControllerList()
   const user = parseCurrentUser(meQuery.data)
   const categories = categoriesQuery.data ?? []
 

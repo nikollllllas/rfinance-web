@@ -1,15 +1,12 @@
 "use client"
 
 import { type DashboardData } from "@/lib/api-types"
-import { useDashboardControllerGetSummary } from "@/lib/api/dashboard/hooks/use-dashboard-controller-get-summary"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useDashboardControllerGetSummary } from "@/lib/api/dashboard/hooks/useDashboardControllerGetSummary"
 import { useToast } from "@/hooks/use-toast"
 
 export function useDashboard() {
   const { toast } = useToast()
-  const dashboardQuery = useDashboardControllerGetSummary(undefined, {
-    client: kubbClientConfig,
-  })
+  const dashboardQuery = useDashboardControllerGetSummary(undefined)
 
   return {
     dashboardData: (dashboardQuery.data ?? null) as DashboardData | null,

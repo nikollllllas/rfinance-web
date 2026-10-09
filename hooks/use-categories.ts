@@ -2,34 +2,25 @@
 
 import { useCallback } from "react"
 import { type Category, type CategoryData } from "@/lib/api-types"
-import { useCategoriesControllerList } from "@/lib/api/categories/hooks/use-categories-controller-list"
-import { useCategoriesControllerCreate } from "@/lib/api/categories/hooks/use-categories-controller-create"
-import { useCategoriesControllerUpdate } from "@/lib/api/categories/hooks/use-categories-controller-update"
-import { useCategoriesControllerRemove } from "@/lib/api/categories/hooks/use-categories-controller-remove"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useCategoriesControllerList } from "@/lib/api/categories/hooks/useCategoriesControllerList"
+import { useCategoriesControllerCreate } from "@/lib/api/categories/hooks/useCategoriesControllerCreate"
+import { useCategoriesControllerUpdate } from "@/lib/api/categories/hooks/useCategoriesControllerUpdate"
+import { useCategoriesControllerRemove } from "@/lib/api/categories/hooks/useCategoriesControllerRemove"
 import { useToast } from "@/hooks/use-toast"
 
 export function useCategories() {
   const { toast } = useToast()
-  const categoriesQuery = useCategoriesControllerList({
-    client: kubbClientConfig,
-  })
-  const createMutation = useCategoriesControllerCreate({
-    client: kubbClientConfig,
-  })
-  const updateMutation = useCategoriesControllerUpdate({
-    client: kubbClientConfig,
-  })
-  const removeMutation = useCategoriesControllerRemove({
-    client: kubbClientConfig,
-  })
+  const categoriesQuery = useCategoriesControllerList()
+  const createMutation = useCategoriesControllerCreate()
+  const updateMutation = useCategoriesControllerUpdate()
+  const removeMutation = useCategoriesControllerRemove()
 
   const categories = (categoriesQuery.data ?? []) as Category[]
 
   const addCategory = useCallback(
     async (data: CategoryData) => {
       try {
-        const newCategory = await createMutation.mutateAsync({ data })
+        const newCategory = await createMutation.mutateAsync({ body: data })
         await categoriesQuery.refetch()
         toast({
           title: "Success",
@@ -51,7 +42,7 @@ export function useCategories() {
   const editCategory = useCallback(
     async (id: string, data: Partial<CategoryData>) => {
       try {
-        const updatedCategory = await updateMutation.mutateAsync({ id, data })
+        const updatedCategory = await updateMutation.mutateAsync({ path: { id }, body: data })
         await categoriesQuery.refetch()
         toast({
           title: "Success",
@@ -73,7 +64,7 @@ export function useCategories() {
   // Sem toast: quem chama mostra o feedback (evita toast duplicado).
   const removeCategory = useCallback(
     async (id: string) => {
-      await removeMutation.mutateAsync({ id })
+      await removeMutation.mutateAsync({ path: { id } })
       await categoriesQuery.refetch()
     },
     [removeMutation, categoriesQuery],

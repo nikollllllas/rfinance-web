@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useUsersControllerAdminResetPassword } from "@/lib/api/users/hooks/use-users-controller-admin-reset-password"
+import { useUsersControllerAdminResetPassword } from "@/lib/api/users/hooks/useUsersControllerAdminResetPassword"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 import type { AdminUser } from "@/lib/users/admin-user"
 
 type AdminUserResetPasswordDialogProps = {
@@ -19,9 +18,7 @@ type AdminUserResetPasswordDialogProps = {
 }
 
 export function AdminUserResetPasswordDialog({ open, user, onOpenChange }: AdminUserResetPasswordDialogProps) {
-  const resetMutation = useUsersControllerAdminResetPassword({
-    client: kubbClientConfig,
-  })
+  const resetMutation = useUsersControllerAdminResetPassword()
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("")
@@ -65,8 +62,8 @@ export function AdminUserResetPasswordDialog({ open, user, onOpenChange }: Admin
 
     try {
       await resetMutation.mutateAsync({
-        id: user.id,
-        data: { password },
+        path: { id: user.id },
+        body: { password },
       })
       setIsSuccess(true)
       setPassword("")

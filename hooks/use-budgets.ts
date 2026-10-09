@@ -2,30 +2,27 @@
 
 import { useCallback } from "react"
 import { type Budget, type BudgetData } from "@/lib/api-types"
-import { useBudgetsControllerList } from "@/lib/api/budgets/hooks/use-budgets-controller-list"
-import { useBudgetsControllerCreate } from "@/lib/api/budgets/hooks/use-budgets-controller-create"
-import { useBudgetsControllerUpdate } from "@/lib/api/budgets/hooks/use-budgets-controller-update"
-import { useBudgetsControllerRemove } from "@/lib/api/budgets/hooks/use-budgets-controller-remove"
-import { useBudgetsControllerReplicate } from "@/lib/api/budgets/hooks/use-budgets-controller-replicate"
-import { useBudgetsControllerProgress } from "@/lib/api/budgets/hooks/use-budgets-controller-progress"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useBudgetsControllerList } from "@/lib/api/budgets/hooks/useBudgetsControllerList"
+import { useBudgetsControllerCreate } from "@/lib/api/budgets/hooks/useBudgetsControllerCreate"
+import { useBudgetsControllerUpdate } from "@/lib/api/budgets/hooks/useBudgetsControllerUpdate"
+import { useBudgetsControllerRemove } from "@/lib/api/budgets/hooks/useBudgetsControllerRemove"
+import { useBudgetsControllerReplicate } from "@/lib/api/budgets/hooks/useBudgetsControllerReplicate"
+import { useBudgetsControllerProgress } from "@/lib/api/budgets/hooks/useBudgetsControllerProgress"
 import { useToast } from "@/hooks/use-toast"
 
 export function useBudgets() {
   const { toast } = useToast()
-  const budgetsQuery = useBudgetsControllerList(undefined, {
-    client: kubbClientConfig,
-  })
-  const createMutation = useBudgetsControllerCreate({ client: kubbClientConfig })
-  const updateMutation = useBudgetsControllerUpdate({ client: kubbClientConfig })
-  const removeMutation = useBudgetsControllerRemove({ client: kubbClientConfig })
-  const replicateMutation = useBudgetsControllerReplicate({ client: kubbClientConfig })
+  const budgetsQuery = useBudgetsControllerList(undefined)
+  const createMutation = useBudgetsControllerCreate()
+  const updateMutation = useBudgetsControllerUpdate()
+  const removeMutation = useBudgetsControllerRemove()
+  const replicateMutation = useBudgetsControllerReplicate()
   const budgets = (budgetsQuery.data ?? []) as Budget[]
 
   const addBudget = useCallback(
     async (data: BudgetData) => {
       try {
-        const newBudget = await createMutation.mutateAsync({ data })
+        const newBudget = await createMutation.mutateAsync({ body: data })
         await budgetsQuery.refetch()
         toast({
           title: "Sucesso",
@@ -47,7 +44,7 @@ export function useBudgets() {
   const editBudget = useCallback(
     async (id: string, data: Partial<BudgetData>) => {
       try {
-        const updatedBudget = await updateMutation.mutateAsync({ id, data })
+        const updatedBudget = await updateMutation.mutateAsync({ path: { id }, body: data })
         await budgetsQuery.refetch()
         toast({
           title: "Sucesso",
@@ -69,7 +66,7 @@ export function useBudgets() {
   // Sem toast: quem chama mostra o feedback (evita toast duplicado).
   const removeBudget = useCallback(
     async (id: string) => {
-      await removeMutation.mutateAsync({ id })
+      await removeMutation.mutateAsync({ path: { id } })
       await budgetsQuery.refetch()
     },
     [removeMutation, budgetsQuery],
@@ -79,7 +76,7 @@ export function useBudgets() {
     async (targetMonth: string) => {
       try {
         const result = await replicateMutation.mutateAsync({
-          data: { action: "replicate", targetMonth },
+          body: { action: "replicate", targetMonth },
         })
         await budgetsQuery.refetch()
         toast({
@@ -119,11 +116,10 @@ export function useBudgets() {
 }
 
 export function useBudgetProgress(budgetId: string) {
-  const progressQuery = useBudgetsControllerProgress(budgetId, {
+  const progressQuery = useBudgetsControllerProgress({ path: { id: budgetId } }, {
     query: {
       enabled: Boolean(budgetId),
     },
-    client: kubbClientConfig,
   })
   const progressData = (progressQuery.data ?? { current: 0, max: 0, transactionCount: 0 }) as {
     current: number

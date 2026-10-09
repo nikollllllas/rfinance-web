@@ -21,8 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCategories } from "@/hooks/use-categories";
 import { CategoryCreateDialog } from "@/components/category-create-dialog";
 import { type TransactionData } from "@/lib/api-types";
-import { useTransactionsControllerCreate } from "@/lib/api/transactions/hooks/use-transactions-controller-create";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { useTransactionsControllerCreate } from "@/lib/api/transactions/hooks/useTransactionsControllerCreate";
 import {
   INSTALLMENT_MAX,
   INSTALLMENT_MIN_SPLIT,
@@ -39,7 +38,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { AttachmentPicker } from "@/components/attachment-picker";
-import { transactionAttachmentsControllerUpload } from "@/lib/api/attachments/transaction-attachments-controller-upload";
+import { transactionAttachmentsControllerUpload } from "@/lib/api/attachments/transactionAttachmentsControllerUpload";
 
 interface TransactionCreateDialogProps {
   open: boolean;
@@ -57,9 +56,7 @@ export const TransactionCreateDialog = ({
   const { toast } = useToast();
   const { categories, isLoading: categoriesLoading, refreshCategories } = useCategories();
   const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
-  const createMutation = useTransactionsControllerCreate({
-    client: kubbClientConfig,
-  });
+  const createMutation = useTransactionsControllerCreate();
 
   const [transactionType, setTransactionType] = useState<"GANHO" | "GASTO">(
     "GASTO"
@@ -146,7 +143,7 @@ export const TransactionCreateDialog = ({
         }
       }
 
-      const result = await createMutation.mutateAsync({ data: transactionData as any });
+      const result = await createMutation.mutateAsync({ body: transactionData as any });
       const newTransactionId = (result as any)?.transactions?.[0]?.id as
         | string
         | undefined;
@@ -156,13 +153,7 @@ export const TransactionCreateDialog = ({
         const failedFileNames: string[] = [];
         for (const file of pendingFiles) {
           try {
-            const formData = new FormData();
-            formData.append("file", file);
-            await transactionAttachmentsControllerUpload(
-              newTransactionId,
-              formData,
-              kubbClientConfig
-            );
+            await transactionAttachmentsControllerUpload({ path: { transactionId: newTransactionId }, body: { file } });
           } catch {
             failedFileNames.push(file.name);
           }

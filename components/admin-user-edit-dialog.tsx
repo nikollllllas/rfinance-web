@@ -8,10 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useUsersControllerUpdateByAdmin } from "@/lib/api/users/hooks/use-users-controller-update-by-admin"
-import type { UpdateUserByAdminDto } from "@/lib/api/schemas/update-user-by-admin-dto"
+import { useUsersControllerUpdateByAdmin } from "@/lib/api/users/hooks/useUsersControllerUpdateByAdmin"
+import type { UpdateUserByAdminDto } from "@/lib/api/schemas/UpdateUserByAdminDto"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 import type { AdminUser, UserRole } from "@/lib/users/admin-user"
 
 type AdminUserEditDialogProps = {
@@ -22,9 +21,7 @@ type AdminUserEditDialogProps = {
 }
 
 export function AdminUserEditDialog({ open, user, onOpenChange, onSuccess }: AdminUserEditDialogProps) {
-  const updateMutation = useUsersControllerUpdateByAdmin({
-    client: kubbClientConfig,
-  })
+  const updateMutation = useUsersControllerUpdateByAdmin()
   const [formData, setFormData] = useState<UpdateUserByAdminDto>({
     name: "",
     email: "",
@@ -56,8 +53,8 @@ export function AdminUserEditDialog({ open, user, onOpenChange, onSuccess }: Adm
 
     try {
       await updateMutation.mutateAsync({
-        data: formData,
-        id: user.id,
+        path: { id: user.id },
+        body: formData,
       })
       onOpenChange(false)
       onSuccess?.()

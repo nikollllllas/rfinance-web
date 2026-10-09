@@ -19,9 +19,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCategories } from "@/hooks/use-categories";
-import { useTransactionsControllerGetById } from "@/lib/api/transactions/hooks/use-transactions-controller-get-by-id";
-import { useTransactionsControllerUpdate } from "@/lib/api/transactions/hooks/use-transactions-controller-update";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { useTransactionsControllerGetById } from "@/lib/api/transactions/hooks/useTransactionsControllerGetById";
+import { useTransactionsControllerUpdate } from "@/lib/api/transactions/hooks/useTransactionsControllerUpdate";
 import {
   getInstallmentSuffix,
   getPaymentMethodLabel,
@@ -52,12 +51,9 @@ export function TransactionEditDialog({
 }: TransactionEditDialogProps) {
   const { toast } = useToast();
   const { categories, isLoading: categoriesLoading } = useCategories();
-  const updateMutation = useTransactionsControllerUpdate({
-    client: kubbClientConfig,
-  });
-  const transactionQuery = useTransactionsControllerGetById(transactionId, {
+  const updateMutation = useTransactionsControllerUpdate();
+  const transactionQuery = useTransactionsControllerGetById({ path: { id: transactionId } }, {
     query: { enabled: open && Boolean(transactionId) },
-    client: kubbClientConfig,
   });
 
   const [transaction, setTransaction] = useState<any>(null);
@@ -136,8 +132,7 @@ export function TransactionEditDialog({
       };
 
       await updateMutation.mutateAsync({
-        id: transactionId,
-        data: transactionData as any,
+        path: { id: transactionId }, body: transactionData as any,
       });
 
       toast({

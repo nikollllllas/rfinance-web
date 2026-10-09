@@ -17,9 +17,8 @@ import {
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCategories } from "@/hooks/use-categories";
-import { budgetsControllerGetById } from "@/lib/api/budgets/budgets-controller-get-by-id";
-import { budgetsControllerUpdate } from "@/lib/api/budgets/budgets-controller-update";
-import { kubbClientConfig } from "@/lib/kubb-client";
+import { budgetsControllerGetById } from "@/lib/api/budgets/budgetsControllerGetById";
+import { budgetsControllerUpdate } from "@/lib/api/budgets/budgetsControllerUpdate";
 import {
   Dialog,
   DialogContent,
@@ -61,7 +60,7 @@ export function BudgetEditDialog({
     async function loadBudget() {
       try {
         setIsLoading(true);
-        const data = await budgetsControllerGetById(budgetId, kubbClientConfig);
+        const data = await budgetsControllerGetById({ path: { id: budgetId } });
         setBudget(data);
 
         setAmount(String(data.amount));
@@ -110,11 +109,7 @@ export function BudgetEditDialog({
         categoryId,
       };
 
-      await budgetsControllerUpdate(
-        budgetId,
-        budgetData as any,
-        kubbClientConfig,
-      );
+      await budgetsControllerUpdate({ path: { id: budgetId }, body: budgetData as any });
 
       toast({
         title: "Orçamento atualizado",

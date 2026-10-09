@@ -8,10 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { useUsersControllerCreate } from "@/lib/api/users/hooks/use-users-controller-create"
-import type { CreateUserDto } from "@/lib/api/schemas/create-user-dto"
+import { useUsersControllerCreate } from "@/lib/api/users/hooks/useUsersControllerCreate"
+import type { CreateUserDto } from "@/lib/api/schemas/CreateUserDto"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 import type { UserRole } from "@/lib/users/admin-user"
 
 type AdminUserCreateDialogProps = {
@@ -28,9 +27,7 @@ const initialFormData: CreateUserDto = {
 }
 
 export function AdminUserCreateDialog({ open, onOpenChange, onSuccess }: AdminUserCreateDialogProps) {
-  const createMutation = useUsersControllerCreate({
-    client: kubbClientConfig,
-  })
+  const createMutation = useUsersControllerCreate()
   const [formData, setFormData] = useState<CreateUserDto>(initialFormData)
   const [error, setError] = useState("")
 
@@ -54,7 +51,7 @@ export function AdminUserCreateDialog({ open, onOpenChange, onSuccess }: AdminUs
     setError("")
 
     try {
-      await createMutation.mutateAsync({ data: formData })
+      await createMutation.mutateAsync({ body: formData })
       handleOpenChange(false)
       onSuccess?.()
     } catch (submitError) {

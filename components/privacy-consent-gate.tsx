@@ -4,14 +4,13 @@ import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { authControllerMeQueryKey, useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
-import { useUsersControllerAcceptPrivacy } from "@/lib/api/users/hooks/use-users-controller-accept-privacy"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { authControllerMeQueryKey, useAuthControllerMe } from "@/lib/api/auth/hooks/useAuthControllerMe"
+import { useUsersControllerAcceptPrivacy } from "@/lib/api/users/hooks/useUsersControllerAcceptPrivacy"
 
 export function PrivacyConsentGate() {
   const queryClient = useQueryClient()
-  const meQuery = useAuthControllerMe({ client: kubbClientConfig })
-  const accept = useUsersControllerAcceptPrivacy({ client: kubbClientConfig })
+  const meQuery = useAuthControllerMe()
+  const accept = useUsersControllerAcceptPrivacy()
   const [error, setError] = useState(false)
   const user = (meQuery.data as { user?: { privacyAcceptedAt?: string | null } } | undefined)?.user
   const needsConsent = Boolean(user) && !user?.privacyAcceptedAt

@@ -5,14 +5,13 @@ import { useQueryClient } from "@tanstack/react-query"
 import { FileText, ImageIcon, Loader2, Paperclip, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { kubbClientConfig } from "@/lib/kubb-client"
-import { attachmentsControllerGetDownloadUrl } from "@/lib/api/attachments/attachments-controller-get-download-url"
+import { attachmentsControllerGetDownloadUrl } from "@/lib/api/attachments/attachmentsControllerGetDownloadUrl"
 import {
   useTransactionAttachmentsControllerList,
   transactionAttachmentsControllerListQueryKey,
-} from "@/lib/api/attachments/hooks/use-transaction-attachments-controller-list"
-import { useTransactionAttachmentsControllerUpload } from "@/lib/api/attachments/hooks/use-transaction-attachments-controller-upload"
-import { useAttachmentsControllerRemove } from "@/lib/api/attachments/hooks/use-attachments-controller-remove"
+} from "@/lib/api/attachments/hooks/useTransactionAttachmentsControllerList"
+import { useTransactionAttachmentsControllerUpload } from "@/lib/api/attachments/hooks/useTransactionAttachmentsControllerUpload"
+import { useAttachmentsControllerRemove } from "@/lib/api/attachments/hooks/useAttachmentsControllerRemove"
 import { ATTACHMENT_ACCEPTED_TYPES } from "@/components/attachment-picker"
 
 function formatBytes(bytes: number): string {
@@ -31,15 +30,12 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [openingId, setOpeningId] = useState<string | null>(null)
 
-  const { data, isLoading } = useTransactionAttachmentsControllerList(transactionId, {
-    client: kubbClientConfig,
-  })
+  const { data, isLoading } = useTransactionAttachmentsControllerList({ path: { transactionId } })
   const attachments = data ?? []
 
-  const queryKey = transactionAttachmentsControllerListQueryKey(transactionId)
+  const queryKey = transactionAttachmentsControllerListQueryKey({ path: { transactionId } })
 
   const uploadMutation = useTransactionAttachmentsControllerUpload({
-    client: kubbClientConfig,
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey })
@@ -55,7 +51,6 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
   })
 
   const removeMutation = useAttachmentsControllerRemove({
-    client: kubbClientConfig,
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey })
@@ -67,15 +62,13 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
     const file = event.target.files?.[0]
     event.target.value = ""
     if (!file) return
-    const formData = new FormData()
-    formData.append("file", file)
-    uploadMutation.mutate({ transactionId, data: formData })
+    uploadMutation.mutate({ path: { transactionId }, body: { file } })
   }
 
   const handleOpen = async (id: string) => {
     setOpeningId(id)
     try {
-      const result = await attachmentsControllerGetDownloadUrl(id, kubbClientConfig)
+      const result = await attachmentsControllerGetDownloadUrl({ path: { id: id } })
       if (result?.url) window.open(result.url, "_blank", "noopener,noreferrer")
     } catch {
       toast({
@@ -150,7 +143,7 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
                 variant="ghost"
                 size="icon"
                 className="h-7 w-7 shrink-0 text-destructive hover:text-destructive"
-                onClick={() => removeMutation.mutate({ id: attachment.id })}
+                onClick={() => removeMutation.mutate({ path: { id: attachment.id } })}
                 disabled={removeMutation.isPending}
               >
                 <Trash2 className="h-3.5 w-3.5" />

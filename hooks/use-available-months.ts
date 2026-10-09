@@ -1,12 +1,9 @@
 "use client"
 
-import { useTransactionsControllerListMonths } from "@/lib/api/transactions/hooks/use-transactions-controller-list-months"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useTransactionsControllerListMonths } from "@/lib/api/transactions/hooks/useTransactionsControllerListMonths"
 
 export function useAvailableMonths() {
-  const monthsQuery = useTransactionsControllerListMonths({
-    client: kubbClientConfig,
-  })
+  const monthsQuery = useTransactionsControllerListMonths()
 
   return {
     months: (monthsQuery.data ?? []) as string[],

@@ -29,18 +29,17 @@
 
 ## API / dados
 
-- Cliente gerado por Kubb em `lib/api/` — não editar os arquivos existentes à mão em
-  condições normais. **Toolchain local do kubb está quebrado**: rodar `kubb:generate`
-  corrompe os tipos gerados pro client inteiro (vira `{}` em tudo), não só pro endpoint
-  novo. Até resolver: escrever manualmente os arquivos de endpoint novo seguindo o padrão
-  exato dos arquivos irmãos existentes (ver `lib/api/attachments/` como referência de como
-  foi feito).
+- Cliente gerado por Kubb v5 (`@kubb/plugin-axios` + `@kubb/plugin-react-query`) em
+  `lib/api/` — não editar à mão; endpoint novo = `bun run kubb:generate`. O runtime axios
+  é gerado em `lib/api/.kubb/client.ts`; `baseURL` e interceptor de 401 ficam em
+  `lib/kubb-client.ts`.
 - Chamada de API passa por proxy same-origin: `next.config.ts` reescreve `/api/:path*` pro
   `API_PROXY_TARGET` (produção por padrão). Pra rodar contra backend local, setar
   `API_PROXY_TARGET=http://localhost:3333` antes do `next dev`.
-- Hooks de mutation/query: `useXControllerY({ client: kubbClientConfig })`. Funções raw:
-  `xControllerY(args, kubbClientConfig)` — config vai direto como argumento, não
-  `{ client: kubbClientConfig }`.
+- Argumentos sempre num objeto `{ path, query, body }`: funções raw
+  `xControllerY({ path: { id }, body })`, query hooks `useXControllerY({ query }, { query: { enabled } })`,
+  mutations `mutateAsync({ path: { id }, body })`. Upload multipart: `body: { file }` (sem
+  `FormData` manual).
 
 ## Dev local
 

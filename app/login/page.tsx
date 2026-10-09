@@ -4,9 +4,8 @@ import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { ArrowRight, Check, Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react"
-import { useAuthControllerLogin } from "@/lib/api/auth/hooks/use-auth-controller-login"
+import { useAuthControllerLogin } from "@/lib/api/auth/hooks/useAuthControllerLogin"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
-import { kubbClientConfig } from "@/lib/kubb-client"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
@@ -18,9 +17,7 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
-  const loginMutation = useAuthControllerLogin({
-    client: kubbClientConfig,
-  })
+  const loginMutation = useAuthControllerLogin()
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -29,7 +26,7 @@ export default function LoginPage() {
 
     try {
       await loginMutation.mutateAsync({
-        data: { email, password },
+        body: { email, password },
       })
 
       router.replace("/")

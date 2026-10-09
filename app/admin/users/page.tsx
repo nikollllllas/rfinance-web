@@ -10,10 +10,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AdminUserCreateDialog } from "@/components/admin-user-create-dialog"
 import { AdminUserEditDialog } from "@/components/admin-user-edit-dialog"
 import { AdminUserResetPasswordDialog } from "@/components/admin-user-reset-password-dialog"
-import { useAuthControllerMe } from "@/lib/api/auth/hooks/use-auth-controller-me"
+import { useAuthControllerMe } from "@/lib/api/auth/hooks/useAuthControllerMe"
 import { parseCurrentUser } from "@/lib/auth/current-user"
-import { useUsersControllerList, usersControllerListQueryKey } from "@/lib/api/users/hooks/use-users-controller-list"
-import { kubbClientConfig } from "@/lib/kubb-client"
+import { useUsersControllerList, usersControllerListQueryKey } from "@/lib/api/users/hooks/useUsersControllerList"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 import { parseAdminUsersList, type AdminUser } from "@/lib/users/admin-user"
 import { useQueryClient } from "@tanstack/react-query"
@@ -21,7 +20,6 @@ import { useQueryClient } from "@tanstack/react-query"
 export default function AdminUsersPage() {
   const queryClient = useQueryClient()
   const meQuery = useAuthControllerMe({
-    client: kubbClientConfig,
     query: {
       retry: false,
     },
@@ -48,12 +46,13 @@ export default function AdminUsersPage() {
 
   const usersQuery = useUsersControllerList(
     {
-      page: 1,
-      perPage: 100,
-      search: debouncedSearchTerm || undefined,
+      query: {
+        page: 1,
+        perPage: 100,
+        search: debouncedSearchTerm || undefined,
+      },
     },
     {
-      client: kubbClientConfig,
       query: {
         retry: false,
       },
