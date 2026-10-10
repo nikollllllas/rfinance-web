@@ -37,7 +37,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton"
-import { cn, formatCurrency, formatDate, formatMonthDisplay } from "@/lib/utils"
+import { cn, formatCurrency, formatDate, formatMonthDisplay, formatMonthShort } from "@/lib/utils"
 import {
   getInstallmentSuffix,
   getPaymentMethodLabel,
@@ -113,7 +113,7 @@ export default function TransactionsPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Descrição</TableHead>
+            <TableHead className="sticky left-0 z-[1] min-w-[200px] border-r bg-card md:static md:min-w-0 md:border-r-0">Descrição</TableHead>
             <TableHead className="hidden md:table-cell">Categoria</TableHead>
             <TableHead className="hidden md:table-cell">Data</TableHead>
             <TableHead>Tag</TableHead>
@@ -124,7 +124,7 @@ export default function TransactionsPage() {
         <TableBody>
           {Array.from({ length: 10 }).map((_, i) => (
             <TableRow key={i}>
-              <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+              <TableCell className="sticky left-0 z-[1] min-w-[200px] border-r bg-card md:static md:min-w-0 md:border-r-0"><Skeleton className="h-4 w-32" /></TableCell>
               <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-24" /></TableCell>
               <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-20" /></TableCell>
               <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
@@ -145,19 +145,20 @@ export default function TransactionsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
-        <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2 md:px-6">
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="font-display text-lg">Transações</span>
+        <div className="flex min-h-14 items-center gap-2 px-4 py-2 md:px-6">
+          <div className="flex min-w-0 items-center gap-2 font-semibold">
+            <span className="truncate font-display text-lg">Transações</span>
           </div>
-          <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
-                <SelectValue placeholder="Selecione o mês" />
+              <SelectTrigger className="w-[104px] sm:w-[200px]" aria-label="Mês">
+                <SelectValue placeholder="Mês" />
               </SelectTrigger>
               <SelectContent>
                 {availableMonths.map((month) => (
                   <SelectItem key={month} value={month}>
-                    {formatMonthDisplay(month)}
+                    <span className="sm:hidden">{formatMonthShort(month)}</span>
+                    <span className="hidden sm:inline">{formatMonthDisplay(month)}</span>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -198,7 +199,7 @@ export default function TransactionsPage() {
                   <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Descrição</TableHead>
+                      <TableHead className="sticky left-0 z-[1] min-w-[200px] border-r bg-card md:static md:min-w-0 md:border-r-0">Descrição</TableHead>
                       <TableHead className="hidden md:table-cell">Categoria</TableHead>
                       <TableHead className="hidden md:table-cell">Data</TableHead>
                       <TableHead>Tag</TableHead>
@@ -217,7 +218,7 @@ export default function TransactionsPage() {
                       );
                       return (
                       <TableRow key={`${transaction.id}-${refreshKey}`}>
-                        <TableCell className="font-medium">
+                        <TableCell className="sticky left-0 z-[1] min-w-[200px] border-r bg-card md:static md:min-w-0 md:border-r-0 font-medium">
                           <div className="flex flex-col gap-0.5 wrap-anywhere">
                             <Link
                               href={`/transactions/${transaction.id}`}
@@ -245,7 +246,7 @@ export default function TransactionsPage() {
                         <TableCell className="hidden md:table-cell">
                           {formatDate(transaction.date.toString())}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="whitespace-nowrap">
                           <InlineTagEditor
                             transactionId={transaction.id}
                             currentTag={transaction.tag ?? null}

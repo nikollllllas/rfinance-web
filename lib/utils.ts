@@ -29,7 +29,14 @@ export const formatMonthDisplay = (monthValue: string) => {
   return date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })
 }
 
-export const formatChange = (change: number) => {
+export const formatMonthShort = (monthValue: string) => {
+  const [year, month] = monthValue.split('-')
+  const date = new Date(parseInt(year), parseInt(month) - 1)
+  const monthName = date.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '')
+  return `${monthName}/${year.slice(-2)}`
+}
+
+export const formatChange =(change: number) => {
   const sign = change >= 0 ? "+" : "";
   return `${sign}${change.toFixed(1)}%`;
 };
