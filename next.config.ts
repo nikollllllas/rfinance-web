@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [{ source: '/api/:path*', destination: `${apiTarget}/:path*` }];
   },
+  async redirects() {
+    return [
+      { source: '/transactions/:id/edit', destination: '/transactions?view=:id', permanent: true },
+      { source: '/transactions/:id', destination: '/transactions?view=:id', permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

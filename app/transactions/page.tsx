@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MonthSelect } from "@/components/month-select";
-import Link from "next/link";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -52,6 +51,10 @@ import { TransactionEditDialog } from "@/components/transaction-edit-dialog";
 import { Badge } from "@/components/ui/badge";
 import { TransactionCreateDialog } from "@/components/transaction-create-dialog";
 import { InlineTagEditor } from "@/components/inline-tag-editor";
+import {
+  TransactionViewDialog,
+  openTransactionView,
+} from "@/components/transaction-view-dialog";
 
 export default function TransactionsPage() {
   const [selectedMonth, setSelectedMonth] = useState(() => {
@@ -206,15 +209,16 @@ export default function TransactionsPage() {
                       <TableRow key={`${transaction.id}-${refreshKey}`}>
                         <TableCell className="sticky left-0 z-[1] min-w-[200px] border-r bg-card md:static md:min-w-0 md:border-r-0 font-medium">
                           <div className="flex flex-col gap-0.5 wrap-anywhere">
-                            <Link
-                              href={`/transactions/${transaction.id}`}
-                              className="hover:underline"
+                            <button
+                              type="button"
+                              onClick={() => openTransactionView(transaction.id)}
+                              className="text-left hover:underline"
                             >
                               {transaction.description}
                               {installmentSuffix
                                 ? ` ${installmentSuffix}`
                                 : ""}
-                            </Link>
+                            </button>
                             {transaction.type === "GASTO" && paymentLabel ? (
                               <span className="text-xs font-normal text-muted-foreground">
                                 {paymentLabel}
@@ -268,11 +272,11 @@ export default function TransactionsPage() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem asChild>
-                                <Link href={`/transactions/${transaction.id}`}>
-                                  <Eye className="mr-2 h-4 w-4" />
-                                  Visualizar
-                                </Link>
+                              <DropdownMenuItem
+                                onSelect={() => openTransactionView(transaction.id)}
+                              >
+                                <Eye className="mr-2 h-4 w-4" />
+                                Visualizar
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onSelect={() => setEditingTransactionId(transaction.id)}
@@ -339,6 +343,13 @@ export default function TransactionsPage() {
           )}
         </div>
       </main>
+
+      <Suspense fallback={null}>
+        <TransactionViewDialog
+          onEdit={setEditingTransactionId}
+          onDelete={setDeletingTransactionId}
+        />
+      </Suspense>
 
       {editingTransactionId && (
         <TransactionEditDialog
