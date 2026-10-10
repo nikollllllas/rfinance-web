@@ -4,13 +4,14 @@ import { useRef, useState } from "react"
 import { FileText, ImageIcon, Paperclip, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export const ATTACHMENT_ACCEPTED_TYPES = ".pdf,.jpg,.jpeg,.png,.webp,.heic"
+export const ATTACHMENT_ACCEPTED_TYPES = ".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif"
 export const ATTACHMENT_ACCEPTED_MIME_TYPES = new Set([
   "application/pdf",
   "image/jpeg",
   "image/png",
   "image/webp",
   "image/heic",
+  "image/heif",
 ])
 export const ATTACHMENT_MAX_SIZE_BYTES = 10 * 1024 * 1024
 

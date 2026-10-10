@@ -32,6 +32,7 @@ import { useToast } from "@/hooks/use-toast";
 import { transactionsControllerGetById } from "@/lib/api/transactions/transactionsControllerGetById";
 import { transactionsControllerUpdate } from "@/lib/api/transactions/transactionsControllerUpdate";
 import { useCategories } from "@/hooks/use-categories";
+import { TransactionAttachments } from "@/components/transaction-attachments";
 
 export default function EditTransactionPage() {
   const params = useParams();
@@ -339,6 +340,8 @@ export default function EditTransactionPage() {
                   rows={3}
                 />
               </div>
+
+              <TransactionAttachments transactionId={id} />
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button

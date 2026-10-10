@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { transactionsControllerGetById } from "@/lib/api/transactions/transactionsControllerGetById";
 import { transactionsControllerRemove } from "@/lib/api/transactions/transactionsControllerRemove";
 import { useCategories } from "@/hooks/use-categories";
+import { TransactionAttachments } from "@/components/transaction-attachments";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -325,6 +326,10 @@ export default function TransactionDetailsPage() {
                 </div>
               </>
             )}
+
+            <Separator />
+
+            <TransactionAttachments transactionId={id} />
 
             <Separator />
 
