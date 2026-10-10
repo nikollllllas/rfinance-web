@@ -10,13 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { MonthSelect } from "@/components/month-select";
 import FinancialOverview from "@/components/financial-overview";
 import RecentTransactions from "@/components/recent-transactions";
 import BudgetProgress from "@/components/budget-progress";
@@ -32,12 +26,6 @@ function DashboardContent() {
   const { dashboardData, isLoading, error, selectedMonth, setSelectedMonth } = useDashboard();
   const { months: availableMonths } = useAvailableMonths();
 
-  const formatMonthDisplay = (monthValue: string) => {
-    const [year, month] = monthValue.split('-')
-    const date = new Date(parseInt(year), parseInt(month) - 1)
-    return date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })
-  }
-
   const handleMonthChange = (month: string) => {
     setSelectedMonth(month);
   };
@@ -50,18 +38,11 @@ function DashboardContent() {
             <span className="font-display text-lg">Painel</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="w-[160px] sm:w-[200px]">
-                <SelectValue placeholder="Selecione o mês" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableMonths.map((month) => (
-                  <SelectItem key={month} value={month}>
-                    {formatMonthDisplay(month)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MonthSelect
+              value={selectedMonth}
+              onValueChange={handleMonthChange}
+              months={availableMonths}
+            />
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Nova Transação">
               <Plus className="h-4 w-4 sm:mr-1" />
               <span className="hidden sm:inline">Nova Transação</span>
