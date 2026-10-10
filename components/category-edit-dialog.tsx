@@ -208,15 +208,8 @@ export function CategoryEditDialog({
               >
                 Cancelar
               </Button>
-              <Button type="submit" disabled={isSaving}>
-                {isSaving ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Salvando...
-                  </>
-                ) : (
-                  "Salvar Alterações"
-                )}
+              <Button type="submit" disabled={isSaving} loading={isSaving}>
+                Salvar Alterações
               </Button>
             </DialogFooter>
           </form>

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Eye, EyeOff, Loader2, LockKeyhole, Mail, User } from "lucide-react"
+import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail, User } from "lucide-react"
 import { useAuthControllerRegister } from "@/lib/api/auth/hooks/useAuthControllerRegister"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 import { AuthInput } from "@/components/auth/auth-input"
@@ -133,18 +133,9 @@ export default function RegisterPage() {
           </p>
         ) : null}
 
-        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" disabled={isLoading} type="submit">
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Criando conta...
-            </>
-          ) : (
-            <>
-              Criar conta
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </>
-          )}
+        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" disabled={isLoading} type="submit" loading={isLoading}>
+          Criar conta
+          <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
 
         <p className="text-center text-[13.5px] text-muted-foreground">

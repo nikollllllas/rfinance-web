@@ -204,17 +204,9 @@ export default function CategoriesPage() {
                           size="sm"
                           disabled={!!deletingId || !!usageText}
                           aria-label={`Excluir categoria ${category.name}`}
+                          loading={deletingId === category.id}
                         >
-                          {deletingId === category.id ? (
-                            <>
-                              <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                              Excluindo...
-                            </>
-                          ) : (
-                            <>
-                              <Trash2 className="h-4 w-4" />
-                            </>
-                          )}
+                          <Trash2 className="h-4 w-4" />
                         </Button>
                       </AlertDialogTrigger>
                       </span>

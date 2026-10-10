@@ -17,10 +17,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { MonthSelect } from "@/components/month-select"
 import { BudgetEditDialog } from "@/components/budget-edit-dialog"
 import { BudgetCreateDialog } from "@/components/budget-create-dialog"
-import { formatBudgetMonth, formatCurrency } from "@/lib/utils"
+import { formatBudgetMonth, formatCurrency, formatMonthDisplay } from "@/lib/utils"
 import { useCategories } from "@/hooks/use-categories"
 import { getBudgetStatusColors } from "@/lib/budget-status-colors"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
@@ -152,18 +152,9 @@ const BudgetCard = React.memo(({ budget, onDeleted }: { budget: any; onDeleted?:
                 }
               >
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="sm" disabled={isDeleting || hasTransactions}>
-                    {isDeleting ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                        Excluindo...
-                      </>
-                    ) : (
-                      <>
-                        <Trash2 className="h-4 w-4 mr-1" />
-                        Excluir
-                      </>
-                    )}
+                  <Button variant="destructive" size="sm" disabled={isDeleting || hasTransactions} loading={isDeleting}>
+                    <Trash2 className="h-4 w-4 mr-1" />
+                    Excluir
                   </Button>
                 </AlertDialogTrigger>
               </span>
@@ -217,12 +208,6 @@ export default function BudgetsPage() {
     return [...new Set([...budgetMonths, ...upcoming, selectedMonth])].sort().reverse()
   }, [budgets, selectedMonth])
 
-  const formatMonthDisplay = (monthValue: string) => {
-    const [year, month] = monthValue.split('-')
-    const date = new Date(parseInt(year), parseInt(month) - 1)
-    return date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' })
-  }
-
   const handleBudgetChanged = () => {
     refreshBudgets()
     setRefreshKey((prev) => prev + 1)
@@ -258,23 +243,16 @@ export default function BudgetsPage() {
     return (
       <div className="flex flex-col min-h-screen">
         <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
-          <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
-            <div className="flex items-center gap-2 font-semibold">
-              <span className="font-display text-lg">Orçamentos</span>
+          <div className="flex min-h-14 items-center gap-2 px-4 py-2">
+            <div className="flex min-w-0 items-center gap-2 font-semibold">
+              <span className="truncate font-display text-lg">Orçamentos</span>
             </div>
-            <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
-              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
-                  <SelectValue placeholder="Selecione o mês" />
-                </SelectTrigger>
-                <SelectContent>
-                  {availableMonths.map((month) => (
-                    <SelectItem key={month} value={month}>
-                      {formatMonthDisplay(month)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="ml-auto flex shrink-0 items-center gap-2">
+              <MonthSelect
+                value={selectedMonth}
+                onValueChange={setSelectedMonth}
+                months={availableMonths}
+              />
               {canReplicate() && (
                 <Button 
                   size="sm" 
@@ -282,18 +260,10 @@ export default function BudgetsPage() {
                   onClick={handleReplicateBudgets}
                   aria-label="Replicar Mês Anterior"
                   disabled={isReplicating}
+                  loading={isReplicating}
                 >
-                  {isReplicating ? (
-                    <>
-                      <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                      Replicando...
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-4 w-4 sm:mr-1" />
-                      <span className="hidden sm:inline">Replicar Mês Anterior</span>
-                    </>
-                  )}
+                  <Copy className="h-4 w-4 sm:mr-1" />
+                  <span className="hidden sm:inline">Replicar Mês Anterior</span>
                 </Button>
               )}
               <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
@@ -316,23 +286,16 @@ export default function BudgetsPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
-        <div className="flex min-h-14 flex-wrap items-center gap-2 px-4 py-2">
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="font-display text-lg">Orçamentos</span>
+        <div className="flex min-h-14 items-center gap-2 px-4 py-2">
+          <div className="flex min-w-0 items-center gap-2 font-semibold">
+            <span className="truncate font-display text-lg">Orçamentos</span>
           </div>
-          <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
-            <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-              <SelectTrigger className="flex-1 sm:w-[200px] sm:flex-none">
-                <SelectValue placeholder="Selecione o mês" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableMonths.map((month) => (
-                  <SelectItem key={month} value={month}>
-                    {formatMonthDisplay(month)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <MonthSelect
+              value={selectedMonth}
+              onValueChange={setSelectedMonth}
+              months={availableMonths}
+            />
             {canReplicate() && (
               <Button 
                 size="sm" 
@@ -340,18 +303,10 @@ export default function BudgetsPage() {
                 onClick={handleReplicateBudgets}
                 aria-label="Replicar Mês Anterior"
                 disabled={isReplicating}
+                loading={isReplicating}
               >
-                {isReplicating ? (
-                  <>
-                    <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                    Replicando...
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4 sm:mr-1" />
-                    <span className="hidden sm:inline">Replicar Mês Anterior</span>
-                  </>
-                )}
+                <Copy className="h-4 w-4 sm:mr-1" />
+                <span className="hidden sm:inline">Replicar Mês Anterior</span>
               </Button>
             )}
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
@@ -378,18 +333,10 @@ export default function BudgetsPage() {
                   onClick={handleReplicateBudgets}
                   aria-label="Replicar Mês Anterior"
                   disabled={isReplicating}
+                  loading={isReplicating}
                 >
-                  {isReplicating ? (
-                    <>
-                      <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                      Replicando...
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="mr-1 h-4 w-4" />
-                      Replicar Mês Anterior
-                    </>
-                  )}
+                  <Copy className="mr-1 h-4 w-4" />
+                  Replicar Mês Anterior
                 </Button>
               )}
               <Button onClick={() => setIsCreateDialogOpen(true)}>

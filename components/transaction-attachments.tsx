@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { FileImage, FileText, Loader2, Paperclip, Trash2 } from "lucide-react"
+import { FileImage, FileText, Paperclip, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
 import {
@@ -106,13 +106,9 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
           variant="outline"
           size="sm"
           onClick={() => fileInputRef.current?.click()}
-          disabled={uploadMutation.isPending}
+          loading={uploadMutation.isPending}
         >
-          {uploadMutation.isPending ? (
-            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-          ) : (
-            <Paperclip className="mr-1.5 h-3.5 w-3.5" />
-          )}
+          <Paperclip className="h-3.5 w-3.5" />
           Anexar
         </Button>
         <input

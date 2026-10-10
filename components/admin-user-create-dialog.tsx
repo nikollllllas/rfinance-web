@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -130,15 +129,8 @@ export function AdminUserCreateDialog({ open, onOpenChange, onSuccess }: AdminUs
             <Button type="button" variant="outline" disabled={isSaving} onClick={() => handleOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
-                </>
-              ) : (
-                "Criar usuário"
-              )}
+            <Button type="submit" disabled={isSaving} loading={isSaving}>
+              Criar usuário
             </Button>
           </DialogFooter>
         </form>

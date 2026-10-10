@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -121,15 +120,8 @@ export function AdminUserResetPasswordDialog({ open, user, onOpenChange }: Admin
             <Button type="button" variant="outline" disabled={isSaving} onClick={() => handleOpenChange(false)}>
               Fechar
             </Button>
-            <Button type="submit" disabled={isSaving || !user}>
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
-                </>
-              ) : (
-                "Salvar nova senha"
-              )}
+            <Button type="submit" disabled={isSaving || !user} loading={isSaving}>
+              Salvar nova senha
             </Button>
           </DialogFooter>
         </form>

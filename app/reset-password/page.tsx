@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, KeyRound, Loader2, LockKeyhole } from "lucide-react"
+import { ArrowLeft, KeyRound, LockKeyhole } from "lucide-react"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
@@ -122,15 +122,8 @@ export default function ResetPasswordPage() {
         ) : null}
         {successMessage ? <p className="text-sm text-success">{successMessage}</p> : null}
 
-        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Salvando...
-            </>
-          ) : (
-            "Redefinir senha"
-          )}
+        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" type="submit" disabled={isSubmitting} loading={isSubmitting}>
+          Redefinir senha
         </Button>
       </form>
 

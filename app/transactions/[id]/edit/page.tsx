@@ -352,15 +352,8 @@ export default function EditTransactionPage() {
               >
                 Cancelar
               </Button>
-              <Button type="submit" disabled={isSaving || categoriesLoading}>
-                {isSaving ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Salvando...
-                  </>
-                ) : (
-                  "Salvar Alterações"
-                )}
+              <Button type="submit" disabled={isSaving || categoriesLoading} loading={isSaving}>
+                Salvar Alterações
               </Button>
             </CardFooter>
           </form>

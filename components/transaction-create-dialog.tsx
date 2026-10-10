@@ -16,7 +16,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useCategories } from "@/hooks/use-categories";
 import { CategoryCreateDialog } from "@/components/category-create-dialog";
@@ -490,15 +489,8 @@ export const TransactionCreateDialog = ({
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isSubmitting || categoriesLoading}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {isUploadingAttachments ? "Enviando comprovantes..." : "Salvando..."}
-                </>
-              ) : (
-                "Salvar Transação"
-              )}
+            <Button type="submit" disabled={isSubmitting || categoriesLoading} loading={isSubmitting}>
+              Salvar Transação
             </Button>
           </DialogFooter>
         </form>
