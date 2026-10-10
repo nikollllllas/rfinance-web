@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Check, Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react"
+import { ArrowRight, Check, Eye, EyeOff, LockKeyhole, Mail } from "lucide-react"
 import { useAuthControllerLogin } from "@/lib/api/auth/hooks/useAuthControllerLogin"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
 import { AuthInput } from "@/components/auth/auth-input"
@@ -105,18 +105,9 @@ export default function LoginPage() {
           </p>
         ) : null}
 
-        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" disabled={isLoading} type="submit">
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Entrando...
-            </>
-          ) : (
-            <>
-              Entrar
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </>
-          )}
+        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" disabled={isLoading} type="submit" loading={isLoading}>
+          Entrar
+          <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
 
         <p className="text-center text-[13.5px] text-muted-foreground">

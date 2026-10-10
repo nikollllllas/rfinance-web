@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -56,8 +55,12 @@ export function DeleteAccountDialog({ open, onOpenChange }: DeleteAccountDialogP
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancelar
             </Button>
-            <Button type="submit" variant="destructive" disabled={mutation.isPending || password.length === 0}>
-              {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            <Button
+              type="submit"
+              variant="destructive"
+              disabled={password.length === 0}
+              loading={mutation.isPending}
+            >
               Excluir definitivamente
             </Button>
           </DialogFooter>

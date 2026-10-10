@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, Loader2, Mail } from "lucide-react"
+import { ArrowLeft, Mail } from "lucide-react"
 import { AuthInput } from "@/components/auth/auth-input"
 import { AuthShell } from "@/components/auth/auth-shell"
 import { Button } from "@/components/ui/button"
@@ -63,15 +63,8 @@ export default function ForgotPasswordPage() {
         ) : null}
         {successMessage ? <p className="text-sm text-success">{successMessage}</p> : null}
 
-        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Enviando...
-            </>
-          ) : (
-            "Enviar instruções"
-          )}
+        <Button className="mt-2.5 h-12 w-full rounded-xl text-[14.5px]" type="submit" disabled={isSubmitting} loading={isSubmitting}>
+          Enviar instruções
         </Button>
       </form>
 

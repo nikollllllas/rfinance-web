@@ -2,7 +2,6 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
 import type { Category } from "@/lib/api-types";
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message";
 import { Button } from "@/components/ui/button";
@@ -168,15 +167,8 @@ export function CategoryCreateDialog({
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isSaving}>
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
-                </>
-              ) : (
-                "Salvar Categoria"
-              )}
+            <Button type="submit" disabled={isSaving} loading={isSaving}>
+              Salvar Categoria
             </Button>
           </DialogFooter>
         </form>

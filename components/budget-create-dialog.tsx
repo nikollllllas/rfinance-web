@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { CurrencyInput } from "@/components/ui/currency-input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "@/hooks/use-categories"
 import { budgetsControllerCreate } from "@/lib/api/budgets/budgetsControllerCreate"
@@ -184,15 +183,8 @@ export function BudgetCreateDialog({ open, onOpenChange, onSuccess, initialMonth
             <Button variant="outline" type="button" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
               Cancelar
             </Button>
-            <Button type="submit" disabled={isSubmitting || categoriesLoading}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Salvando...
-                </>
-              ) : (
-                "Salvar Orçamento"
-              )}
+            <Button type="submit" disabled={isSubmitting || categoriesLoading} loading={isSubmitting}>
+              Salvar Orçamento
             </Button>
           </DialogFooter>
         </form>

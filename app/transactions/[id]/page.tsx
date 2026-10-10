@@ -201,18 +201,9 @@ export default function TransactionDetailsPage() {
             </Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm" disabled={isDeleting} aria-label="Excluir">
-                  {isDeleting ? (
-                    <>
-                      <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                      Excluindo...
-                    </>
-                  ) : (
-                    <>
-                      <Trash2 className="h-4 w-4 sm:mr-1" />
-                      <span className="hidden sm:inline">Excluir</span>
-                    </>
-                  )}
+                <Button variant="destructive" size="sm" disabled={isDeleting} aria-label="Excluir" loading={isDeleting}>
+                  <Trash2 className="h-4 w-4 sm:mr-1" />
+                  <span className="hidden sm:inline">Excluir</span>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>

@@ -11,13 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { MonthSelect } from "@/components/month-select";
 import Link from "next/link";
 import {
   ArrowDownIcon,
@@ -37,7 +31,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton"
-import { cn, formatCurrency, formatDate, formatMonthDisplay, formatMonthShort } from "@/lib/utils"
+import { cn, formatCurrency, formatDate, formatMonthDisplay } from "@/lib/utils"
 import {
   getInstallmentSuffix,
   getPaymentMethodLabel,
@@ -150,19 +144,11 @@ export default function TransactionsPage() {
             <span className="truncate font-display text-lg">Transações</span>
           </div>
           <div className="ml-auto flex shrink-0 items-center gap-2">
-            <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="w-[104px] sm:w-[200px]" aria-label="Mês">
-                <SelectValue placeholder="Mês" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableMonths.map((month) => (
-                  <SelectItem key={month} value={month}>
-                    <span className="sm:hidden">{formatMonthShort(month)}</span>
-                    <span className="hidden sm:inline">{formatMonthDisplay(month)}</span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MonthSelect
+              value={selectedMonth}
+              onValueChange={handleMonthChange}
+              months={availableMonths}
+            />
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Nova Transação">
               <Plus className="h-4 w-4 sm:mr-1" />
               <span className="hidden sm:inline">Nova Transação</span>

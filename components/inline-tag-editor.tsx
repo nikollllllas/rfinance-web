@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronDown, Loader2 } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -93,56 +93,50 @@ export function InlineTagEditor({
 
   return (
     <div className="relative">
-      {isUpdating ? (
-        <div className="flex items-center">
-          <Loader2 className="h-4 w-4 animate-spin mr-2" />
-          <span className="text-xs">Atualizando...</span>
-        </div>
-      ) : (
-        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            loading={isUpdating}
+            className={cn(
+              "h-8 px-2 flex items-center gap-1 hover:bg-accent",
+              !currentTag && "text-muted-foreground"
+            )}
+          >
+            {getCurrentTagDisplay()}
+            <ChevronDown className="h-4 w-4 opacity-50" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-fit space-y-1">
+          {tagOptions.map((option) => (
+            <DropdownMenuItem
+              key={option.value || "none"}
+              disabled={option.value === currentTag}
               className={cn(
-                "h-8 px-2 flex items-center gap-1 hover:bg-accent",
-                !currentTag && "text-muted-foreground"
+                "flex items-center gap-2 cursor-pointer p-0",
+                option.value === currentTag && "bg-accent"
               )}
+              onClick={() =>
+                handleTagChange(
+                  option.value as
+                    | "FALTA"
+                    | "PAGO"
+                    | "RECEBIDO"
+                    | "DEVOLVER"
+                    | "ECONOMIA"
+                    | null
+                )
+              }
             >
-              {getCurrentTagDisplay()}
-              <ChevronDown className="h-4 w-4 opacity-50" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-fit space-y-1">
-            {tagOptions.map((option) => (
-              <DropdownMenuItem
-                key={option.value || "none"}
-                disabled={option.value === currentTag}
-                className={cn(
-                  "flex items-center gap-2 cursor-pointer p-0",
-                  option.value === currentTag && "bg-accent"
-                )}
-                onClick={() =>
-                  handleTagChange(
-                    option.value as
-                      | "FALTA"
-                      | "PAGO"
-                      | "RECEBIDO"
-                      | "DEVOLVER"
-                      | "ECONOMIA"
-                      | null
-                  )
-                }
-              >
-                <Badge variant={option.variant as any} className="flex gap-1 w-full rounded justify-between"> 
-                  {option.label}
-                  {option.value === currentTag && <Check className="size-3" />}
-                </Badge>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
+              <Badge variant={option.variant as any} className="flex gap-1 w-full rounded justify-between"> 
+                {option.label}
+                {option.value === currentTag && <Check className="size-3" />}
+              </Badge>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }
