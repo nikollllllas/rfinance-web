@@ -2,17 +2,31 @@
 
 import { useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { FileText, ImageIcon, Loader2, Paperclip, Trash2 } from "lucide-react"
+import { FileImage, FileText, Loader2, Paperclip, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { attachmentsControllerGetDownloadUrl } from "@/lib/api/attachments/attachmentsControllerGetDownloadUrl"
 import {
   useTransactionAttachmentsControllerList,
   transactionAttachmentsControllerListQueryKey,
 } from "@/lib/api/attachments/hooks/useTransactionAttachmentsControllerList"
 import { useTransactionAttachmentsControllerUpload } from "@/lib/api/attachments/hooks/useTransactionAttachmentsControllerUpload"
 import { useAttachmentsControllerRemove } from "@/lib/api/attachments/hooks/useAttachmentsControllerRemove"
+import type { AttachmentResponseDto } from "@/lib/api/schemas/AttachmentResponseDto"
 import { ATTACHMENT_ACCEPTED_TYPES } from "@/components/attachment-picker"
+import { AttachmentViewer } from "@/components/attachment-viewer"
+import { PdfViewerDialog } from "@/components/pdf-viewer-dialog"
+
+const PREVIEWABLE_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"])
+
+function attachmentContentUrl(id: string): string {
+  return `/api/v1/attachments/${id}/content`
+}
+
+function attachmentOrder(attachment: AttachmentResponseDto): number {
+  if (PREVIEWABLE_IMAGE_TYPES.has(attachment.mimeType)) return 0
+  if (attachment.mimeType === "application/pdf") return 2
+  return 1
+}
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`
@@ -28,10 +42,18 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
   const { toast } = useToast()
   const queryClient = useQueryClient()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [openingId, setOpeningId] = useState<string | null>(null)
+  const [imageIndex, setImageIndex] = useState<number | null>(null)
+  const [openPdf, setOpenPdf] = useState<AttachmentResponseDto | null>(null)
 
   const { data, isLoading } = useTransactionAttachmentsControllerList({ path: { transactionId } })
-  const attachments = data ?? []
+  const attachments = [...(data ?? [])].sort((a, b) => attachmentOrder(a) - attachmentOrder(b))
+  const images = attachments
+    .filter((attachment) => PREVIEWABLE_IMAGE_TYPES.has(attachment.mimeType))
+    .map((attachment) => ({
+      id: attachment.id,
+      fileName: attachment.fileName,
+      src: attachmentContentUrl(attachment.id),
+    }))
 
   const queryKey = transactionAttachmentsControllerListQueryKey({ path: { transactionId } })
 
@@ -65,19 +87,13 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
     uploadMutation.mutate({ path: { transactionId }, body: { file } })
   }
 
-  const handleOpen = async (id: string) => {
-    setOpeningId(id)
-    try {
-      const result = await attachmentsControllerGetDownloadUrl({ path: { id: id } })
-      if (result?.url) window.open(result.url, "_blank", "noopener,noreferrer")
-    } catch {
-      toast({
-        title: "Erro",
-        description: "Falha ao abrir o comprovante",
-        variant: "destructive",
-      })
-    } finally {
-      setOpeningId(null)
+  const handleOpen = (attachment: AttachmentResponseDto) => {
+    if (PREVIEWABLE_IMAGE_TYPES.has(attachment.mimeType)) {
+      setImageIndex(images.findIndex((image) => image.id === attachment.id))
+    } else if (attachment.mimeType === "application/pdf") {
+      setOpenPdf(attachment)
+    } else {
+      window.open(attachmentContentUrl(attachment.id), "_blank", "noopener,noreferrer")
     }
   }
 
@@ -113,46 +129,61 @@ export function TransactionAttachments({ transactionId }: TransactionAttachments
       ) : attachments.length === 0 ? (
         <p className="text-xs text-muted-foreground">Nenhum comprovante anexado.</p>
       ) : (
-        <div className="flex flex-col gap-1.5">
-          {attachments.map((attachment) => (
-            <div
-              key={attachment.id}
-              className="flex items-center justify-between rounded-lg border px-2.5 py-2"
-            >
-              <button
-                type="button"
-                onClick={() => handleOpen(attachment.id)}
-                disabled={openingId === attachment.id}
-                className="flex min-w-0 flex-1 items-center gap-2 text-left"
+        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+          {attachments.map((attachment) => {
+            const isImage = PREVIEWABLE_IMAGE_TYPES.has(attachment.mimeType)
+            const Icon = attachment.mimeType === "application/pdf" ? FileText : FileImage
+            return (
+              <div
+                key={attachment.id}
+                className="relative aspect-square overflow-hidden rounded-lg border bg-muted"
               >
-                {attachment.mimeType === "application/pdf" ? (
-                  <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
-                ) : (
-                  <ImageIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
-                )}
-                <span className="truncate text-xs">{attachment.fileName}</span>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {formatBytes(attachment.sizeBytes)}
-                </span>
-                {openingId === attachment.id && (
-                  <Loader2 className="h-3 w-3 shrink-0 animate-spin" />
-                )}
-              </button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7 shrink-0 text-destructive hover:text-destructive"
-                onClick={() => removeMutation.mutate({ path: { id: attachment.id } })}
-                disabled={removeMutation.isPending}
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-                <span className="sr-only">Remover</span>
-              </Button>
-            </div>
-          ))}
+                <button
+                  type="button"
+                  onClick={() => handleOpen(attachment)}
+                  className="flex h-full w-full items-center justify-center"
+                >
+                  {isImage ? (
+                    <img
+                      src={attachmentContentUrl(attachment.id)}
+                      alt={attachment.fileName}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="flex flex-col items-center gap-1 p-2 text-muted-foreground">
+                      <Icon className="h-6 w-6" />
+                      <span className="line-clamp-2 break-all text-center text-[10px] text-foreground">
+                        {attachment.fileName}
+                      </span>
+                      <span className="text-[10px]">{formatBytes(attachment.sizeBytes)}</span>
+                    </span>
+                  )}
+                  <span className="sr-only">Ver {attachment.fileName}</span>
+                </button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1 h-7 w-7 rounded-full bg-background/80 text-destructive backdrop-blur-sm hover:bg-background hover:text-destructive"
+                  onClick={() => removeMutation.mutate({ path: { id: attachment.id } })}
+                  disabled={removeMutation.isPending}
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span className="sr-only">Remover</span>
+                </Button>
+              </div>
+            )
+          })}
         </div>
       )}
+
+      <AttachmentViewer images={images} index={imageIndex} onClose={() => setImageIndex(null)} />
+      <PdfViewerDialog
+        file={openPdf ? attachmentContentUrl(openPdf.id) : null}
+        fileName={openPdf?.fileName ?? ""}
+        onClose={() => setOpenPdf(null)}
+      />
     </div>
   )
 }

@@ -27,7 +27,15 @@ import {
   Loader2,
   Pencil,
   Trash2,
+  Eye,
+  MoreVertical,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn, formatCurrency, formatDate, formatMonthDisplay } from "@/lib/utils"
 import {
@@ -45,7 +53,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { TransactionEditDialog } from "@/components/transaction-edit-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -68,6 +75,9 @@ export default function TransactionsPage() {
   
   const { months: availableMonths } = useAvailableMonths()
   const [editingTransactionId, setEditingTransactionId] = useState<
+    string | null
+  >(null)
+  const [deletingTransactionId, setDeletingTransactionId] = useState<
     string | null
   >(null)
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
@@ -108,7 +118,7 @@ export default function TransactionsPage() {
             <TableHead className="hidden md:table-cell">Data</TableHead>
             <TableHead>Tag</TableHead>
             <TableHead className="text-right">Valor</TableHead>
-            <TableHead className="hidden w-[100px] md:table-cell">Ações</TableHead>
+            <TableHead className="w-px text-right md:w-[100px]">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -119,10 +129,10 @@ export default function TransactionsPage() {
               <TableCell className="hidden md:table-cell"><Skeleton className="h-4 w-20" /></TableCell>
               <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
               <TableCell className="text-right"><Skeleton className="h-4 w-20 ml-auto" /></TableCell>
-              <TableCell className="hidden md:table-cell">
-                <div className="flex justify-end gap-2">
+              <TableCell>
+                <div className="flex justify-end gap-1 md:gap-2">
                   <Skeleton className="h-8 w-8 rounded" />
-                  <Skeleton className="h-8 w-8 rounded" />
+                  <Skeleton className="hidden h-8 w-8 rounded md:block" />
                 </div>
               </TableCell>
             </TableRow>
@@ -193,7 +203,7 @@ export default function TransactionsPage() {
                       <TableHead className="hidden md:table-cell">Data</TableHead>
                       <TableHead>Tag</TableHead>
                       <TableHead className="text-right">Valor</TableHead>
-                      <TableHead className="hidden w-[100px] md:table-cell">Ações</TableHead>
+                      <TableHead className="w-px text-right md:w-[100px]">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -262,8 +272,37 @@ export default function TransactionsPage() {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          <div className="flex justify-end gap-2">
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="md:hidden">
+                                <MoreVertical className="h-4 w-4" />
+                                <span className="sr-only">Mais ações</span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem asChild>
+                                <Link href={`/transactions/${transaction.id}`}>
+                                  <Eye className="mr-2 h-4 w-4" />
+                                  Visualizar
+                                </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onSelect={() => setEditingTransactionId(transaction.id)}
+                              >
+                                <Pencil className="mr-2 h-4 w-4" />
+                                Editar
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onSelect={() => setDeletingTransactionId(transaction.id)}
+                                className="text-destructive focus:text-destructive"
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Apagar
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                          <div className="hidden justify-end gap-2 md:flex">
                             <Button
                               variant="ghost"
                               size="icon"
@@ -274,40 +313,15 @@ export default function TransactionsPage() {
                               <Pencil className="h-4 w-4" />
                               <span className="sr-only">Editar</span>
                             </Button>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="text-destructive hover:text-destructive"
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                  <span className="sr-only">Excluir</span>
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    Tem certeza?
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Esta ação não pode ser desfeita. Isso excluirá
-                                    permanentemente esta transação.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() =>
-                                      removeTransaction(transaction.id)
-                                    }
-                                    className="bg-destructive text-destructive-foreground"
-                                  >
-                                    Excluir
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => setDeletingTransactionId(transaction.id)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                              <span className="sr-only">Excluir</span>
+                            </Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -349,6 +363,34 @@ export default function TransactionsPage() {
           onSuccess={handleTransactionChanged}
         />
       )}
+
+      <AlertDialog
+        open={!!deletingTransactionId}
+        onOpenChange={(open) => {
+          if (!open) setDeletingTransactionId(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação não pode ser desfeita. Isso excluirá
+              permanentemente esta transação.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (deletingTransactionId) removeTransaction(deletingTransactionId);
+              }}
+              className="bg-destructive text-destructive-foreground"
+            >
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <TransactionCreateDialog
         open={isCreateDialogOpen}
