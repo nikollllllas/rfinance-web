@@ -33,10 +33,11 @@ export function authControllerRegisterMutationOptions<TContext = unknown>(
 		TContext
 	>({
 		mutationKey,
-		mutationFn: async ({ body }) => {
+		mutationFn: async ({ body, headers }) => {
 			return await authControllerRegister({
 				...config,
 				body,
+				headers,
 				throwOnError: true,
 			});
 		},

@@ -6,5 +6,11 @@
 import type { UserSummaryDto } from "./UserSummaryDto";
 
 export type LoginResponseDto = {
+	/**
+	 * @description Só presente quando o header x-client-platform: mobile é enviado — clientes mobile não têm cookie jar, então o token também vai no body
+	 * @example jwt.token.value
+	 * @type string | undefined
+	 */
+	accessToken?: string;
 	user: UserSummaryDto;
 };
