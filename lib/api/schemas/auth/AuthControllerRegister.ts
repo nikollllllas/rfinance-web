@@ -6,6 +6,14 @@
 import type { LoginResponseDto } from "../LoginResponseDto";
 import type { RegisterDto } from "../RegisterDto";
 
+export type AuthControllerRegisterHeaders = {
+	/**
+	 * @description Enviar \"mobile\" pra receber accessToken também no body (sem isso, só o cookie httpOnly é setado)
+	 * @type string | undefined
+	 */
+	"x-client-platform"?: string;
+};
+
 export type AuthControllerRegisterStatus201 = LoginResponseDto;
 
 export type AuthControllerRegisterStatus409 = unknown;
@@ -16,7 +24,7 @@ export type AuthControllerRegisterOptions = {
 	body: AuthControllerRegisterBody;
 	path?: never;
 	query?: never;
-	headers?: never;
+	headers?: AuthControllerRegisterHeaders;
 };
 
 export type AuthControllerRegisterResponses = {

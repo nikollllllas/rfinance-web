@@ -33,8 +33,13 @@ export function authControllerLoginMutationOptions<TContext = unknown>(
 		TContext
 	>({
 		mutationKey,
-		mutationFn: async ({ body }) => {
-			return await authControllerLogin({ ...config, body, throwOnError: true });
+		mutationFn: async ({ body, headers }) => {
+			return await authControllerLogin({
+				...config,
+				body,
+				headers,
+				throwOnError: true,
+			});
 		},
 	});
 }

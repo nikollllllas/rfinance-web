@@ -6,6 +6,14 @@
 import type { LoginDto } from "../LoginDto";
 import type { LoginResponseDto } from "../LoginResponseDto";
 
+export type AuthControllerLoginHeaders = {
+	/**
+	 * @description Enviar \"mobile\" pra receber accessToken também no body (sem isso, só o cookie httpOnly é setado)
+	 * @type string | undefined
+	 */
+	"x-client-platform"?: string;
+};
+
 export type AuthControllerLoginStatus200 = LoginResponseDto;
 
 export type AuthControllerLoginStatus401 = unknown;
@@ -16,7 +24,7 @@ export type AuthControllerLoginOptions = {
 	body: AuthControllerLoginBody;
 	path?: never;
 	query?: never;
-	headers?: never;
+	headers?: AuthControllerLoginHeaders;
 };
 
 export type AuthControllerLoginResponses = {
