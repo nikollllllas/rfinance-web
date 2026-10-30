@@ -1519,6 +1519,74 @@
           "dashboard"
         ]
       }
+    },
+    "/v1/reports/transactions": {
+      "get": {
+        "operationId": "ReportsController_getTransactionsReport",
+        "parameters": [
+          {
+            "name": "from",
+            "required": true,
+            "in": "query",
+            "description": "Data inicial (YYYY-MM-DD), inclusiva",
+            "schema": {
+              "example": "2026-01-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": true,
+            "in": "query",
+            "description": "Data final (YYYY-MM-DD), inclusiva",
+            "schema": {
+              "example": "2026-12-31",
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "description": "GANHO = só entradas, GASTO = só saídas, AMBOS = entradas e saídas",
+            "schema": {
+              "default": "AMBOS",
+              "type": "string",
+              "enum": [
+                "GANHO",
+                "GASTO",
+                "AMBOS"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsReportResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datas inválidas, período invertido ou maior que 12 meses"
+          },
+          "401": {
+            "description": "Não autenticado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "reports"
+        ]
+      }
     }
   },
   "info": {
@@ -2757,6 +2825,195 @@
           "recentTransactions",
           "budgets",
           "monthlyData"
+        ]
+      },
+      "ReportPeriodDto": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "example": "2026-01-01"
+          },
+          "to": {
+            "type": "string",
+            "example": "2026-12-31"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      },
+      "ReportTotalsDto": {
+        "type": "object",
+        "properties": {
+          "income": {
+            "type": "number",
+            "example": 5200
+          },
+          "expense": {
+            "type": "number",
+            "example": 3150.4
+          },
+          "balance": {
+            "type": "number",
+            "example": 2049.6,
+            "description": "income - expense"
+          },
+          "count": {
+            "type": "number",
+            "example": 42
+          }
+        },
+        "required": [
+          "income",
+          "expense",
+          "balance",
+          "count"
+        ]
+      },
+      "ReportCategoryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-category"
+          },
+          "name": {
+            "type": "string",
+            "example": "Alimentação"
+          },
+          "color": {
+            "type": "string",
+            "example": "#22c55e"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "color"
+        ]
+      },
+      "ReportTransactionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "uuid-transaction"
+          },
+          "date": {
+            "type": "string",
+            "example": "2026-01-05",
+            "description": "YYYY-MM-DD"
+          },
+          "description": {
+            "type": "string",
+            "example": "Supermercado"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GANHO",
+              "GASTO"
+            ],
+            "example": "GASTO"
+          },
+          "amount": {
+            "type": "number",
+            "example": 145.9
+          },
+          "category": {
+            "$ref": "#/components/schemas/ReportCategoryDto"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "enum": [
+              "PIX",
+              "DEBITO",
+              "CREDITO"
+            ],
+            "nullable": true
+          },
+          "tag": {
+            "type": "string",
+            "enum": [
+              "FALTA",
+              "PAGO",
+              "DEVOLVER",
+              "ECONOMIA",
+              "RECEBIDO"
+            ],
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "date",
+          "description",
+          "type",
+          "amount",
+          "category"
+        ]
+      },
+      "ReportMonthDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string",
+            "example": "2026-01",
+            "description": "YYYY-MM"
+          },
+          "totals": {
+            "$ref": "#/components/schemas/ReportTotalsDto"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportTransactionDto"
+            }
+          }
+        },
+        "required": [
+          "month",
+          "totals",
+          "transactions"
+        ]
+      },
+      "TransactionsReportResponseDto": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "$ref": "#/components/schemas/ReportPeriodDto"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "GANHO",
+              "GASTO",
+              "AMBOS"
+            ],
+            "example": "AMBOS"
+          },
+          "totals": {
+            "$ref": "#/components/schemas/ReportTotalsDto"
+          },
+          "months": {
+            "description": "Um item por mês do período, em ordem, inclusive meses sem transações",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportMonthDto"
+            }
+          }
+        },
+        "required": [
+          "period",
+          "type",
+          "totals",
+          "months"
         ]
       }
     }
