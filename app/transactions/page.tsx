@@ -22,7 +22,7 @@ import {
   Trash2,
   Eye,
   MoreVertical,
-  FileDown,
+  FileChartColumn,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -53,8 +53,6 @@ import { Badge } from "@/components/ui/badge";
 import { TransactionCreateDialog } from "@/components/transaction-create-dialog";
 import { InlineTagEditor } from "@/components/inline-tag-editor";
 import { ReportExportDialog } from "@/components/report-export-dialog";
-
-const REPORTS_ENABLED = process.env.NEXT_PUBLIC_REPORTS_ENABLED === "true";
 import {
   TransactionViewDialog,
   openTransactionView,
@@ -157,17 +155,16 @@ export default function TransactionsPage() {
               onValueChange={handleMonthChange}
               months={availableMonths}
             />
-            {REPORTS_ENABLED && (
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setIsReportDialogOpen(true)}
-                aria-label="Exportar relatório"
-              >
-                <FileDown className="h-4 w-4 sm:mr-1" />
-                <span className="hidden sm:inline">Relatório</span>
-              </Button>
-            )}
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-8 px-0 sm:w-auto sm:px-3"
+              onClick={() => setIsReportDialogOpen(true)}
+              aria-label="Exportar relatório"
+            >
+              <FileChartColumn className="h-4 w-4 sm:mr-1" />
+              <span className="hidden sm:inline">Relatório</span>
+            </Button>
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Nova Transação">
               <Plus className="h-4 w-4 sm:mr-1" />
               <span className="hidden sm:inline">Nova Transação</span>
@@ -411,13 +408,11 @@ export default function TransactionsPage() {
         onOpenChange={setIsCreateDialogOpen}
         onSuccess={handleTransactionChanged}
       />
-      {REPORTS_ENABLED && (
-        <ReportExportDialog
-          open={isReportDialogOpen}
-          onOpenChange={setIsReportDialogOpen}
-          initialMonth={selectedMonth}
-        />
-      )}
+      <ReportExportDialog
+        open={isReportDialogOpen}
+        onOpenChange={setIsReportDialogOpen}
+        initialMonth={selectedMonth}
+      />
     </div>
   );
 }
