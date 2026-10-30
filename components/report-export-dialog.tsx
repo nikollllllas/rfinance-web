@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
+import { cn } from "@/lib/utils"
 import { reportsControllerGetTransactionsReport } from "@/lib/api/reports/reportsControllerGetTransactionsReport"
 import {
   REPORT_MAX_MONTHS,
@@ -123,27 +124,27 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 py-4 sm:grid-cols-2">
-          <div className="space-y-2 sm:col-span-2">
+          <div className="flex flex-col gap-2 sm:col-span-2">
             <Label>Período</Label>
             <Tabs value={mode} onValueChange={(value) => setMode(value as ReportMode)}>
               <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="week">Semana</TabsTrigger>
-                <TabsTrigger value="month">Mês</TabsTrigger>
-                <TabsTrigger value="range">Meses</TabsTrigger>
-                <TabsTrigger value="year">Ano</TabsTrigger>
+                <TabsTrigger value="week" className="cursor-pointer">Semana</TabsTrigger>
+                <TabsTrigger value="month" className="cursor-pointer">Mês</TabsTrigger>
+                <TabsTrigger value="range" className="cursor-pointer">Meses</TabsTrigger>
+                <TabsTrigger value="year" className="cursor-pointer">Ano</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
 
           {mode === "week" && (
-            <div className="flex flex-col space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2">
               <Label>Qualquer dia da semana</Label>
               <DatePicker date={weekDate} setDate={(date) => date && setWeekDate(date)} />
             </div>
           )}
 
           {mode === "month" && (
-            <div className="flex flex-col space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2">
               <Label>Mês</Label>
               <MonthPicker
                 selectedMonth={month}
@@ -155,7 +156,7 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
 
           {mode === "range" && (
             <>
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>De</Label>
                 <MonthPicker
                   selectedMonth={rangeStart}
@@ -163,7 +164,7 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
                   callbacks={monthPickerCallbacks}
                 />
               </div>
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col gap-2">
                 <Label>Até</Label>
                 <MonthPicker
                   selectedMonth={rangeEnd}
@@ -175,10 +176,10 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
           )}
 
           {mode === "year" && (
-            <div className="space-y-2 sm:col-span-2">
+            <div className="flex flex-col gap-2">
               <Label htmlFor="report-year">Ano</Label>
               <Select value={String(year)} onValueChange={(value) => setYear(Number(value))}>
-                <SelectTrigger id="report-year">
+                <SelectTrigger id="report-year" className="cursor-pointer">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -192,10 +193,10 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
             </div>
           )}
 
-          <div className="space-y-2 sm:col-span-2">
+          <div className={cn("flex flex-col gap-2", mode === "range" && "sm:col-span-2")}>
             <Label htmlFor="report-type">Transações</Label>
             <Select value={type} onValueChange={(value) => setType(value as ReportTypeFilter)}>
-              <SelectTrigger id="report-type">
+              <SelectTrigger id="report-type" className="cursor-pointer">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -227,10 +228,10 @@ export function ReportExportDialog({ open, onOpenChange, initialMonth }: ReportE
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isGenerating}>
+          <Button variant="outline" className="cursor-pointer" onClick={() => onOpenChange(false)} disabled={isGenerating}>
             Cancelar
           </Button>
-          <Button onClick={handleGenerate} disabled={isGenerating || rangeTooLong}>
+          <Button className="cursor-pointer" onClick={handleGenerate} disabled={isGenerating || rangeTooLong}>
             {isGenerating ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (

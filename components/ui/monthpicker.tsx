@@ -72,7 +72,7 @@ function MonthPicker({
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant={"outline"} className={cn("w-full justify-start text-left capitalize font-normal", !selectedMonth && "text-muted-foreground")}>
+                <Button variant={"outline"} className={cn("w-full cursor-pointer justify-start text-left capitalize font-normal", !selectedMonth && "text-muted-foreground")}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {selectedMonth ? format(selectedMonth, "MMMM yyyy", { locale: ptBR }) : <span>Selecione um mês</span>}
                 </Button>

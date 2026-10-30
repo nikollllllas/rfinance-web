@@ -158,7 +158,7 @@ export default function TransactionsPage() {
             <Button
               size="sm"
               variant="outline"
-              className="w-8 px-0 sm:w-auto sm:px-3"
+              className="h-9 w-9 cursor-pointer px-0 sm:w-auto sm:px-3"
               onClick={() => setIsReportDialogOpen(true)}
               aria-label="Exportar relatório"
             >
