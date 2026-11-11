@@ -20,7 +20,7 @@ import {
 import { MonthSelect } from "@/components/month-select"
 import { BudgetEditDialog } from "@/components/budget-edit-dialog"
 import { BudgetCreateDialog } from "@/components/budget-create-dialog"
-import { formatBudgetMonth, formatCurrency, formatMonthDisplay } from "@/lib/utils"
+import { formatBudgetMonth, formatCurrency, formatMonthDisplay, formatMonthShort } from "@/lib/utils"
 import { useCategories } from "@/hooks/use-categories"
 import { getBudgetStatusColors } from "@/lib/budget-status-colors"
 import { getApiErrorMessage } from "@/lib/errors/get-api-error-message"
@@ -225,17 +225,14 @@ export default function BudgetsPage() {
     }
   }
 
-  const canReplicate = () => {
-    const currentMonthBudgets = budgets.filter(budget => budget.budgetMonth === selectedMonth)
-    if (currentMonthBudgets.length > 0) return false
-
-    const [year, month] = selectedMonth.split('-').map(Number)
-    const prevDate = new Date(year, month - 2)
-    const prevMonth = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, '0')}`
-    const previousMonthBudgets = budgets.filter(budget => budget.budgetMonth === prevMonth)
-    
-    return previousMonthBudgets.length > 0
-  }
+  const replicateSource = budgets.some(budget => budget.budgetMonth === selectedMonth)
+    ? undefined
+    : budgets
+        .map(budget => budget.budgetMonth)
+        .filter(month => month < selectedMonth)
+        .sort()
+        .at(-1)
+  const replicateLabel = replicateSource ? `Replicar de ${formatMonthShort(replicateSource)}` : ""
 
   const filteredBudgets = budgets.filter(budget => budget.budgetMonth === selectedMonth)
   
@@ -253,17 +250,17 @@ export default function BudgetsPage() {
                 onValueChange={setSelectedMonth}
                 months={availableMonths}
               />
-              {canReplicate() && (
+              {replicateSource && (
                 <Button 
                   size="sm" 
                   variant="outline" 
                   onClick={handleReplicateBudgets}
-                  aria-label="Replicar Mês Anterior"
+                  aria-label={replicateLabel}
                   disabled={isReplicating}
                   loading={isReplicating}
                 >
                   <Copy className="h-4 w-4 sm:mr-1" />
-                  <span className="hidden sm:inline">Replicar Mês Anterior</span>
+                  <span className="hidden sm:inline">{replicateLabel}</span>
                 </Button>
               )}
               <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
@@ -296,17 +293,17 @@ export default function BudgetsPage() {
               onValueChange={setSelectedMonth}
               months={availableMonths}
             />
-            {canReplicate() && (
+            {replicateSource && (
               <Button 
                 size="sm" 
                 variant="outline" 
                 onClick={handleReplicateBudgets}
-                aria-label="Replicar Mês Anterior"
+                aria-label={replicateLabel}
                 disabled={isReplicating}
                 loading={isReplicating}
               >
                 <Copy className="h-4 w-4 sm:mr-1" />
-                <span className="hidden sm:inline">Replicar Mês Anterior</span>
+                <span className="hidden sm:inline">{replicateLabel}</span>
               </Button>
             )}
             <Button size="sm" onClick={() => setIsCreateDialogOpen(true)} aria-label="Novo Orçamento">
@@ -327,16 +324,16 @@ export default function BudgetsPage() {
               Nenhum orçamento encontrado para {formatMonthDisplay(selectedMonth)}.
             </p>
             <div className="flex gap-2">
-              {canReplicate() && (
+              {replicateSource && (
                 <Button 
                   variant="outline" 
                   onClick={handleReplicateBudgets}
-                  aria-label="Replicar Mês Anterior"
+                  aria-label={replicateLabel}
                   disabled={isReplicating}
                   loading={isReplicating}
                 >
                   <Copy className="mr-1 h-4 w-4" />
-                  Replicar Mês Anterior
+                  {replicateLabel}
                 </Button>
               )}
               <Button onClick={() => setIsCreateDialogOpen(true)}>
